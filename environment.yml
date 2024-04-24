@@ -1,0 +1,17 @@
+name: ai-video-narration-for-visually-impaired  # Name of the environment
+channels:
+# Locations where packages are stored. They serve as the base for hosting and managing packages. Conda
+# packages are downloaded from remote channels, which are URLs to directories containing conda packages.
+# The conda command searches a set of channels.
+  - pytorch
+  - anaconda
+  - defaults
+dependencies:
+  - pip
+  - python=3.10
+  - pip:
+    - -r requirements.txt
+
+# You can control where a conda environment lives by providing a
+# path to a target directory when creating the environment.
+# prefix: C:\Users\User\anaconda3\envs\Conda-Example_Env

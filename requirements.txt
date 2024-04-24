@@ -1,0 +1,7 @@
+lightning
+opencv-python
+torch
+torchmetrics
+torchsummary
+torchvision
+transformers
