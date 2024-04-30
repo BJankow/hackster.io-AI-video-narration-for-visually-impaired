@@ -4,6 +4,9 @@
 ### Torch Lightning
 lightning_logs
 
+### NumPy ###
+*.npy
+
 ### Images ###
 # JPEG
 *.jpg

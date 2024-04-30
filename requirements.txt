@@ -1,5 +1,7 @@
+gpustat
 lightning
 opencv-python
+scikit-learn
 torch
 torchmetrics
 torchsummary
