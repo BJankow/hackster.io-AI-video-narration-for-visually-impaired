@@ -4,8 +4,27 @@
 ### Torch Lightning
 lightning_logs
 
+### Directories ###
+grouping_frames_into_scenes/scene_detect_cache
+
+### conda ###
+*condaenv*.txt
+
+### Backup Files###
+*.bkp
+
 ### NumPy ###
 *.npy
+
+### Pickle ###
+*.pickle
+
+### Video ###
+*.mp4
+*.avi
+*.wmv
+*.flv
+*.mov
 
 ### Images ###
 # JPEG
@@ -396,3 +415,5 @@ terraform.rc
 
 # End of https://www.toptal.com/developers/gitignore/api/images,python,pycharm,terraform
 
+### My Special Files ###
+!Dataflow_Stages.png

@@ -3,8 +3,9 @@ channels:
 # Locations where packages are stored. They serve as the base for hosting and managing packages. Conda
 # packages are downloaded from remote channels, which are URLs to directories containing conda packages.
 # The conda command searches a set of channels.
-  - pytorch
   - anaconda
+  - conda-forge
+  - pytorch
   - defaults
 dependencies:
   - pip

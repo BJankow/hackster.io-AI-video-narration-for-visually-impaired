@@ -1,6 +1,8 @@
 gpustat
 lightning
+moviepy
 opencv-python
+scenedetect[opencv]  # FROM: https://www.scenedetect.com/
 scikit-learn
 torch
 torchmetrics
