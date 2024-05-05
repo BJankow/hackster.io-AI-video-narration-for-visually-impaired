@@ -12,5 +12,6 @@ class ClipDescriptorBase(ClipDescriptorInterface):
         super(ClipDescriptorBase, self).__init__()
 
     def describe(self, frames: List) -> str:
+        print("AAA")
         raise NotImplementedError
 

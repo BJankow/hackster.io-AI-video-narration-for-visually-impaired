@@ -8,7 +8,7 @@ from StagesProcessor import StagesProcessor, MovieHandlerBase, CutDetectorBase, 
     VoiceSynthesizerBase, MovieComposerBase
 
 
-DATASETS_FOLDER = "../../datasets/"
+DATASETS_FOLDER = "../datasets/"
 CURRENT_DATASET_FOLDER = os.path.join(DATASETS_FOLDER, "hackster.io-AI-video-narration-for-visually-impaired-dataset/")
 FILENAME = "big_buck_bunny_1080p_h264.mov"
 FILEPATH = os.path.join(CURRENT_DATASET_FOLDER, FILENAME)

@@ -1,9 +1,13 @@
 gpustat
+joblib
 lightning
 moviepy
 opencv-python
+pydub
+pyttsx3
 scenedetect[opencv]  # FROM: https://www.scenedetect.com/
 scikit-learn
+soundfile
 torch
 torchmetrics
 torchsummary

@@ -10,10 +10,11 @@ from typing import List
 class CutDetectorInterface(ABC):
 
     @abstractmethod
-    def detect_cuts(self, frames: List) -> List:
+    def detect_scenes(self, video) -> List:
         """
-        Detects cuts in given serie of frames.
+        Detects scenes in a given serie of frames.
 
+        :param video: Video that will be processed.
         :return: List of tuples. Every tuple is in form (start_frame_idx, stop_frame_idx) indicating start and end of
             shot/scene.
         """

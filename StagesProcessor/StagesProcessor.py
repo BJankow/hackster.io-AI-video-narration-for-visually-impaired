@@ -24,17 +24,17 @@ class StagesProcessor(StagesProcessorInterface):
             movie_composer: MovieComposerBase
     ):
         super(StagesProcessor, self).__init__()
-        self.__movie_handler = movie_handler
-        self.__cut_detector = cut_detector
-        self.__clip_descriptor = clip_descriptor
-        self.__voice_synthesizer = voice_synthesizer
-        self.__movie_composer = movie_composer
+        self.movie_handler = movie_handler
+        self.cut_detector = cut_detector
+        self.clip_descriptor = clip_descriptor
+        self.voice_synthesizer = voice_synthesizer
+        self.movie_composer = movie_composer
 
     def load_movie(self, fp: Union[str, Path]):
-        self.__movie_handler.load(fp=fp)
+        self.movie_handler.load(fp=fp)
 
     def detect_cuts(self, *args, **kwargs):
-        self.__cut_detector.detect_cuts(frames=self.__movie_handler.get_movie())
+        self.cut_detector.detect_cuts(frames=self.movie_handler.get_movie())
 
     def generate_descriptions(self):
         raise NotImplementedError
