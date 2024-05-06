@@ -1,8 +1,9 @@
 # standard library imports
 from abc import ABC, abstractmethod
-from typing import Any
+from typing import List
 
 # 3rd party library imports
+from pydub.audio_segment import AudioSegment
 
 # local imports
 
@@ -10,11 +11,11 @@ from typing import Any
 class VoiceSynthesizerInterface(ABC):
 
     @abstractmethod
-    def synthesize(self, text: str) -> Any:  # TODO: change Any into something more specific (sound representation type)
+    def synthesize(self, texts: List[str]) -> List[AudioSegment]:
         """
         Synthesizes given text into voice
 
-        :param text: text that will be synthesized.
+        :param texts: List of texts that will be synthesized.
         :return: None.
         """
         pass

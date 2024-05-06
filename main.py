@@ -4,7 +4,7 @@ import os
 # 3rd party library imports
 
 # local imports
-from StagesProcessor import StagesProcessor, MovieHandlerBase, CutDetectorBase, ClipDescriptorBase, \
+from StagesProcessor import StagesProcessor, MovieHandlerBase, SceneDetectorBase, ClipDescriptorBase, \
     VoiceSynthesizerBase, MovieComposerBase
 
 
@@ -17,11 +17,13 @@ FILEPATH = os.path.join(CURRENT_DATASET_FOLDER, FILENAME)
 if __name__ == '__main__':
     stages_processor = StagesProcessor(
         movie_handler=MovieHandlerBase(),
-        cut_detector=CutDetectorBase(),
+        scene_detector=SceneDetectorBase(),
         clip_descriptor=ClipDescriptorBase(),
         voice_synthesizer=VoiceSynthesizerBase(),
         movie_composer=MovieComposerBase()
     )
-    stages_processor.load_movie(fp=FILEPATH)
-    stages_processor.detect_cuts()
+    video, audio = stages_processor.load_movie(fp=FILEPATH)
+    scenes = stages_processor.detect_scenes(fp=FILEPATH)
+    descriptions = stages_processor.generate_descriptions(fp=FILEPATH, scenes=scenes)
+    synthesized_descriptions = stages_processor.synthesize_descriptions(fp=FILEPATH, descriptions=descriptions)
 

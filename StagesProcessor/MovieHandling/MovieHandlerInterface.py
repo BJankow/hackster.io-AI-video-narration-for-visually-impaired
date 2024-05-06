@@ -1,9 +1,11 @@
 # standard library imports
 from abc import ABC, abstractmethod
 from pathlib import Path
-from typing import Union
+from typing import Union, Optional
 
 # 3rd party library imports
+from pydub import AudioSegment
+from scenedetect import VideoStream
 
 # local imports
 
@@ -20,3 +22,10 @@ class MovieHandlerInterface(ABC):
         """
         pass
 
+    @abstractmethod
+    def get_video(self) -> Optional[VideoStream]:
+        pass
+
+    @abstractmethod
+    def get_audio(self) -> Optional[AudioSegment]:
+        pass

@@ -1,4 +1,5 @@
 gpustat
+gTTS
 joblib
 lightning
 moviepy
@@ -13,3 +14,4 @@ torchmetrics
 torchsummary
 torchvision
 transformers
+tqdm

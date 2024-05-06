@@ -4,7 +4,7 @@
 
 # local imports
 from .ClipDescribing.ClipDescriptors import ClipDescriptorBase
-from .CutsDetecting.CutDetectors import CutDetectorBase
+from .ScenesDetecting.SceneDetectors import SceneDetectorBase
 from .MovieComposing.MovieComposers import MovieComposerBase
 from .MovieHandling.MovieHandlers import MovieHandlerBase
 from .VoiceSynthesizing.VoiceSynthesizers import VoiceSynthesizerBase

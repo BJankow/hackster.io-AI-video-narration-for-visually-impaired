@@ -10,12 +10,13 @@ from typing import List
 class ClipDescriptorInterface(ABC):
 
     @abstractmethod
-    def describe(self, frames: List) -> str:
+    def describe(self, video, scenes: List) -> List[str]:
         """
         Generates a text caption for given sequence of frames.
 
-        :param frames: sequence of frames for given clip
-        :return: generated caption text.
+        :param video: Video with frames described.
+        :param scenes: List of sequence of frames for given clip. List of clips as an input.
+        :return: List of generated caption texts. One text for every clip.
         """
         pass
 

@@ -12,10 +12,10 @@ class LogHandlerBase:
         self.__init_logger()
 
     def __init_logger(self):
-        self.__my_logger = logging.getLogger(name=f"{__name__}-{self.__class__.__name__}")
+        self._my_logger = logging.getLogger(name=f"{__name__}-{self.__class__.__name__}")
 
         handler = logging.StreamHandler(sys.stdout)
         handler.setLevel(logging.DEBUG)
         formatter = logging.Formatter('[%(levelname)s] [%(name)s] (%(asctime)s) |%(name)s|: %(message)s')
         handler.setFormatter(formatter)
-        self.__my_logger.addHandler(handler)  # TODO: check if it works to stdout
+        self._my_logger.addHandler(handler)  # TODO: check if it works to stdout
