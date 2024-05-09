@@ -5,6 +5,7 @@ from typing import Union, Tuple, List
 import joblib
 
 # 3rd party library imports
+from moviepy.editor import VideoFileClip, AudioFileClip
 from scenedetect import FrameTimecode
 
 # local imports
@@ -65,9 +66,14 @@ class StagesProcessor(StagesProcessorInterface):
         return descriptions
 
     def synthesize_descriptions(self, fp: Union[str, Path], descriptions: List[str]) -> List:
-        r = self.voice_synthesizer.synthesize(texts=descriptions)
-        pass
+        return self.voice_synthesizer.synthesize(texts=descriptions)
 
-    def compose_movie(self, fp: Union[str, Path], out_fp: Union[str, Path]):
+    def compose_movie(
+            self,
+            fp: Union[str, Path],
+            video: VideoFileClip,
+            audio: AudioFileClip,
+            out_fp: Union[str, Path]
+    ):
         raise NotImplementedError
 

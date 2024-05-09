@@ -11,12 +11,12 @@ from typing import List, Union
 class MovieComposerInterface(ABC):
 
     @abstractmethod
-    def compose(self, frames: List, sound):
+    def compose(self, video, audio):
         """
         Composes given frames and sound into movie.
 
-        :param frames: sequence of frames for movie.
-        :param sound: sound for movie.
+        :param video: video for movie.
+        :param audio: audio for movie.
         :return:
         """
         pass

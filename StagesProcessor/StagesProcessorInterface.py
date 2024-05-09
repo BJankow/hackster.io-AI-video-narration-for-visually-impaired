@@ -5,8 +5,10 @@ from typing import Union, Tuple, List
 
 
 # 3rd party library imports
+from moviepy.editor import VideoFileClip, AudioFileClip
 
 # local imports
+
 
 class StagesProcessorInterface(ABC):
 
@@ -58,11 +60,19 @@ class StagesProcessorInterface(ABC):
         pass
 
     @abstractmethod
-    def compose_movie(self, fp: Union[str, Path], out_fp: Union[str, Path]):
+    def compose_movie(
+            self,
+            fp: Union[str, Path],
+            video: VideoFileClip,
+            audio: AudioFileClip,
+            out_fp: Union[str, Path]
+    ):
         """
         Composes frames and sound into movie.
 
         :param fp: path to original movie file.
+        :param video: video of new movie.
+        :param audio: audio of new movie.
         :param out_fp: path to file where the composed movie will be saved.
         :return:
         """

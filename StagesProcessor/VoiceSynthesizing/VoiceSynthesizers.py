@@ -28,12 +28,10 @@ class VoiceSynthesizerBase(VoiceSynthesizerInterface):
         total_amount = len(texts)
 
         def inner(idx, s_t):
-            print(f"[{idx + 1}/{total_amount}]")
             mp3_fp = BytesIO()  # write to buffer
             s_t.write_to_fp(mp3_fp)
             mp3_fp.seek(0)  # go to beginning
             audio_segments.append((idx, AudioSegment.from_mp3(mp3_fp)))
-            print(f"[{idx + 1}/{total_amount}] DONE!")
 
         with ThreadPoolExecutor(max_workers=20) as executor:
             futures = [executor.submit(inner, idx, s_t) for idx, s_t in enumerate(synthesized_texts)]
