@@ -1,21 +1,19 @@
 # standard library imports
 from abc import ABC, abstractmethod
 from pathlib import Path
+from pydub.audio_segment import AudioSegment
 from typing import Union, Tuple, List
 
 
 # 3rd party library imports
 from moviepy.editor import VideoFileClip, AudioFileClip
+from scenedetect import FrameTimecode
+
 
 # local imports
 
 
 class StagesProcessorInterface(ABC):
-
-    def __init__(
-            self
-    ):
-        pass
 
     @abstractmethod
     def load_movie(self, fp: Union[str, Path]) -> Tuple:
@@ -25,7 +23,6 @@ class StagesProcessorInterface(ABC):
         :param fp: path to movie file.
         :return:
         """
-        pass
 
     @abstractmethod
     def detect_scenes(self, fp: Union[str, Path], *args, **kwargs) -> List:
@@ -35,7 +32,6 @@ class StagesProcessorInterface(ABC):
         :param fp: path to movie file.
         :return:
         """
-        pass
 
     @abstractmethod
     def generate_descriptions(self, fp: Union[str, Path], scenes: List) -> List[str]:
@@ -46,7 +42,6 @@ class StagesProcessorInterface(ABC):
         :param scenes: scenes of given movie.
         :return: List of text descriptions.
         """
-        pass
 
     @abstractmethod
     def synthesize_descriptions(self, fp: Union[str, Path], descriptions: List[str]) -> List:
@@ -57,24 +52,22 @@ class StagesProcessorInterface(ABC):
         :param descriptions: List of text descriptions.
         :return: List of synthesized descriptions.
         """
-        pass
 
     @abstractmethod
     def compose_movie(
             self,
             fp: Union[str, Path],
-            video: VideoFileClip,
-            audio: AudioFileClip,
-            out_fp: Union[str, Path]
+            out_fp: Union[str, Path],
+            scenes: List[Tuple[FrameTimecode, FrameTimecode]],
+            synthesized_descriptions: List[AudioSegment]
     ):
         """
-        Composes frames and sound into movie.
+        Composes frames and sound with synthesized descriptions into movie.
 
         :param fp: path to original movie file.
-        :param video: video of new movie.
-        :param audio: audio of new movie.
         :param out_fp: path to file where the composed movie will be saved.
+        :param scenes: scenes as Tuple of FrameTimecodes. First indicates beginning of the scene, second - end.
+        :param synthesized_descriptions: descriptions as audio.
         :return:
         """
-        pass
 

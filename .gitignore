@@ -25,6 +25,7 @@ grouping_frames_into_scenes/scene_detect_cache
 *.wmv
 *.flv
 *.mov
+*.mkv
 
 ### Images ###
 # JPEG

@@ -1,12 +1,14 @@
 # standard library imports
+import joblib
 from pathlib import Path
 from typing import Union, Tuple, List
 
-import joblib
 
 # 3rd party library imports
 from moviepy.editor import VideoFileClip, AudioFileClip
+from pydub.audio_segment import AudioSegment
 from scenedetect import FrameTimecode
+
 
 # local imports
 from . import ClipDescriptorBase
@@ -41,7 +43,7 @@ class StagesProcessor(StagesProcessorInterface):
         self.detect_scenes = mem.cache(self.detect_scenes)
         self.generate_descriptions = mem.cache(self.generate_descriptions)
         self.synthesize_descriptions = mem.cache(self.synthesize_descriptions)
-        self.compose_movie = mem.cache(self.compose_movie, ignore=['out_fp'])
+        # self.compose_movie = mem.cache(self.compose_movie, ignore=['out_fp', 'video', 'audio'])
 
     def load_movie(self, fp: Union[str, Path]) -> Tuple:
         return self.movie_handler.load(fp=fp)
@@ -71,9 +73,23 @@ class StagesProcessor(StagesProcessorInterface):
     def compose_movie(
             self,
             fp: Union[str, Path],
-            video: VideoFileClip,
-            audio: AudioFileClip,
-            out_fp: Union[str, Path]
+            out_fp: Union[str, Path],
+            scenes: List[Tuple[FrameTimecode, FrameTimecode]],
+            synthesized_descriptions: List[AudioSegment]
     ):
-        raise NotImplementedError
+        """
+
+        :param fp: path to original movie file.
+        :param out_fp: path to file where the composed movie will be saved.
+        :param scenes: scenes as Tuple of FrameTimecodes. First indicates beginning of the scene, second - end.
+        :param synthesized_descriptions: descriptions as audio.
+        :return:
+        """
+        self.movie_composer.compose(
+            video_fp=fp,
+            audio_fp=fp,
+            scenes=scenes,
+            synthesized_descriptions=synthesized_descriptions
+        )
+        self.movie_composer.save(out_fp=out_fp)
 
