@@ -9,6 +9,7 @@ from tqdm import tqdm
 # 3rd party library imports
 from moviepy.editor import VideoFileClip, AudioFileClip
 from pydub.audio_segment import AudioSegment
+from pydub.effects import speedup
 from pydub.playback import play
 from scenedetect import FrameTimecode, VideoStreamCv2
 
@@ -60,7 +61,7 @@ class MovieComposerBase(MovieComposerInterface, StandardLogger):
             freeze_command_sequence += f" + gte(T,{(scene_start_frame + 1) / video_frame_rate})*({synthesized_duration}/TB)"
 
             # Modify Audio
-            synthesized = synthesized.set_frame_rate(audio_frequency) - 2
+            synthesized = synthesized.set_frame_rate(audio_frequency) + 3
             stop_pos = int(scene_stop_frame * audio_frame_rate / video_frame_rate)
             new_audio += synthesized
             new_audio += audio[last_stop_pos: stop_pos]

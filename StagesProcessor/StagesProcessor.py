@@ -42,7 +42,7 @@ class StagesProcessor(StagesProcessorInterface):
         self.load_movie = mem.cache(self.load_movie)
         self.detect_scenes = mem.cache(self.detect_scenes)
         self.generate_descriptions = mem.cache(self.generate_descriptions)
-        self.synthesize_descriptions = mem.cache(self.synthesize_descriptions)
+        # self.synthesize_descriptions = mem.cache(self.synthesize_descriptions)
         # self.compose_movie = mem.cache(self.compose_movie, ignore=['out_fp', 'scenes', 'synthesized_descriptions'])
 
     def load_movie(self, fp: Union[str, Path]) -> Tuple:
@@ -60,15 +60,16 @@ class StagesProcessor(StagesProcessorInterface):
     def generate_descriptions(
             self,
             fp: Union[str, Path],
-            scenes: List[Tuple[FrameTimecode, FrameTimecode]]
+            scenes: List[Tuple[FrameTimecode, FrameTimecode]],
+            language: str
     ) -> List:
         self.load_movie(fp=fp)
         self.clip_descriptor.load_models()
         descriptions = self.clip_descriptor.describe(video=self.movie_handler.get_video(), scenes=scenes)
         return descriptions
 
-    def synthesize_descriptions(self, fp: Union[str, Path], descriptions: List[str]) -> List:
-        return self.voice_synthesizer.synthesize(texts=descriptions)
+    def synthesize_descriptions(self, fp: Union[str, Path], descriptions: List[str], language: str) -> List:
+        return self.voice_synthesizer.synthesize(texts=descriptions, language=language)
 
     def compose_movie(
             self,

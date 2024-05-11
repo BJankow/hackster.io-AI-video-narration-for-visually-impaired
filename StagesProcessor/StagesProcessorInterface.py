@@ -34,22 +34,24 @@ class StagesProcessorInterface(ABC):
         """
 
     @abstractmethod
-    def generate_descriptions(self, fp: Union[str, Path], scenes: List) -> List[str]:
+    def generate_descriptions(self, fp: Union[str, Path], scenes: List, language: str) -> List[str]:
         """
         Generates descriptions for every shot/scene.
 
         :param fp: path to movie file.
         :param scenes: scenes of given movie.
+        :param language: Selected language.
         :return: List of text descriptions.
         """
 
     @abstractmethod
-    def synthesize_descriptions(self, fp: Union[str, Path], descriptions: List[str]) -> List:
+    def synthesize_descriptions(self, fp: Union[str, Path], descriptions: List[str], language: str) -> List:
         """
         Synthesizes all text shot/scene descriptions into voice sound.
 
         :param fp: path to movie file.
         :param descriptions: List of text descriptions.
+        :param language: Selected language.
         :return: List of synthesized descriptions.
         """
 

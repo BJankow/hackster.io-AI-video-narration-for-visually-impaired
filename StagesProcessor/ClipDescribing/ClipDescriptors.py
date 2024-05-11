@@ -55,4 +55,3 @@ class ClipDescriptorBase(ClipDescriptorInterface, LogHandlerBase):
         descriptions = self.__tokenizer.batch_decode(output_ids, skip_special_tokens=True)
         descriptions = [description.strip() for description in descriptions]
         return descriptions
-
