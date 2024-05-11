@@ -43,7 +43,7 @@ class StagesProcessor(StagesProcessorInterface):
         self.detect_scenes = mem.cache(self.detect_scenes)
         self.generate_descriptions = mem.cache(self.generate_descriptions)
         self.synthesize_descriptions = mem.cache(self.synthesize_descriptions)
-        # self.compose_movie = mem.cache(self.compose_movie, ignore=['out_fp', 'video', 'audio'])
+        # self.compose_movie = mem.cache(self.compose_movie, ignore=['out_fp', 'scenes', 'synthesized_descriptions'])
 
     def load_movie(self, fp: Union[str, Path]) -> Tuple:
         return self.movie_handler.load(fp=fp)

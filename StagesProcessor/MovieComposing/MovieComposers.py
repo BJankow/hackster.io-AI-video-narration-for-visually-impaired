@@ -52,6 +52,7 @@ class MovieComposerBase(MovieComposerInterface, StandardLogger):
         freeze_command_sequence = "PTS-STARTPTS"
 
         new_audio = AudioSegment.empty()
+        last_stop_pos = 0
         for scene, synthesized in tqdm(zip(scenes, synthesized_descriptions), desc="Adding synthesized audio into movie..."):
             synthesized_duration = synthesized.duration_seconds  # [s]
             scene_start_frame = scene[0].frame_num
@@ -60,11 +61,17 @@ class MovieComposerBase(MovieComposerInterface, StandardLogger):
 
             # Modify Audio
             synthesized = synthesized.set_frame_rate(audio_frequency) - 2
-            start_pos = int(scene_start_frame * audio_frame_rate / video_frame_rate)
             stop_pos = int(scene_stop_frame * audio_frame_rate / video_frame_rate)
             new_audio += synthesized
-            new_audio += audio[start_pos: stop_pos]
+            new_audio += audio[last_stop_pos: stop_pos]
+            last_stop_pos = stop_pos
+        else:
+            new_audio += audio[last_stop_pos: len(audio)]
+            pass
 
+        # TODO: adding synthesized makes missing few audio frames...
+        # assert len(audio) + sum([len(s) for s in synthesized_descriptions]) == len(new_audio), \
+        #     "You have missed some audio frames"  # no audio frames missed check
         freeze_command += f" -vf \"setpts='{freeze_command_sequence}'\""  #  -af \"asetpts='{freeze_command_sequence}',aresample=async=1:first_pts=0\"
 
         self.__audio_tmp_fp = NamedTemporaryFile(suffix=".mp3")

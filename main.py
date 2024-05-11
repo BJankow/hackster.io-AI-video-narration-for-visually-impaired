@@ -14,7 +14,9 @@ from StagesProcessor import StagesProcessor, MovieHandlerBase, SceneDetectorBase
 
 
 DATASETS_FOLDER = "../datasets/"
-CURRENT_DATASET_FOLDER = os.path.join(DATASETS_FOLDER, "hackster.io-AI-video-narration-for-visually-impaired-dataset/")
+CURRENT_DATASET_FOLDER = os.path.join(DATASETS_FOLDER, "hackster.io-AI-video-narration-for-visually-impaired-dataset")
+CURRENT_DATASET_FOLDER_PROCESSED = CURRENT_DATASET_FOLDER + "_processed"
+os.makedirs(CURRENT_DATASET_FOLDER_PROCESSED, exist_ok=True)
 FILENAME = "big_buck_bunny_1080p_h264.mov"
 FILEPATH = os.path.join(CURRENT_DATASET_FOLDER, FILENAME)
 
@@ -32,9 +34,8 @@ if __name__ == '__main__':
     synthesized_descriptions = stages_processor.synthesize_descriptions(fp=FILEPATH, descriptions=descriptions)
     stages_processor.compose_movie(
         fp=FILEPATH,
-        out_fp="Processed_" + os.path.splitext(FILENAME)[0] + ".mkv",
+        out_fp=os.path.join(CURRENT_DATASET_FOLDER_PROCESSED, os.path.splitext(FILENAME)[0] + ".mkv"),
         scenes=scenes,
         synthesized_descriptions=synthesized_descriptions
     )
-    pass
 
