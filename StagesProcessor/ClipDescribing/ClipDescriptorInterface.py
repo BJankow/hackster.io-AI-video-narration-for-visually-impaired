@@ -18,5 +18,4 @@ class ClipDescriptorInterface(ABC):
         :param scenes: List of sequence of frames for given clip. List of clips as an input.
         :return: List of generated caption texts. One text for every clip.
         """
-        pass
 

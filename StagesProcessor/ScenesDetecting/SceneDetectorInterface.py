@@ -19,4 +19,3 @@ class SceneDetectorInterface(ABC):
         :return: List of tuples. Every tuple is in form (start_FrameTimecode, stop_FrameTimecode) indicating start and
             end of every shot/scene.
         """
-        pass

@@ -31,5 +31,6 @@ if __name__ == '__main__':
     }
     pipeline.instantiate(HYPER_PARAMETERS)
     vad = pipeline(buffer)
+    a = [(el.start, el.end) for el in vad._tracks._list._lists[0]]
     pass
 

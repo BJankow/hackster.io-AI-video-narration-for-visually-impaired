@@ -19,5 +19,4 @@ class VoiceSynthesizerInterface(ABC):
         :param language: Selected language.
         :return: None.
         """
-        pass
 
