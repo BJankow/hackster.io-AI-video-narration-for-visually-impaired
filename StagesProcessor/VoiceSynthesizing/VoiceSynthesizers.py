@@ -26,9 +26,12 @@ from .VoiceSynthesizerInterface import VoiceSynthesizerInterface
 
 READERS_FOLDER = os.path.join(Path.home(), 'Projects', 'datasets', 'hackster.io-AI-video-narration-for-visually-impaired-lectors')
 LANGUAGE2READER = {
-    'en': os.path.join(READERS_FOLDER, 'AlanWatts.mp3'),
+    # 'en': os.path.join(READERS_FOLDER, 'AlanWatts.mp3'),
+    'en': os.path.join(READERS_FOLDER, 'lector_en.wav'),
     # 'pl': os.path.join(READERS_FOLDER, 'Knapik.mp3'),
-    'pl': os.path.join(READERS_FOLDER, 'DariuszSzpakowski.mp3')
+    # 'pl': os.path.join(READERS_FOLDER, 'Knapik2.mp3'),
+    # 'pl': os.path.join(READERS_FOLDER, 'DariuszSzpakowski.mp3'),
+    'pl': os.path.join(READERS_FOLDER, 'lektor_pl.wav')
     # 'pl': os.path.join(READERS_FOLDER, 'MagdalenaSchejbal.mp3')
 }
 
@@ -45,35 +48,37 @@ class VoiceSynthesizerBase(VoiceSynthesizerInterface):
 
         tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2", gpu=True, progress_bar=True)
         tts.eval()
-        synthesized_texts = [tts.tts(
-            text=text,
-            # speaker_wav=LANGUAGE2READER[language],
-            language=language,
-            speed=1.3,
-            emotion="happy"
-        ) for text in texts]
+
+        synthesized_text_files = [BytesIO() for _ in texts]
+
+        # You can check all Coqui available speakers with the following command:
+        # tts --model_name tts_models/multilingual/multi-dataset/xtts_v2 --list_speaker_idx
+        for f, text in zip(synthesized_text_files, texts):
+            tts.tts_to_file(
+                text=text,
+                file_path=f,
+                # speaker="Sofia Hellen",
+                speaker_wav=LANGUAGE2READER[language],
+                language=language,
+                temperature=0.3,
+                repetition_penalty=25.0,  # Default: 2.0
+                length_penalty=30,  # Default: 1.0
+                top_k=1,  # Default: 50
+                top_p=0.0,  # Default: 0.8
+                enable_text_splitting=False  # Default: True
+                # speed=1.3,
+                # emotion="happy"
+            )
         audio_segments = []
 
-        def inner(idx, s_t):
-
-            # mp3_fp = BytesIO()  # write to buffer
-            # audio_processor.save_wav(wav=s_t, pipe_out=mp3_fp)
-            # mp3_fp.seek(0)  # go to beginning
-            # audio_segments.append((idx, AudioSegment.from_mp3(mp3_fp)))
-
-            arr = np.array(s_t)
-            audio_segment = AudioSegment(
-                (arr * 32767 / max(0.01, np.max(np.abs(arr)))).astype(np.int16).tostring(),
-                frame_rate=22050,
-                channels=1,
-                sample_width=2
-            )
+        def inner(idx: int, file: BytesIO):
+            audio_segment = AudioSegment.from_file(file)
             audio_segments.append((idx, audio_segment))
 
         # a = AudioSegment(data=np.array(synthesized_texts[0]), sample_width=1, channels=1, frame_rate=44100)
 
         with ThreadPoolExecutor(max_workers=20) as executor:
-            futures = [executor.submit(inner, idx, s_t) for idx, s_t in enumerate(synthesized_texts)]
+            futures = [executor.submit(inner, idx, f) for idx, f in enumerate(synthesized_text_files)]
 
         wait(futures)
 

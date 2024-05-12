@@ -18,6 +18,9 @@ from .MovieComposerInterface import MovieComposerInterface
 from utils.LogHandling.LogHandlers import StandardLogger
 
 
+TIME_DISTANCE_BETWEEN_LECTOR_AND_EVENT = 1  # [s] - time between lector ending speaking and (end of scene or beginning of someone talking)
+
+
 class MovieComposerBase(MovieComposerInterface, StandardLogger):
 
     def __init__(self):
@@ -54,7 +57,10 @@ class MovieComposerBase(MovieComposerInterface, StandardLogger):
 
         new_audio = AudioSegment.empty()
         last_stop_pos = 0
-        for scene, synthesized in tqdm(zip(scenes, synthesized_descriptions), desc="Adding synthesized audio into movie..."):
+        for scene, synthesized in tqdm(
+                zip(scenes, synthesized_descriptions),
+                desc=f"Adding synthesized audio into movie... (total: {len(synthesized_descriptions)})"
+        ):
             synthesized_duration = synthesized.duration_seconds  # [s]
             scene_start_frame = scene[0].frame_num
             scene_stop_frame = scene[1].frame_num

@@ -5,6 +5,7 @@ joblib
 lightning
 moviepy
 opencv-python
+pyannote.audio
 pydub
 pyttsx3
 scenedetect[opencv]  # FROM: https://www.scenedetect.com/

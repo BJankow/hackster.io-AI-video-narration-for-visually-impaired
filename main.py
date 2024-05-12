@@ -38,6 +38,7 @@ if __name__ == '__main__':
     )
     scenes = stages_processor.detect_scenes(fp=FILEPATH)
     for language in LANGUAGES:
+        print(f"Processing for language: '{language}'")
         descriptions = stages_processor.generate_descriptions(
             fp=FILEPATH,
             scenes=scenes,
