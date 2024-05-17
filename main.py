@@ -10,8 +10,12 @@ from moviepy.editor import VideoFileClip, AudioFileClip
 
 
 # local imports
-from StagesProcessor import StagesProcessor, MovieHandlerBase, SceneDetectorBase, ClipDescriptorBase, \
-    VoiceSynthesizerBase, MovieComposerBase
+from StagesProcessor import StagesProcessor
+from StagesProcessor.ClipDescribing import ClipDescriptorViTGPT2, ClipDescriptorLLaVA15
+from StagesProcessor.MovieComposing import MovieComposerBase
+from StagesProcessor.MovieHandling import MovieHandlerBase
+from StagesProcessor.ScenesDetecting import SceneDetectorBase
+from StagesProcessor.VoiceSynthesizing import VoiceSynthesizerBase
 
 
 DATASETS_FOLDER = "../datasets/"
@@ -20,7 +24,7 @@ CURRENT_DATASET_FOLDER_PROCESSED = CURRENT_DATASET_FOLDER + "_processed"
 os.makedirs(CURRENT_DATASET_FOLDER_PROCESSED, exist_ok=True)
 FILENAME = "big_buck_bunny_1080p_h264.mov"
 FILEPATH = os.path.join(CURRENT_DATASET_FOLDER, FILENAME)
-LANGUAGES = ['pl']
+LANGUAGES = ['en']
 
 
 def translate(texts: List[str], target_language: str) -> List[str]:
@@ -32,22 +36,23 @@ if __name__ == '__main__':
     stages_processor = StagesProcessor(
         movie_handler=MovieHandlerBase(),
         scene_detector=SceneDetectorBase(),
-        clip_descriptor=ClipDescriptorBase(),
+        clip_descriptor=ClipDescriptorLLaVA15(),
         voice_synthesizer=VoiceSynthesizerBase(),
         movie_composer=MovieComposerBase()
     )
     scenes = stages_processor.detect_scenes(fp=FILEPATH)
+    english_descriptions = stages_processor.generate_descriptions(
+        fp=FILEPATH,
+        scenes=scenes,
+    )
     for language in LANGUAGES:
         print(f"Processing for language: '{language}'")
-        descriptions = stages_processor.generate_descriptions(
-            fp=FILEPATH,
-            scenes=scenes,
-            language=language
-        )
 
         # Translation may be needed
         if language != 'en':
-            descriptions = translate(texts=descriptions, target_language=language)
+            descriptions = translate(texts=english_descriptions, target_language=language)
+        else:
+            descriptions = english_descriptions
 
         synthesized_descriptions = stages_processor.synthesize_descriptions(
             fp=FILEPATH,

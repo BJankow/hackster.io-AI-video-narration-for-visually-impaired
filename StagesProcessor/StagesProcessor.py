@@ -11,11 +11,11 @@ from scenedetect import FrameTimecode
 
 
 # local imports
-from . import ClipDescriptorBase
-from . import SceneDetectorBase
-from . import MovieComposerBase
-from . import MovieHandlerBase
-from . import VoiceSynthesizerBase
+from . import ClipDescriptorInterface
+from . import SceneDetectorInterface
+from . import MovieComposerInterface
+from . import MovieHandlerInterface
+from . import VoiceSynthesizerInterface
 from . import StagesProcessorInterface
 
 CACHE_FOLDER = ".cache/"
@@ -26,11 +26,11 @@ class StagesProcessor(StagesProcessorInterface):
 
     def __init__(
             self,
-            movie_handler: MovieHandlerBase,
-            scene_detector: SceneDetectorBase,
-            clip_descriptor: ClipDescriptorBase,
-            voice_synthesizer: VoiceSynthesizerBase,
-            movie_composer: MovieComposerBase
+            movie_handler: MovieHandlerInterface,
+            scene_detector: SceneDetectorInterface,
+            clip_descriptor: ClipDescriptorInterface,
+            voice_synthesizer: VoiceSynthesizerInterface,
+            movie_composer: MovieComposerInterface
     ):
         super(StagesProcessor, self).__init__()
         self.movie_handler = movie_handler
@@ -60,11 +60,17 @@ class StagesProcessor(StagesProcessorInterface):
     def generate_descriptions(
             self,
             fp: Union[str, Path],
-            scenes: List[Tuple[FrameTimecode, FrameTimecode]],
-            language: str
+            scenes: List[Tuple[FrameTimecode, FrameTimecode]]
     ) -> List:
+        """
+        Generates descriptions for every shot/scene. Generated descriptions are in english ('en') language.
+
+        :param fp: path to movie file.
+        :param scenes: scenes of given movie.
+        :return: List of text descriptions.
+        """
+
         self.load_movie(fp=fp)
-        self.clip_descriptor.load_models()
         descriptions = self.clip_descriptor.describe(video=self.movie_handler.get_video(), scenes=scenes)
         return descriptions
 

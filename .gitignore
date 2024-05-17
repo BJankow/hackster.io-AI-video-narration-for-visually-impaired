@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/images,python,pycharm,terraform
 # Edit at https://www.toptal.com/developers/gitignore?templates=images,python,pycharm,terraform
 
+### log files ###
+*.log*
+
 ### Torch Lightning
 lightning_logs
 

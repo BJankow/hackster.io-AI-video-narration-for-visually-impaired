@@ -34,13 +34,12 @@ class StagesProcessorInterface(ABC):
         """
 
     @abstractmethod
-    def generate_descriptions(self, fp: Union[str, Path], scenes: List, language: str) -> List[str]:
+    def generate_descriptions(self, fp: Union[str, Path], scenes: List) -> List[str]:
         """
-        Generates descriptions for every shot/scene.
+        Generates descriptions for every shot/scene. Generated descriptions are in english ('en') language.
 
         :param fp: path to movie file.
         :param scenes: scenes of given movie.
-        :param language: Selected language.
         :return: List of text descriptions.
         """
 

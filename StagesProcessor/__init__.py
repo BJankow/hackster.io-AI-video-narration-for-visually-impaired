@@ -3,11 +3,16 @@
 # 3rd party library imports
 
 # local imports
-from .ClipDescribing.ClipDescriptors import ClipDescriptorBase
+from .ClipDescribing.ClipDescriptorInterface import ClipDescriptorInterface
+from .ClipDescribing.ClipDescriptors import ClipDescriptorViTGPT2, ClipDescriptorLLaVA15
+from .ScenesDetecting.SceneDetectorInterface import SceneDetectorInterface
 from .ScenesDetecting.SceneDetectors import SceneDetectorBase
+from .MovieComposing.MovieComposerInterface import MovieComposerInterface
 from .MovieComposing.MovieComposers import MovieComposerBase
 from .MovieHandling.MovieHandlers import MovieHandlerBase
+from .MovieHandling.MovieHandlerInterface import MovieHandlerInterface
 from .VoiceSynthesizing.VoiceSynthesizers import VoiceSynthesizerBase
+from .VoiceSynthesizing.VoiceSynthesizerInterface import VoiceSynthesizerInterface
 from .StagesProcessorInterface import StagesProcessorInterface
 from .StagesProcessor import StagesProcessor
 
