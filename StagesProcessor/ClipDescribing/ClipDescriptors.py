@@ -68,14 +68,18 @@ class ClipDescriptorLLaVA15(ClipDescriptorInterface, LogHandlerBase):
         self.preferred_device = torch.device("cpu")
         self.model: Optional[LlavaForConditionalGeneration] = None
         self.__processor: Optional[LlavaProcessor] = None  # resizes & normalizes
+        self.__desired_data_type = torch.float16
 
     def __reload_preferred_device(self):
         self.preferred_device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
 
     def __load_models(self):
-        # self.__reload_preferred_device()
+        self.__reload_preferred_device()
         if self.model is None:
-            model = LlavaForConditionalGeneration.from_pretrained("llava-hf/llava-1.5-7b-hf")
+            model = LlavaForConditionalGeneration.from_pretrained(
+                "llava-hf/llava-1.5-7b-hf",
+                torch_dtype=self.__desired_data_type,
+            )
             self._my_logger.debug(model)  # TODO - it is not visible in terminal right now...
             model.eval()
             model.to(self.preferred_device)
@@ -94,14 +98,19 @@ class ClipDescriptorLLaVA15(ClipDescriptorInterface, LogHandlerBase):
             video.seek(s[0])  # beginning of scene will be representation
             frames.append(torch.from_numpy(video.read(decode=True, advance=True)))
 
-        prompt = "USER: <image>\nWhat's the content of the image? ASSISTANT:"
+        prompt = "USER: <image>\nWhat's the content of the given movie scene? Give text for narrator. ASSISTANT:"
+        # You are assistant that describes
 
         descriptions = []
-        PER_ITER = 5
+        PER_ITER = 8
         sub_frames_list = [frames[i * PER_ITER: (i+1) * PER_ITER] for i in range(math.ceil(len(frames) / PER_ITER))]
         with torch.no_grad():
             for sub_frames in tqdm(sub_frames_list, desc="Describing images..."):
-                inputs = self.__processor(text=[prompt]*len(sub_frames), images=sub_frames, return_tensors="pt")
+                inputs = self.__processor(
+                    text=[prompt]*len(sub_frames),
+                    images=sub_frames,
+                    return_tensors="pt"
+                ).to(self.preferred_device).to(self.__desired_data_type)
                 output_ids = self.model.generate(**inputs, max_new_tokens=50)
                 descriptions += self.__processor.batch_decode(
                     output_ids,
@@ -111,3 +120,7 @@ class ClipDescriptorLLaVA15(ClipDescriptorInterface, LogHandlerBase):
 
         descriptions = [description.split("ASSISTANT: ")[1] for description in descriptions]
         return descriptions
+
+    def __free_memory(self):
+        del self.model
+        del self.__processor

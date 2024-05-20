@@ -41,7 +41,7 @@ class StagesProcessor(StagesProcessorInterface):
 
         self.load_movie = mem.cache(self.load_movie)
         self.detect_scenes = mem.cache(self.detect_scenes)
-        self.generate_descriptions = mem.cache(self.generate_descriptions)
+        # self.generate_descriptions = mem.cache(self.generate_descriptions, ignore=['scenes'])
         # self.synthesize_descriptions = mem.cache(self.synthesize_descriptions)
         # self.compose_movie = mem.cache(self.compose_movie, ignore=['out_fp', 'scenes', 'synthesized_descriptions'])
 
