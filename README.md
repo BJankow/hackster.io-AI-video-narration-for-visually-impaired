@@ -68,7 +68,7 @@ Very nice GUI interface to observe CPU usage
 sudo snap install btop
 ```
 
-## 7. How to install rocm with pyTorch
+## 7. How to install ROCm with pyTorch
 ### 7.0 Helpful links (7.* tip are based on information from those links):
 - https://wiki.archlinux.org/title/GPGPU#ROCm (Troubleshooting tips - good source of information)
 - https://github.com/rocm-arch/rocm-arch (installation of ROCm dependencies - 7.1)
@@ -81,6 +81,11 @@ sudo pacman -S rocm-hip-sdk rocm-opencl-sdk
 ```
 
 ### 7.2 Install python-pytorch-rocm
+##### Option 1: via package manager
+Find all 'rocm' packages - there should be many already installed (7.1 command). You should be able to see 
+'python-pytorch-rocm' package that is not installed yet. Click it to be installed
+
+##### Option 2: via terminal
 
 ### 7.3 Install torch, torchmetrics, torchsummary, torchvision - all ROCm version
 Currently this step is not supported by anaconda (env.yml file etc.), so if you create an anaconda environment be sure 
