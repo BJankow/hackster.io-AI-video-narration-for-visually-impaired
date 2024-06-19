@@ -129,19 +129,16 @@ class ClipDescriptorLLaVA15(ClipDescriptorInterface, LogHandlerBase):
                     # padding=True,
                     return_tensors="pt"
                 ).to(self.preferred_device, self.__desired_data_type)
-                print(f"{inputs=}")
                 output_ids = self.model.generate(
                     **inputs,
                     max_new_tokens=200,
                     do_sample=False
                 )
-                print(f"{output_ids.size()=}")
                 descriptions += self.__processor.batch_decode(
                     output_ids,
                     skip_special_tokens=True,
                     clean_up_tokenization_spaces=False
                 )
-                print(f"{descriptions=}")
 
         self.__free_memory()
         descriptions = [description.split("ASSISTANT: ")[1] for description in descriptions]
