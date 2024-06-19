@@ -83,7 +83,7 @@ class ClipDescriptorLLaVA15(ClipDescriptorInterface, LogHandlerBase):
         self.model: Optional[LlavaForConditionalGeneration] = None
         self.__processor: Optional[LlavaProcessor] = None  # resizes & normalizes
         self.__desired_data_type = torch.float16
-        self.__prompt = "USER: <image>\nWhat's the content of the image? ASSISTANT:"
+        self.__prompt = "USER: <image>\nWhat's the content of the image?\nASSISTANT:"
         # self.__prompt = f"A chat between a curious human and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the human's questions.###Human: <image>\nWhat's the content of the image?###Assistant:"
         self.__model_id = "llava-hf/llava-1.5-7b-hf"  # problems
         # self.__model_id = "llava-hf/vip-llava-13b-hf"  # problems
@@ -107,6 +107,8 @@ class ClipDescriptorLLaVA15(ClipDescriptorInterface, LogHandlerBase):
 
         if self.__processor is None:
             self.__processor = AutoProcessor.from_pretrained(self.__model_id)
+            self.__processor.tokenizer.add_tokens(["<image>", "<pad>"], special_tokens=True)
+            self.model.resize_token_embeddings(len(self.__processor.tokenizer))
             # self.__processor.tokenizer.padding_side = "left"
 
     def describe(self, video: VideoStreamCv2, scenes: List[Tuple[FrameTimecode, FrameTimecode]]) -> List[str]:
@@ -137,7 +139,7 @@ class ClipDescriptorLLaVA15(ClipDescriptorInterface, LogHandlerBase):
                 descriptions += self.__processor.batch_decode(
                     output_ids,
                     skip_special_tokens=True,
-                    clean_up_tokenization_spaces=False
+                    # clean_up_tokenization_spaces=False
                 )
 
         self.__free_memory()
