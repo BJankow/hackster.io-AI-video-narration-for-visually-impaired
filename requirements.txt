@@ -4,6 +4,7 @@ gTTS
 joblib
 lightning
 moviepy
+openai
 opencv-python
 pyannote.audio
 pydub

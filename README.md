@@ -87,9 +87,9 @@ Find all 'rocm' packages - there should be many already installed (7.1 command).
 
 ##### Option 2: via terminal
 
-### 7.3 Install torch, torchmetrics, torchsummary, torchvision - all ROCm version
+### 7.3 Install torch, torchmetrics, torchsummary, torchvision, torchaudio - all ROCm version
 Currently this step is not supported by anaconda (env.yml file etc.), so if you create an anaconda environment be sure 
-that you install (**torch, torchmetrics, torchsummary, torchvision**) manually via pip with:
+that you install (**torch, torchmetrics, torchsummary, torchvision, torchaudio**) manually via pip with:
 ```commandline
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm6.0
 ```

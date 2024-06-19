@@ -4,7 +4,8 @@
 
 # local imports
 from .ClipDescribing.ClipDescriptorInterface import ClipDescriptorInterface
-from .ClipDescribing.ClipDescriptors import ClipDescriptorViTGPT2, ClipDescriptorLLaVA15
+from .ClipDescribing.ClipDescriptors import (ClipDescriptorViTGPT2, ClipDescriptorLLaVA15, ClipDescriptorLLaVAMistral16,
+                                             ClipDescriptorLLaVANextVideo34B)
 from .ScenesDetecting.SceneDetectorInterface import SceneDetectorInterface
 from .ScenesDetecting.SceneDetectors import SceneDetectorBase
 from .MovieComposing.MovieComposerInterface import MovieComposerInterface
@@ -15,4 +16,3 @@ from .VoiceSynthesizing.VoiceSynthesizers import VoiceSynthesizerBase
 from .VoiceSynthesizing.VoiceSynthesizerInterface import VoiceSynthesizerInterface
 from .StagesProcessorInterface import StagesProcessorInterface
 from .StagesProcessor import StagesProcessor
-
