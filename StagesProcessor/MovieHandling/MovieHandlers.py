@@ -12,9 +12,10 @@ import soundfile as sf
 
 # local imports
 from .MovieHandlerInterface import MovieHandlerInterface
+from utils.LogHandling.LogHandlers import StandardLogger
 
 
-class MovieHandlerBase(MovieHandlerInterface):
+class MovieHandlerBase(MovieHandlerInterface, StandardLogger):
 
     def __init__(self):
         super(MovieHandlerInterface, self).__init__()

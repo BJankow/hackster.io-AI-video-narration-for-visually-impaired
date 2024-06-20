@@ -19,12 +19,43 @@ class LogHandlerBase:
 
         handler = logging.StreamHandler(sys.stdout)
         handler.setLevel(logging.DEBUG)
-        formatter = logging.Formatter('[%(levelname)s] [%(name)s] (%(asctime)s) |%(name)s|: %(message)s')
+        formatter = logging.Formatter()
         handler.setFormatter(formatter)
         self._my_logger.addHandler(handler)  # TODO: check if it works to stdout
 
 
+class CustomFormatter(logging.Formatter):
+    """
+    Helps to format terminal color and organize information in a log message.
+    based on: https://stackoverflow.com/questions/384076/how-can-i-color-python-logging-output
+    """
+
+    grey = "\x1b[37;20m"
+    yellow = "\x1b[33;20m"
+    red = "\x1b[31;20m"
+    bold_red = "\x1b[31;1m"
+    reset = "\x1b[0m"
+    f = '[%(levelname)s] [%(name)s] (%(asctime)s) |%(name)s|: %(message)s (%(filename)s:%(lineno)d)'
+
+    FORMATS = {
+        logging.DEBUG: grey + f + reset,
+        logging.INFO: grey + f + reset,
+        logging.WARNING: yellow + f + reset,
+        logging.ERROR: red + f + reset,
+        logging.CRITICAL: bold_red + f + reset
+    }
+
+    def format(self, record):
+        log_fmt = self.FORMATS.get(record.levelno)
+        formatter = logging.Formatter(log_fmt)
+        return formatter.format(record)
+
+
 class StandardLogger:
+    """
+    Base class for capturing event information (indicating that something happened) and storing it appropriately.
+    """
+
     def __init__(self):
         self._logger = logging.getLogger(self.__class__.__name__)
         self._logger.setLevel(logging.DEBUG)
@@ -144,8 +175,7 @@ class Logger:
         current_logger.propagate = Logger.propagate
 
         streaming_handler = logging.StreamHandler()
-        formatter = logging.Formatter('[%(levelname)s | %(name)s]:%(asctime)s -%(module)s- %(message)s')
-        streaming_handler.setFormatter(formatter)
+        streaming_handler.setFormatter(CustomFormatter())
         streaming_handler.setLevel(level=handler_level)
         current_logger.addHandler(streaming_handler)
 

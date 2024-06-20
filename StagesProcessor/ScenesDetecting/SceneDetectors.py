@@ -7,9 +7,10 @@ from scenedetect import detect, AdaptiveDetector, ContentDetector, ThresholdDete
 
 # local imports
 from .SceneDetectorInterface import SceneDetectorInterface
+from utils.LogHandling.LogHandlers import StandardLogger
 
 
-class SceneDetectorBase(SceneDetectorInterface):
+class SceneDetectorBase(SceneDetectorInterface, StandardLogger):
 
     def __init__(self):
         super(SceneDetectorBase, self).__init__()

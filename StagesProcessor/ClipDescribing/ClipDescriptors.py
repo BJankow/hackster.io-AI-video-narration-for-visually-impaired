@@ -18,10 +18,10 @@ from transformers import GPT2TokenizerFast, ViTImageProcessor, VisionEncoderDeco
 
 # local imports
 from .ClipDescriptorInterface import ClipDescriptorInterface
-from utils.LogHandling.LogHandlers import LogHandlerBase
+from utils.LogHandling.LogHandlers import StandardLogger
 
 
-class ClipDescriptorViTGPT2(ClipDescriptorInterface, LogHandlerBase):
+class ClipDescriptorViTGPT2(ClipDescriptorInterface, StandardLogger):
     def __init__(self):
         super(ClipDescriptorViTGPT2, self).__init__()
         self.cpu_device = torch.device("cpu")
@@ -37,7 +37,7 @@ class ClipDescriptorViTGPT2(ClipDescriptorInterface, LogHandlerBase):
         self.reload_preferred_device()
         if self.model is None:
             model = VisionEncoderDecoderModel.from_pretrained("nlpconnect/vit-gpt2-image-captioning")
-            self._my_logger.debug(model)  # TODO - it is not visible in terminal right now...
+            self._logger.debug(model)  # TODO - it is not visible in terminal right now...
             model.eval()
             model.to(self.preferred_device)
             self.model = model
@@ -75,7 +75,7 @@ class ClipDescriptorViTGPT2(ClipDescriptorInterface, LogHandlerBase):
         del self.__tokenizer
 
 
-class ClipDescriptorLLaVA15(ClipDescriptorInterface, LogHandlerBase):
+class ClipDescriptorLLaVA15(ClipDescriptorInterface, StandardLogger):
     def __init__(self):
         super(ClipDescriptorLLaVA15, self).__init__()
         self.cpu_device = torch.device("cpu")
@@ -91,6 +91,7 @@ class ClipDescriptorLLaVA15(ClipDescriptorInterface, LogHandlerBase):
 
     def __reload_preferred_device(self):
         self.preferred_device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
+        self._logger.info(f"Utilized GPU: {torch.cuda.get_device_name(self.preferred_device)}")
 
     def __load_models(self):
         self.__reload_preferred_device()
@@ -101,7 +102,7 @@ class ClipDescriptorLLaVA15(ClipDescriptorInterface, LogHandlerBase):
                 torch_dtype=self.__desired_data_type,
                 # low_cpu_mem_usage=True
             ).to(self.preferred_device)
-            self._my_logger.debug(model)  # TODO - it is not visible in terminal right now...
+            self._logger.debug(model)  # TODO - it is not visible in terminal right now...
             model.eval()
             self.model = model
 
@@ -124,7 +125,7 @@ class ClipDescriptorLLaVA15(ClipDescriptorInterface, LogHandlerBase):
         PER_ITER = 1
         sub_frames_list = [frames[i * PER_ITER: (i+1) * PER_ITER] for i in range(math.ceil(len(frames) / PER_ITER))]
         with torch.no_grad():
-            for sub_frames in tqdm(sub_frames_list[:1], desc="Describing images..."):
+            for sub_frames in tqdm(sub_frames_list, desc="Describing images..."):
                 inputs = self.__processor(
                     [self.__prompt] * sub_frames.__len__(),
                     sub_frames,
@@ -151,7 +152,7 @@ class ClipDescriptorLLaVA15(ClipDescriptorInterface, LogHandlerBase):
         del self.__processor
 
 
-class ClipDescriptorLLaVAMistral16(ClipDescriptorInterface, LogHandlerBase):
+class ClipDescriptorLLaVAMistral16(ClipDescriptorInterface, StandardLogger):
     def __init__(self):
         super(ClipDescriptorLLaVAMistral16, self).__init__()
         self.cpu_device = torch.device("cpu")
@@ -174,7 +175,7 @@ class ClipDescriptorLLaVAMistral16(ClipDescriptorInterface, LogHandlerBase):
                 torch_dtype=self.__desired_data_type,
                 # low_cpu_mem_usage=True
             )).to(self.preferred_device)
-            self._my_logger.debug(model)  # TODO - it is not visible in terminal right now...
+            self._logger.debug(model)  # TODO - it is not visible in terminal right now...
             model.eval()
             self.model = model
 
@@ -221,7 +222,7 @@ class ClipDescriptorLLaVAMistral16(ClipDescriptorInterface, LogHandlerBase):
         del self.__processor
 
 
-class ClipDescriptorLLaVANextVideo34B(ClipDescriptorInterface, LogHandlerBase):
+class ClipDescriptorLLaVANextVideo34B(ClipDescriptorInterface, StandardLogger):
     def __init__(self):
         super(ClipDescriptorLLaVANextVideo34B, self).__init__()
         self.cpu_device = torch.device("cpu")
@@ -244,7 +245,7 @@ class ClipDescriptorLLaVANextVideo34B(ClipDescriptorInterface, LogHandlerBase):
                 torch_dtype=self.__desired_data_type,
                 low_cpu_mem_usage=True
             ).to(self.preferred_device)
-            self._my_logger.debug(model)  # TODO - it is not visible in terminal right now...
+            self._logger.debug(model)  # TODO - it is not visible in terminal right now...
             model.eval()
             self.model = model
 
@@ -252,7 +253,7 @@ class ClipDescriptorLLaVANextVideo34B(ClipDescriptorInterface, LogHandlerBase):
             self.__processor = AutoProcessor.from_pretrained(self.__model_id)
 
 
-class ClipDescriptorGPT4o(ClipDescriptorInterface, LogHandlerBase):
+class ClipDescriptorGPT4o(ClipDescriptorInterface, StandardLogger):
     def __init__(self, open_ai_key_fp: Union[str, Path]):
         super(ClipDescriptorGPT4o, self).__init__()
         self.__open_ai_key_fp = open_ai_key_fp

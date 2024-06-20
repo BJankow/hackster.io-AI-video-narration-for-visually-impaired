@@ -17,12 +17,14 @@ from . import MovieComposerInterface
 from . import MovieHandlerInterface
 from . import VoiceSynthesizerInterface
 from . import StagesProcessorInterface
+from utils.LogHandling.LogHandlers import StandardLogger
+
 
 CACHE_FOLDER = ".cache/"
 mem = joblib.Memory(location=CACHE_FOLDER, verbose=1)
 
 
-class StagesProcessor(StagesProcessorInterface):
+class StagesProcessor(StagesProcessorInterface, StandardLogger):
 
     def __init__(
             self,
