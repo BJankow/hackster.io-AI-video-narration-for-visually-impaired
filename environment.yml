@@ -11,8 +11,8 @@ dependencies:
   - pip
   - python=3.10
   - pip:
-    - -r requirements.txt  # --index-url https://download.pytorch.org/whl/rocm6.0 --extra-index-url https://pypi.org/simple
-
+    - -r torch_like_requirements.txt  # --index-url https://download.pytorch.org/whl/rocm6.0 --extra-index-url https://pypi.org/simple
+    - -r other_requirements.txt
 # You can control where a conda environment lives by providing a
 # path to a target directory when creating the environment.
 # prefix: C:\Users\User\anaconda3\envs\Conda-Example_Env

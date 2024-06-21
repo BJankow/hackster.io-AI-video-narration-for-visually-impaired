@@ -36,8 +36,45 @@ Software:
 - Video playback software with synchronization capabilities.
 - Tools for building ML pipeline (e.g. MLflow, kubeflow, git).
 
+## 5. Installation
+### 5.1 Manjaro Installation
+#### 5.1.1 Helpful links (7.* tip are based on information from those links):
+- https://wiki.archlinux.org/title/GPGPU#ROCm (Troubleshooting tips - good source of information)
+- https://github.com/rocm-arch/rocm-arch (installation of ROCm dependencies - 7.1)
+- https://pytorch.org/get-started/locally/ (torch for python on ROCm )
+- https://archlinux.org/packages/extra/x86_64/python-pytorch-rocm/ (Install python-pytorch-rocm)
 
-## 5. How to observe GPU usage
+#### 5.1.2 ROCm Installation
+
+```commandline
+sudo pacman -S rocm-hip-sdk rocm-opencl-sdk
+```
+
+#### 5.1.3 Install python-pytorch-rocm
+
+##### Option 1) via package manager
+Find all 'rocm' packages - there should be many already installed (7.1 command). You should be able to see 
+'python-pytorch-rocm' package that is not installed yet. Click it to be installed
+
+##### Option 2) via terminal
+
+#### 5.1.4 ROCm version python ML libraries (torch, torchmetrics, torchsummary, torchvision, torchaudio)
+Currently this step is not supported by anaconda (env.yml file etc.), so firstly you create an anaconda environment 
+with python and then install required packages via pip.
+Below installation is for ROCm 6.0. \
+Last line is using other_requirements.txt to install some requirements for conda environment. This file is located in
+same repository on the same level as THIS README.md.
+```commandline
+conda create -n ai-video-narration-for-visually-impaired-rocm python=3.10 
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm6.0
+pip install -r other_requirements.txt
+```
+
+### 5.2 Ubuntu Installation
+
+
+
+## 6. Observe Hardware Usage
 ### gpustat
 ```commandline
 gpustat -a -i 0.5
@@ -52,7 +89,6 @@ sudo pamac install radeontop
 radeontop
 ```
 
-## 6. How to observe CPU usage
 ### htop
 Standard command line program that helps to observe CPU usage.
 ```commandline
@@ -66,30 +102,4 @@ Arguments explaination:
 Very nice GUI interface to observe CPU usage
 ```commandline
 sudo snap install btop
-```
-
-## 7. How to install ROCm with pyTorch
-### 7.0 Helpful links (7.* tip are based on information from those links):
-- https://wiki.archlinux.org/title/GPGPU#ROCm (Troubleshooting tips - good source of information)
-- https://github.com/rocm-arch/rocm-arch (installation of ROCm dependencies - 7.1)
-- https://pytorch.org/get-started/locally/ (torch for python on ROCm )
-- https://archlinux.org/packages/extra/x86_64/python-pytorch-rocm/ (Install python-pytorch-rocm)
-
-### 7.1 Most dependencies installation
-```commandline
-sudo pacman -S rocm-hip-sdk rocm-opencl-sdk
-```
-
-### 7.2 Install python-pytorch-rocm
-##### Option 1: via package manager
-Find all 'rocm' packages - there should be many already installed (7.1 command). You should be able to see 
-'python-pytorch-rocm' package that is not installed yet. Click it to be installed
-
-##### Option 2: via terminal
-
-### 7.3 Install torch, torchmetrics, torchsummary, torchvision, torchaudio - all ROCm version
-Currently this step is not supported by anaconda (env.yml file etc.), so if you create an anaconda environment be sure 
-that you install (**torch, torchmetrics, torchsummary, torchvision, torchaudio**) manually via pip with:
-```commandline
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm6.0
 ```

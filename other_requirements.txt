@@ -12,10 +12,6 @@ pyttsx3
 scenedetect[opencv]  # FROM: https://www.scenedetect.com/
 scikit-learn
 soundfile
-torch
-torchmetrics
-torchsummary
-torchvision
 transformers
 TTS
 tqdm
