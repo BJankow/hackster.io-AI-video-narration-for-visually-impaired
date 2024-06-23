@@ -57,8 +57,30 @@ Find all 'rocm' packages - there should be many already installed (7.1 command).
 'python-pytorch-rocm' package that is not installed yet. Click it to be installed
 
 ##### Option 2) via terminal
+To install all required packages paste below code to terminal.
+```commandline
 
-#### 5.1.4 ROCm version python ML libraries (torch, torchmetrics, torchsummary, torchvision, torchaudio)
+```
+
+**Verify rocm Installation** with following command. If it works and displays a piece of information adequate to your 
+computer modules, then rocm is (probably) installed well.
+```commandline
+rocminfo
+```
+
+#### 5.1.4 ROCm version of python ML libraries (torch, torchmetrics, torchsummary, torchvision, torchaudio)
+**a) Installing Anaconda** \
+Download and run Anaconda installation script. Accept all default options.
+```commandline
+wget https://repo.anaconda.com/archive/Anaconda3-2024.02-1-Linux-x86_64.sh
+bash Anaconda3-2024.02-1-Linux-x86_64.sh
+```
+**Verify conda installation with following command**. This command lists installed packages in conda environment. 
+```commandline
+conda list
+```
+
+**b) Creating environment** \
 Currently this step is not supported by anaconda (env.yml file etc.), so firstly you create an anaconda environment 
 with python and then install required packages via pip.
 Below installation is for ROCm 6.0. \
@@ -66,9 +88,31 @@ Last line is using other_requirements.txt to install some requirements for conda
 same repository on the same level as THIS README.md.
 ```commandline
 conda create -n ai-video-narration-for-visually-impaired-rocm python=3.10 
+conda activate ai-video-narration-for-visually-impaired-rocm
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm6.0
 pip install -r other_requirements.txt
 ```
+
+**To check if environment was created run following command**. This command should display your environments. If you haven't had 
+any conda environments before conda installation then you should see only `base` and 
+`ai-video-narration-for-visually-impaired-rocm` environments.
+```commandline
+conda env list
+```
+
+**To check if torch is installed in your environment and does see AMD GPU run following commands**
+```commandline
+conda activate ai-video-narration-for-visually-impaired-rocm
+python
+```
+In Python shell type.
+```python
+import torch
+torch.__version__  # TODO is expected 
+torch.cuda.is_available()  # True is expected
+torch.get_device_name(0)  # Your graphic card model name is expected
+```
+
 
 ### 5.2 Ubuntu Installation
 
