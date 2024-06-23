@@ -108,9 +108,9 @@ python
 In Python shell type.
 ```python
 import torch
-torch.__version__  # TODO is expected 
+torch.__version__  # '2.3.0+rocm6.0' is expected 
 torch.cuda.is_available()  # True is expected
-torch.get_device_name(0)  # Your graphic card model name is expected
+torch.get_device_name(0)  # Your graphic card model name is expected. Example: 'AMD Radeon Pro W7900'
 ```
 
 
