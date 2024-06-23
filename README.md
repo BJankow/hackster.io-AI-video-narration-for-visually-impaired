@@ -40,8 +40,8 @@ Software:
 ### 5.1 Manjaro Installation
 #### 5.1.1 Helpful links (7.* tip are based on information from those links):
 - https://wiki.archlinux.org/title/GPGPU#ROCm (Troubleshooting tips - good source of information)
-- https://github.com/rocm-arch/rocm-arch (installation of ROCm dependencies - 7.1)
-- https://pytorch.org/get-started/locally/ (torch for python on ROCm )
+- https://github.com/rocm-arch/rocm-arch (installation of ROCm dependencies)
+- https://pytorch.org/get-started/locally/ (torch for python on ROCm)
 - https://archlinux.org/packages/extra/x86_64/python-pytorch-rocm/ (Install python-pytorch-rocm)
 
 #### 5.1.2 ROCm Installation
