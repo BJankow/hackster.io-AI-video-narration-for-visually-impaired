@@ -116,6 +116,36 @@ torch.get_device_name(0)  # Your graphic card model name is expected. Example: '
 
 ### 5.2 Ubuntu Installation
 
+#### Docker approach
+
+https://rocm.docs.amd.com/projects/install-on-linux/en/latest/how-to/3rd-party/pytorch-install.html
+
+https://huggingface.co/amd
+https://rocm.blogs.amd.com/artificial-intelligence/llava-next/README.html
+
+https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html
+
+reboot after installation
+
+```shell
+pip3 install accelerate
+```
+
+https://huggingface.co/amd
+https://pytorch.org/get-started/locally/
+
+https://rocm.blogs.amd.com/artificial-intelligence/llava-next/README.html
+
+
+https://github.com/pytorch/pytorch/issues/119637
+https://www.reddit.com/r/ROCm/comments/17e2b5o/rocmpytorch_problem/
+
+```shell
+export HIP_VISIBLE_DEVICES=0 
+```
+
+https://rocm.docs.amd.com/en/latest/conceptual/gpu-isolation.html
+https://rocm.docs.amd.com/projects/HIP/en/docs-6.0.0/how_to_guides/debugging.html
 
 
 ## 6. Observe Hardware Usage
