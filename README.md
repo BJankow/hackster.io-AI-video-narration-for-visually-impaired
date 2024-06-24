@@ -54,7 +54,7 @@ Software:
 
 #### 5.1.2 ROCm installation
 
-```commandline
+```shell
 sudo pacman -S rocm-hip-sdk rocm-opencl-sdk
 ```
 
@@ -69,14 +69,14 @@ Find all 'rocm' packages - there should be many already installed (7.1 command).
 
 To install all required packages paste below code to terminal.
 
-```commandline
+```shell
 
 ```
 
 **Verify rocm installation** with following command. If it works and displays a piece of information adequate to your
 computer modules, then rocm is (probably) installed well.
 
-```commandline
+```shell
 rocminfo
 ```
 
@@ -85,14 +85,14 @@ rocminfo
 **a) Installing Anaconda** \
 Download and run Anaconda installation script. Accept all default options.
 
-```commandline
+```shell
 wget https://repo.anaconda.com/archive/Anaconda3-2024.02-1-Linux-x86_64.sh
 bash Anaconda3-2024.02-1-Linux-x86_64.sh
 ```
 
 **Verify conda installation with following command**. This command lists installed packages in conda environment.
 
-```commandline
+```shell
 conda list
 ```
 
@@ -103,7 +103,7 @@ Below installation is for ROCm 6.0. \
 Last line is using other_requirements.txt to install some requirements for conda environment. This file is located in
 same repository on the same level as THIS README.md.
 
-```commandline
+```shell
 conda create -n ai-video-narration-for-visually-impaired-rocm python=3.10 
 conda activate ai-video-narration-for-visually-impaired-rocm
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm6.0
@@ -114,13 +114,13 @@ pip install -r other_requirements.txt
 any conda environments before conda installation then you should see only `base` and
 `ai-video-narration-for-visually-impaired-rocm` environments.
 
-```commandline
+```shell
 conda env list
 ```
 
 **To check if torch is installed in your environment and does see AMD GPU run following commands**
 
-```commandline
+```shell
 conda activate ai-video-narration-for-visually-impaired-rocm
 python
 ```
@@ -170,7 +170,7 @@ export HIP_VISIBLE_DEVICES=0
 
 ### gpustat
 
-```commandline
+```shell
 gpustat -a -i 0.5
 ```
 
@@ -181,7 +181,7 @@ Arguments explaination:
 
 ### radeontop
 
-```commandline
+```shell
 sudo pamac install radeontop
 radeontop
 ```
@@ -190,7 +190,7 @@ radeontop
 
 Standard command line program that helps to observe CPU usage.
 
-```commandline
+```shell
 htop -d 10
 ```
 
@@ -204,6 +204,6 @@ Arguments explaination:
 
 Very nice GUI interface to observe CPU usage
 
-```commandline
+```shell
 sudo snap install btop
 ```
