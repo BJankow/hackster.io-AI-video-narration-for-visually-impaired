@@ -4,4 +4,4 @@
 
 # local imports
 from .ClipDescriptors import ClipDescriptorViTGPT2, ClipDescriptorLLaVA15, ClipDescriptorGPT4o, \
-    ClipDescriptorLLaVAMistral16, ClipDescriptorLLaVANextVideo34B
+    ClipDescriptorLLaVAMistral16, ClipDescriptorLLaVANextVideo34B, ClipDescriptorVideoLLava

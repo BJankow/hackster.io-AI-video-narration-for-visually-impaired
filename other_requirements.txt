@@ -1,3 +1,4 @@
+accelerate
 deep-translator
 gpustat
 gTTS

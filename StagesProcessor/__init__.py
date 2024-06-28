@@ -8,6 +8,8 @@ from .ClipDescribing.ClipDescriptors import (ClipDescriptorViTGPT2, ClipDescript
                                              ClipDescriptorLLaVANextVideo34B)
 from .ScenesDetecting.SceneDetectorInterface import SceneDetectorInterface
 from .ScenesDetecting.SceneDetectors import SceneDetectorBase
+from .Summarization.SummarizationInterface import SummarizerInterface
+from .Summarization.Summarizer import SummarizerBase
 from .MovieComposing.MovieComposerInterface import MovieComposerInterface
 from .MovieComposing.MovieComposers import MovieComposerBase
 from .MovieHandling.MovieHandlers import MovieHandlerBase

@@ -12,7 +12,8 @@ from moviepy.editor import VideoFileClip, AudioFileClip
 # local imports
 from StagesProcessor import StagesProcessor
 from StagesProcessor.ClipDescribing import (ClipDescriptorViTGPT2, ClipDescriptorLLaVA15, ClipDescriptorGPT4o,
-                                            ClipDescriptorLLaVAMistral16, ClipDescriptorLLaVANextVideo34B)
+                                            ClipDescriptorLLaVAMistral16, ClipDescriptorLLaVANextVideo34B,
+                                            ClipDescriptorVideoLLava)
 from StagesProcessor.MovieComposing import MovieComposerBase
 from StagesProcessor.MovieHandling import MovieHandlerBase
 from StagesProcessor.ScenesDetecting import SceneDetectorBase
@@ -37,7 +38,8 @@ if __name__ == '__main__':
     stages_processor = StagesProcessor(
         movie_handler=MovieHandlerBase(),
         scene_detector=SceneDetectorBase(),
-        clip_descriptor=ClipDescriptorLLaVA15(),
+        # clip_descriptor=ClipDescriptorLLaVA15(),
+        clip_descriptor=ClipDescriptorVideoLLava(),
         # clip_descriptor=ClipDescriptorLLaVAMistral16(),
         # clip_descriptor=ClipDescriptorLLaVANextVideo34B(),
         # clip_descriptor=ClipDescriptorViTGPT2(),
