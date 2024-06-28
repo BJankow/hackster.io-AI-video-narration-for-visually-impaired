@@ -24,35 +24,54 @@ from .ClipDescriptorInterface import ClipDescriptorInterface
 from utils.LogHandling.LogHandlers import StandardLogger
 
 
-class ClipDescriptorViTGPT2(ClipDescriptorInterface, StandardLogger):
+class ClipDescriptorBase(ClipDescriptorInterface, StandardLogger):
+    def __init__(self):
+        super(ClipDescriptorBase, self).__init__()
+        self.preferred_device = torch.device("cpu")
+        self._desired_data_type = torch.float16
+        self.__model_id = None
+
+    def _reload_preferred_device(self):
+        if torch.cuda.is_available():
+            self.preferred_device = torch.device("cuda:0")
+            self._logger.info(f"Utilized (GPU): {torch.cuda.get_device_name(self.preferred_device)}")
+        else:
+            self.preferred_device = torch.device("cpu")
+            self._logger.info(f"Utilized device - CPU")
+
+    def describe(self, video: VideoStreamCv2, scenes: List[Tuple[FrameTimecode, FrameTimecode]]) -> List[str]:
+        raise NotImplementedError
+
+
+class ClipDescriptorViTGPT2(ClipDescriptorBase):
     def __init__(self):
         super(ClipDescriptorViTGPT2, self).__init__()
-        self.cpu_device = torch.device("cpu")
-        self.preferred_device = torch.device("cpu")
         self.model: Optional[VisionEncoderDecoderModel] = None
         self.__tokenizer: Optional[GPT2TokenizerFast] = None
         self.__processor: Optional[ViTImageProcessor] = None  # resizes & normalizes
+        self.__model_id = "nlpconnect/vit-gpt2-image-captioning"
 
-    def reload_preferred_device(self):
-        self.preferred_device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
-
-    def __load_models(self):
-        self.reload_preferred_device()
+    def _load_models(self):
+        self._reload_preferred_device()
         if self.model is None:
-            model = VisionEncoderDecoderModel.from_pretrained("nlpconnect/vit-gpt2-image-captioning")
+            model = VisionEncoderDecoderModel.from_pretrained(
+                self.__model_id,
+                torch_dtype=self._desired_data_type,
+                device_map=self.preferred_device,
+                low_cpu_mem_usage=True  # requires Accelerate version >= 0.9.0
+            )
             self._logger.debug(model)  # TODO - it is not visible in terminal right now...
             model.eval()
-            model.to(self.preferred_device)
             self.model = model
 
         if self.__tokenizer is None:
-            self.__tokenizer = GPT2TokenizerFast.from_pretrained("nlpconnect/vit-gpt2-image-captioning")
+            self.__tokenizer = GPT2TokenizerFast.from_pretrained(self.__model_id)
 
         if self.__processor is None:
-            self.__processor = ViTImageProcessor.from_pretrained("nlpconnect/vit-gpt2-image-captioning")
+            self.__processor = ViTImageProcessor.from_pretrained(self.__model_id)
 
     def describe(self, video: VideoStreamCv2, scenes: List[Tuple[FrameTimecode, FrameTimecode]]) -> List[str]:
-        self.__load_models()
+        self._load_models()
         # pick frame - take frame that is in 10% from beginning
         video.reset()  # make sure video is at the beginning
         frames = []
@@ -78,30 +97,24 @@ class ClipDescriptorViTGPT2(ClipDescriptorInterface, StandardLogger):
         del self.__tokenizer
 
 
-class ClipDescriptorLLaVA15(ClipDescriptorInterface, StandardLogger):
+class ClipDescriptorLLaVA15(ClipDescriptorBase):
     def __init__(self):
         super(ClipDescriptorLLaVA15, self).__init__()
-        self.cpu_device = torch.device("cpu")
-        self.preferred_device = torch.device("cpu")
         self.model: Optional[LlavaForConditionalGeneration] = None
         self.__processor: Optional[LlavaProcessor] = None  # resizes & normalizes
-        self.__desired_data_type = torch.float16
         self.__prompt = "USER: <image>\nWhat's the content of the image?\nASSISTANT:"
         self.__model_id = "llava-hf/llava-1.5-7b-hf"
 
-    def __reload_preferred_device(self):
-        self.preferred_device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
-        self._logger.info(f"Utilized GPU: {torch.cuda.get_device_name(self.preferred_device)}")
-
-    def __load_models(self):
-        self.__reload_preferred_device()
+    def _load_models(self):
+        self._reload_preferred_device()
 
         if self.model is None:
             model = LlavaForConditionalGeneration.from_pretrained(
                 self.__model_id,
-                torch_dtype=self.__desired_data_type,
-                # low_cpu_mem_usage=True
-            ).to(self.preferred_device)
+                device_map=self.preferred_device,
+                torch_dtype=self._desired_data_type,
+                low_cpu_mem_usage=True  # requires Accelerate version >= 0.9.0
+            )
             self._logger.debug(model)  # TODO - it is not visible in terminal right now...
             model.eval()
             self.model = model
@@ -111,8 +124,8 @@ class ClipDescriptorLLaVA15(ClipDescriptorInterface, StandardLogger):
             # self.__processor.tokenizer.padding_side = "left"
 
     def describe(self, video: VideoStreamCv2, scenes: List[Tuple[FrameTimecode, FrameTimecode]]) -> List[str]:
-        self.__load_models()
-        # pick frame - take frame that is in 10% from beginning
+        self._load_models()
+        # TODO: pick frame - take frame that is in 10% from beginning
         video.reset()  # make sure video is at the beginning
         frames = []
         for s in scenes:
@@ -129,7 +142,7 @@ class ClipDescriptorLLaVA15(ClipDescriptorInterface, StandardLogger):
                     sub_frames,
                     # padding=True,
                     return_tensors="pt"
-                ).to(self.preferred_device, self.__desired_data_type)
+                ).to(self.preferred_device, self._desired_data_type)
                 output_ids = self.model.generate(
                     **inputs,
                     max_new_tokens=200,
@@ -150,14 +163,11 @@ class ClipDescriptorLLaVA15(ClipDescriptorInterface, StandardLogger):
         del self.__processor
 
 
-class ClipDescriptorVideoLLava(ClipDescriptorInterface, StandardLogger):
+class ClipDescriptorVideoLLava(ClipDescriptorBase):
     def __init__(self):
         super(ClipDescriptorVideoLLava, self).__init__()
-        self.cpu_device = torch.device("cpu")
-        self.preferred_device = torch.device("cpu")
         self.model: Optional[VideoLlavaForConditionalGeneration] = None
         self.__processor: Optional[VideoLlavaProcessor] = None  # resizes & normalizes
-        self.__desired_data_type = torch.float16
         self.__scene_descriptions = {}
         self.__model_id = "LanguageBind/Video-LLaVA-7B-hf"
 
@@ -197,19 +207,16 @@ class ClipDescriptorVideoLLava(ClipDescriptorInterface, StandardLogger):
         # print(prompt)
         return prompt
 
-    def __reload_preferred_device(self):
-        self.preferred_device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
-        self._logger.info(f"Utilized GPU: {torch.cuda.get_device_name(self.preferred_device)}")
-
     def __load_models(self):
-        self.__reload_preferred_device()
+        self._reload_preferred_device()
 
         if self.model is None:
             model = (VideoLlavaForConditionalGeneration.from_pretrained(
                 self.__model_id,
-                torch_dtype=self.__desired_data_type,
-                # low_cpu_mem_usage=True
-            ).to(self.preferred_device))
+                device_map=self.preferred_device,
+                torch_dtype=self._desired_data_type,
+                low_cpu_mem_usage=True  # requires Accelerate version >= 0.9.0
+            ))
             self._logger.debug(model)  # TODO - it is not visible in terminal right now...
             model.eval()
             self.model = model
@@ -236,7 +243,7 @@ class ClipDescriptorVideoLLava(ClipDescriptorInterface, StandardLogger):
                     videos=clip,
                     # padding=True,
                     return_tensors="pt"
-                ).to(self.preferred_device, self.__desired_data_type)
+                ).to(self.preferred_device, self._desired_data_type)
                 output_ids = self.model.generate(
                     **inputs,
                     max_new_tokens=200,
@@ -259,28 +266,23 @@ class ClipDescriptorVideoLLava(ClipDescriptorInterface, StandardLogger):
         del self.__processor
 
 
-class ClipDescriptorLLaVAMistral16(ClipDescriptorInterface, StandardLogger):
+class ClipDescriptorLLaVAMistral16(ClipDescriptorBase):
     def __init__(self):
         super(ClipDescriptorLLaVAMistral16, self).__init__()
-        self.cpu_device = torch.device("cpu")
-        self.preferred_device = torch.device("cpu")
         self.model: Optional[LlavaNextForConditionalGeneration] = None
         self.__processor: Optional[LlavaProcessor] = None  # resizes & normalizes
-        self.__desired_data_type = torch.float16
         self.__prompt = "[INST] <image>\nWhat is shown in this image? [/INST]"
         self.__model_id = "llava-hf/llava-v1.6-mistral-7b-hf"
 
-    def __reload_preferred_device(self):
-        self.preferred_device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
-
     def __load_models(self):
-        self.__reload_preferred_device()
+        self._reload_preferred_device()
 
         if self.model is None:
             model = (LlavaNextForConditionalGeneration.from_pretrained(
                 self.__model_id,
-                torch_dtype=self.__desired_data_type,
-                # low_cpu_mem_usage=True
+                device_map=self.preferred_device,
+                torch_dtype=self._desired_data_type,
+                low_cpu_mem_usage=True  # requires Accelerate version >= 0.9.0
             )).to(self.preferred_device)
             self._logger.debug(model)  # TODO - it is not visible in terminal right now...
             model.eval()
@@ -329,28 +331,23 @@ class ClipDescriptorLLaVAMistral16(ClipDescriptorInterface, StandardLogger):
         del self.__processor
 
 
-class ClipDescriptorLLaVANextVideo34B(ClipDescriptorInterface, StandardLogger):
+class ClipDescriptorLLaVANextVideo34B(ClipDescriptorBase):
     def __init__(self):
         super(ClipDescriptorLLaVANextVideo34B, self).__init__()
-        self.cpu_device = torch.device("cpu")
-        self.preferred_device = torch.device("cpu")
         self.model: Optional[LlavaForConditionalGeneration] = None
         self.__processor: Optional[LlavaProcessor] = None  # resizes & normalizes
-        self.__desired_data_type = torch.float16
         self.__prompt = "USER: <image>\nWhat's the content of the image? ASSISTANT:"
         self.__model_id = "llava-hf/LLaVA-NeXT-Video-34B-hf"
 
-    def __reload_preferred_device(self):
-        self.preferred_device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
-
     def __load_models(self):
-        self.__reload_preferred_device()
+        self._reload_preferred_device()
 
         if self.model is None:
             model = LlavaNextForConditionalGeneration.from_pretrained(
                 self.__model_id,
-                torch_dtype=self.__desired_data_type,
-                low_cpu_mem_usage=True
+                device_map=self.preferred_device,
+                torch_dtype=self._desired_data_type,
+                low_cpu_mem_usage=True  # requires Accelerate version >= 0.9.0
             ).to(self.preferred_device)
             self._logger.debug(model)  # TODO - it is not visible in terminal right now...
             model.eval()
@@ -360,16 +357,13 @@ class ClipDescriptorLLaVANextVideo34B(ClipDescriptorInterface, StandardLogger):
             self.__processor = AutoProcessor.from_pretrained(self.__model_id)
 
 
-class ClipDescriptorGPT4o(ClipDescriptorInterface, StandardLogger):
+class ClipDescriptorGPT4o(ClipDescriptorBase):
     def __init__(self, open_ai_key_fp: Union[str, Path]):
         super(ClipDescriptorGPT4o, self).__init__()
         self.__open_ai_key_fp = open_ai_key_fp
         self.cpu_device = torch.device("cpu")
         self.preferred_device = torch.device("cpu")
         self.client: Optional[OpenAI] = None
-
-    def __reload_preferred_device(self):
-        self.preferred_device = torch.device("cuda:0") if torch.cuda.is_available() else torch.device("cpu")
 
     def __load_models(self):
         # self.__reload_preferred_device()

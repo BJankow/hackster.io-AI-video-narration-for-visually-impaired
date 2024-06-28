@@ -13,6 +13,7 @@ from scenedetect import FrameTimecode
 # local imports
 from . import ClipDescriptorInterface
 from . import SceneDetectorInterface
+from . import SummarizerInterface
 from . import MovieComposerInterface
 from . import MovieHandlerInterface
 from . import VoiceSynthesizerInterface
@@ -31,6 +32,7 @@ class StagesProcessor(StagesProcessorInterface, StandardLogger):
             movie_handler: MovieHandlerInterface,
             scene_detector: SceneDetectorInterface,
             clip_descriptor: ClipDescriptorInterface,
+            summarizer: SummarizerInterface,
             voice_synthesizer: VoiceSynthesizerInterface,
             movie_composer: MovieComposerInterface
     ):
@@ -38,6 +40,7 @@ class StagesProcessor(StagesProcessorInterface, StandardLogger):
         self.movie_handler = movie_handler
         self.scene_detector = scene_detector
         self.clip_descriptor = clip_descriptor
+        self.summarizer = summarizer
         self.voice_synthesizer = voice_synthesizer
         self.movie_composer = movie_composer
 
@@ -75,6 +78,14 @@ class StagesProcessor(StagesProcessorInterface, StandardLogger):
         self.load_movie(fp=fp)
         descriptions = self.clip_descriptor.describe(video=self.movie_handler.get_video(), scenes=scenes)
         return descriptions
+
+    def convert_descriptions_to_narration(self, descriptions: List[str]) -> List[str]:
+        """
+        Modifies descriptions so they briefly describe what happened in a video scene by scene. Narrative style.
+        :param descriptions: Descriptions - one per scene
+        :return: modified descriptions in the form of narrative.
+        """
+        return self.summarizer.summarize(sentences=descriptions)
 
     def synthesize_descriptions(self, fp: Union[str, Path], descriptions: List[str], language: str) -> List:
         return self.voice_synthesizer.synthesize(texts=descriptions, language=language)

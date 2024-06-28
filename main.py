@@ -52,18 +52,21 @@ if __name__ == '__main__':
         fp=FILEPATH,
         scenes=scenes,
     )
+
+    english_narration = stages_processor.convert_descriptions_to_narration(descriptions=english_descriptions)
+
     for language in LANGUAGES:
         print(f"Processing for language: '{language}'")
 
         # Translation may be needed
         if language != 'en':
-            descriptions = translate(texts=english_descriptions, target_language=language)
+            narration = translate(texts=english_narration, target_language=language)
         else:
-            descriptions = english_descriptions
+            narration = english_narration
 
         synthesized_descriptions = stages_processor.synthesize_descriptions(
             fp=FILEPATH,
-            descriptions=descriptions,
+            descriptions=narration,
             language=language
         )
 
