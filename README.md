@@ -57,6 +57,8 @@ You will find the official description here: https://rocm.docs.amd.com/projects/
 We tried 2 distros: Ubuntu 22.04.4 LTS and Manjaro.
 Here is how we did it so you may do it too:
 
+---
+
 ### [Ubuntu 22.04.4 LTS](https://releases.ubuntu.com/jammy/)
 
 Install ROCm drivers and libraries like in the [quickguide](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html):
@@ -76,6 +78,8 @@ sudo apt install amdgpu-dkms rocm
 
 
 And that is all! :sunglasses:
+
+---
 
 ### Manjaro
 
@@ -114,6 +118,8 @@ Packages (1) rocminfo-6.0.2-1
 
 > [!IMPORTANT]
 > After successful installation reboot the system.
+
+---
 
 Now we are complete with the drivers. **Verify drivers installation** with the following commands to ensure you can see your GPU:
 
@@ -197,6 +203,8 @@ Helpful resources:
 
 - https://rocm.blogs.amd.com/artificial-intelligence/llava-next/README.html
 - https://huggingface.co/amd
+
+---
 
 ### Conda
 
