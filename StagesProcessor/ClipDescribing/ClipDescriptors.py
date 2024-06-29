@@ -62,6 +62,7 @@ class ClipDescriptorViTGPT2(ClipDescriptorBase):
             )
             self._logger.debug(model)  # TODO - it is not visible in terminal right now...
             model.eval()
+            model = torch.compile(model, mode='reduce-overhead')  # speeds up inference. torch >= 2.0.
             self.model = model
 
         if self.__tokenizer is None:
@@ -117,6 +118,7 @@ class ClipDescriptorLLaVA15(ClipDescriptorBase):
             )
             self._logger.debug(model)  # TODO - it is not visible in terminal right now...
             model.eval()
+            model = torch.compile(model, mode='reduce-overhead')  # speeds up inference. torch >= 2.0.
             self.model = model
 
         if self.__processor is None:
@@ -219,6 +221,7 @@ class ClipDescriptorVideoLLava(ClipDescriptorBase):
             ))
             self._logger.debug(model)  # TODO - it is not visible in terminal right now...
             model.eval()
+            model = torch.compile(model, mode='reduce-overhead')  # speeds up inference. torch >= 2.0.
             self.model = model
 
         if self.__processor is None:
@@ -286,6 +289,7 @@ class ClipDescriptorLLaVAMistral16(ClipDescriptorBase):
             )).to(self.preferred_device)
             self._logger.debug(model)  # TODO - it is not visible in terminal right now...
             model.eval()
+            model = torch.compile(model, mode='reduce-overhead')  # speeds up inference. torch >= 2.0.
             self.model = model
 
         if self.__processor is None:
@@ -351,6 +355,7 @@ class ClipDescriptorLLaVANextVideo34B(ClipDescriptorBase):
             ).to(self.preferred_device)
             self._logger.debug(model)  # TODO - it is not visible in terminal right now...
             model.eval()
+            model = torch.compile(model, mode='reduce-overhead')  # speeds up inference. torch >= 2.0.
             self.model = model
 
         if self.__processor is None:

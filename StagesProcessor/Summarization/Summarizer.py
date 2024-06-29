@@ -72,6 +72,7 @@ class PegasusSummarizer(SummarizerBase):
             ))
             self._logger.debug(model)  # TODO - it is not visible in terminal right now...
             model.eval()
+            model = torch.compile(model, mode='reduce-overhead')  # speeds up inference. torch >= 2.0.
             self.model = model
 
     def summarize(
