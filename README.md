@@ -1,10 +1,10 @@
 # hackster.io-AI-video-narration-for-visually-impaired
 
-## 1. Problem to solve
+## Introduction
 
 The problem I aim to address is the lack of accessibility to visual content for visually impaired individuals. While movies and videos are a significant form of entertainment and communication in today's society, those who are blind or visually impaired often miss out on the visual aspects of these mediums.
 
-## 2. Solution idea
+## Solution idea
 
 I will build an AI-driven video narration system tailored specifically for visually impaired individuals. Unlike existing solutions, which often rely on pre-recorded audio descriptions, my system will utilize technologies such as convolutional neural networks (CNN) for human pose detection and description, along with an open-source language model (LLM) for scene interpretation.
 
@@ -12,7 +12,7 @@ To enhance accuracy and relevance, I'll fine-tune these models using datasets so
 
 This approach sets my solution apart by offering dynamic descriptions that adapt to the content being viewed, ultimately providing visually impaired individuals with a more immersive and engaging viewing experience.
 
-## 3. Main features of the solution
+## Main features of the solution
 
 My solution will involve testing multiple Language Model architectures to determine the most suitable one. During this process, I will assess potential limitations of the AMD Radeon PRO W7900 GPU when working with these models. The results of these tests will be documented in the project summary.
 
@@ -24,7 +24,7 @@ Main Features:
 - Identification of objects, actions, and scenes.
 - Synchronized narration with video playback.
 
-## 4. Hardware and software used to build solution
+## Hardware and software used to build solution
 
 Hardware:
 
@@ -41,11 +41,7 @@ Software:
 - Video playback software with synchronization capabilities.
 - Tools for building ML pipeline (e.g. MLflow, kubeflow, git).
 
-## 5. Installation
-
-### 5.1 Manjaro installation
-
-#### 5.1.1 Helpful links (7.* tip are based on information from those links)
+## Installation
 
 - <https://wiki.archlinux.org/title/GPGPU#ROCm> (Troubleshooting tips - good source of information)
 - <https://github.com/rocm-arch/rocm-arch> (installation of ROCm dependencies)
@@ -166,7 +162,7 @@ export HIP_VISIBLE_DEVICES=0
 <https://rocm.docs.amd.com/en/latest/conceptual/gpu-isolation.html>
 <https://rocm.docs.amd.com/projects/HIP/en/docs-6.0.0/how_to_guides/debugging.html>
 
-## 6. Observe hardware usage
+## Observe hardware usage
 
 ### gpustat
 
