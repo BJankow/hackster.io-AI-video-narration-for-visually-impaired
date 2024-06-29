@@ -43,124 +43,260 @@ Software:
 
 ## Installation
 
-- <https://wiki.archlinux.org/title/GPGPU#ROCm> (Troubleshooting tips - good source of information)
-- <https://github.com/rocm-arch/rocm-arch> (installation of ROCm dependencies)
-- <https://pytorch.org/get-started/locally/> (torch for python on ROCm)
-- <https://archlinux.org/packages/extra/x86_64/python-pytorch-rocm/> (Install python-pytorch-rocm)
+As we stated, we only use Linux for this project (and for others too :wink:).
+The first step is to install AMD GPU drivers and this process varies between different distros.
+You will find the official description here: https://rocm.docs.amd.com/projects/install-on-linux/en/latest/
 
-#### 5.1.2 ROCm installation
+We tried 2 distros: Ubuntu 22.04.4 LTS and Manjaro.
+Here is how we did it so you may do it too:
 
-```shell
-sudo pacman -S rocm-hip-sdk rocm-opencl-sdk
-```
+### [Ubuntu 22.04.4 LTS](https://releases.ubuntu.com/jammy/)
 
-#### 5.1.3 Install python-pytorch-rocm
-
-##### Option 1) via package manager
-
-Find all 'rocm' packages - there should be many already installed (7.1 command). You should be able to see
-'python-pytorch-rocm' package that is not installed yet. Click it to be installed
-
-##### Option 2) via terminal
-
-To install all required packages paste below code to terminal.
+Install ROCm drivers and libraries like in the [quickguide](https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html):
 
 ```shell
-
+sudo apt update
+sudo apt install "linux-headers-$(uname -r)" "linux-modules-extra-$(uname -r)"
+sudo usermod -a -G render,video $LOGNAME # Add the current user to the render and video groups
+wget https://repo.radeon.com/amdgpu-install/6.1.2/ubuntu/jammy/amdgpu-install_6.1.60102-1_all.deb
+sudo apt install ./amdgpu-install_6.1.60102-1_all.deb
+sudo apt update
+sudo apt install amdgpu-dkms rocm
 ```
 
-**Verify rocm installation** with following command. If it works and displays a piece of information adequate to your
-computer modules, then rocm is (probably) installed well.
+> [!IMPORTANT]
+> Now you will need to restart your system.
+
+
+And that is all! :sunglasses:
+
+### Manjaro
+
+This distribution is our favorite
+It is not officially supported by AMD, but it is not a problem at all.
+The Arch repository covers all needed packages, just install `rocm-hip-sdk` via Pamac GUI or run this in terminal:
+
+```shell
+sudo pacman -Sy rocm-hip-sdk
+```
+
+The packages we installed:
+
+```shell
+Packages (41) cmake-3.29.3-1  comgr-6.0.2-1  composable-kernel-6.0.2-1  cppdap-1.58.0-1  hip-runtime-amd-6.0.2-4  hipblas-6.0.2-1
+              hipcub-6.0.2-1  hipfft-6.0.2-1  hiprand-6.0.2-1  hipsolver-6.0.2-1  hipsparse-6.0.2-1  hsa-rocr-6.0.2-2
+              hsakmt-roct-6.0.0-2  jsoncpp-1.9.5-2  libuv-1.48.0-2  miopen-hip-6.0.2-1  opencl-headers-2:2024.05.08-1  openmp-17.0.6-2
+              rccl-6.0.2-1  rhash-1.4.4-1  rocalution-6.0.2-2  rocblas-6.0.2-1  rocfft-6.0.2-1  rocm-clang-ocl-6.0.2-1
+              rocm-cmake-6.0.2-1  rocm-core-6.0.2-2  rocm-device-libs-6.0.2-1  rocm-hip-libraries-6.0.2-1  rocm-hip-runtime-6.0.2-1
+              rocm-language-runtime-6.0.2-1  rocm-llvm-6.0.2-1  rocm-opencl-runtime-6.0.2-1  rocm-smi-lib-6.0.2-1  rocminfo-6.0.2-1
+              rocprim-6.0.2-1  rocrand-6.0.2-1  rocsolver-6.0.2-1  rocsparse-6.0.2-2  rocthrust-6.0.2-1  roctracer-6.0.2-1
+              rocm-hip-sdk-6.0.2-1
+```
+
+You may also want to install an additional app for reporting system info:
+
+```shell
+sudo pacman -Sy rocminfo
+```
+
+The version we used:
+
+```shell
+Packages (1) rocminfo-6.0.2-1
+```
+
+> [!IMPORTANT]
+> After successful installation reboot the system.
+
+Now we are complete with the drivers. **Verify drivers installation** with the following commands to ensure you can see your GPU:
+
+Command:
+
+```shell
+rocm-smi --showproductname
+```
+
+My result:
+
+**TODO: Replace with W7900 entry!**
+```shell
+============================ ROCm System Management Interface ============================
+====================================== Product Info ======================================
+GPU[0]          : Card series:          Navi 31 [Radeon RX 7900 XT/7900 XTX/7900M]
+GPU[0]          : Card model:           0x5318
+GPU[0]          : Card vendor:          Advanced Micro Devices, Inc. [AMD/ATI]
+GPU[0]          : Card SKU:             APM7198
+==========================================================================================
+================================== End of ROCm SMI Log ===================================
+```
+
+Command:
 
 ```shell
 rocminfo
 ```
 
-#### 5.1.4 ROCm version of python ML libraries (torch, torchmetrics, torchsummary, torchvision, torchaudio)
+Expect something like this:
 
-**a) Installing Anaconda** \
-Download and run Anaconda installation script. Accept all default options.
+**TODO: Replace with W7900 entry!**
+```shell
+ROCk module is loaded
+=====================
+HSA System Attributes
+=====================
+Runtime Version:         1.1
+System Timestamp Freq.:  1000.000000MHz
+Sig. Max Wait Duration:  18446744073709551615 (0xFFFFFFFFFFFFFFFF) (timestamp count)
+Machine Model:           LARGE
+System Endianness:       LITTLE
+Mwaitx:                  DISABLED
+DMAbuf Support:          YES
+
+[...]
+```
+
+Look for the GPU entry:
+
+**TODO: Replace with W7900 entry!**
+```shell
+[...]
+
+*******
+Agent 2
+*******
+  Name:                    gfx1100
+  Uuid:                    GPU-cbb3e48822a56626
+  Marketing Name:          AMD Radeon RX 7900 GRE
+  Vendor Name:             AMD
+  Feature:                 KERNEL_DISPATCH
+  Profile:                 BASE_PROFILE
+  Float Round Mode:        NEAR
+  Max Queue Number:        128(0x80)
+  Queue Min Size:          64(0x40)
+  Queue Max Size:          131072(0x20000)
+  Queue Type:              MULTI
+  Node:                    1
+  Device Type:             GPU
+
+[...]
+```
+
+Helpful resources:
+
+- <https://wiki.archlinux.org/title/GPGPU#ROCm> (Troubleshooting tips - good source of information)
+- <https://github.com/rocm-arch/rocm-arch> (installation of ROCm dependencies)
+- <https://pytorch.org/get-started/locally/> (torch for python on ROCm)
+- <https://archlinux.org/packages/extra/x86_64/python-pytorch-rocm/> (Install python-pytorch-rocm)
+
+- https://rocm.blogs.amd.com/artificial-intelligence/llava-next/README.html
+- https://huggingface.co/amd
+
+### Conda
+
+We use Conda to make our environment reproducible and least dependent on the used OS.
+Look at this [site](https://docs.anaconda.com/anaconda/install/linux/) to get into details.
+
+To follow our steps download and run the Anaconda installation script. Accept all default options:
 
 ```shell
 wget https://repo.anaconda.com/archive/Anaconda3-2024.02-1-Linux-x86_64.sh
 bash Anaconda3-2024.02-1-Linux-x86_64.sh
 ```
 
-**Verify conda installation with following command**. This command lists installed packages in conda environment.
+**Verify with the following command**. It lists installed packages in a conda environment:
 
 ```shell
 conda list
 ```
 
-**b) Creating environment** \
-Currently this step is not supported by anaconda (env.yml file etc.), so firstly you create an anaconda environment
-with python and then install required packages via pip.
-Below installation is for ROCm 6.0. \
-Last line is using other_requirements.txt to install some requirements for conda environment. This file is located in
-same repository on the same level as THIS README.md.
+
+### Conda environment
+
+Now you may want to create and activate a new conda environment, e.g.:
 
 ```shell
-conda create -n ai-video-narration-for-visually-impaired-rocm python=3.10 
+conda create -n ai-video-narration-for-visually-impaired-rocm python=3.10
 conda activate ai-video-narration-for-visually-impaired-rocm
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm6.0
-pip install -r other_requirements.txt
 ```
 
-**To check if environment was created run following command**. This command should display your environments. If you haven't had
-any conda environments before conda installation then you should see only `base` and
-`ai-video-narration-for-visually-impaired-rocm` environments.
+Display your environments to ensure it was created. 
+If you haven't had any before, then you should see only `base` and `ai-video-narration-for-visually-impaired-rocm`.
 
 ```shell
 conda env list
 ```
 
-**To check if torch is installed in your environment and does see AMD GPU run following commands**
+Example result, the asterisk `*` means currently activated environment:
 
-```shell
-conda activate ai-video-narration-for-visually-impaired-rocm
-python
+```
+# conda environments:
+#
+base                     /home/<user>/anaconda3
+ai-video-narration-for-visually-impaired-rocm  *  /home/<user>/anaconda3/envs/ai-video-narration-for-visually-impaired-rocm
 ```
 
-In Python shell type.
+> [!NOTE]
+> From now on, we will install all Python packages in this environment.
+
+
+First, start by installing PyTorch for AMD ROCm:
+
+```shell
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm6.0
+```
+
+Then proceed to install other remaining packages listed in [other_requirements.txt](other_requirements.txt):
+
+```shell
+pip install -r other_requirements.txt
+```
+
+To check if PyTorch sees your GPU and to list all visible, run in `python` CLI:
 
 ```python
 import torch
-torch.__version__  # '2.3.0+rocm6.0' is expected 
-torch.cuda.is_available()  # True is expected
-torch.get_device_name(0)  # Your graphic card model name is expected. Example: 'AMD Radeon Pro W7900'
+print(f"Torch version: {torch.__version__}")
+print(f"Is CUDA available?: {torch.cuda.is_available()}")
+print(f"Number of GPUs: {torch.cuda.device_count()}")
+for i in range(torch.cuda.device_count()):
+    print(f"index: {i}; device name: {torch.cuda.get_device_name(i)}")
 ```
 
-### 5.2 Ubuntu installation
+Expect something like:
 
-#### Docker approach
+**TODO: Replace with W7900 entry!**
+```
+Torch version: 2.3.1+rocm6.0
+Is CUDA available?: True
+number of GPUs: 1
+['AMD Radeon RX 7900 GRE']
+```
+
+If you see more than one device, consider exporting [`HIP_VISIBLE_DEVICES`](https://rocm.docs.amd.com/en/latest/conceptual/gpu-isolation.html#hip-visible-devices) variable before running Python.
+
+> [!IMPORTANT]
+> Firstly check the index of your GPU like we did it in Python, it may be other than 0!
+
+```shell
+export HIP_VISIBLE_DEVICES=0
+```
+
+In my case, the CPU's embedded GPU was also seen by PyTorch and it caused some troubles, which stopped me for a while. The errors weren't enough suggestive (the closest one I got was when I run [the Docker example](https://rocm.blogs.amd.com/artificial-intelligence/llava-next/README.html)), but the web search has found the solution for me. You may look at these link:
+
+- <https://github.com/pytorch/pytorch/issues/119637>
+- <https://www.reddit.com/r/ROCm/comments/17e2b5o/rocmpytorch_problem/>
+- <https://rocm.docs.amd.com/projects/HIP/en/docs-6.0.0/how_to_guides/debugging.html#making-device-visible>
+
+Resources:
+
+- Check out this official [guide](https://huggingface.co/amd) for ROCm dependent Python libraries.
+- we are using the [`transformers`](https://huggingface.co/docs/transformers/index) library, 
+
+### Other resources
+
+PyTorch for ROCm in Docker:
 
 <https://rocm.docs.amd.com/projects/install-on-linux/en/latest/how-to/3rd-party/pytorch-install.html>
-
-<https://huggingface.co/amd>
-<https://rocm.blogs.amd.com/artificial-intelligence/llava-next/README.html>
-
-<https://rocm.docs.amd.com/projects/install-on-linux/en/latest/tutorial/quick-start.html>
-
-reboot after installation
-
-```shell
-pip3 install accelerate
-```
-
-<https://huggingface.co/amd>
-<https://pytorch.org/get-started/locally/>
-
-<https://rocm.blogs.amd.com/artificial-intelligence/llava-next/README.html>
-
-<https://github.com/pytorch/pytorch/issues/119637>
-<https://www.reddit.com/r/ROCm/comments/17e2b5o/rocmpytorch_problem/>
-
-```shell
-export HIP_VISIBLE_DEVICES=0 
-```
-
-<https://rocm.docs.amd.com/en/latest/conceptual/gpu-isolation.html>
-<https://rocm.docs.amd.com/projects/HIP/en/docs-6.0.0/how_to_guides/debugging.html>
 
 ## Observe hardware usage
 
