@@ -90,7 +90,7 @@ if __name__ == '__main__':
 
             t = datetime.now()
             pixel_values = pixel_values.to(gpu_device)
-            with torch.no_grad():
+            with torch.inference_mode():
                 encoded = model.encoder(pixel_values).pooler_output.to(cpu_device)
             logging.debug(f"Image Encoder {PARALLEL_PROCESSED} images time: {(datetime.now() - t).total_seconds()} [s]")
             all_encoded += encoded
@@ -101,7 +101,7 @@ if __name__ == '__main__':
     if len(images) > 0:
         pixel_values = image_processor(torch.stack(images, dim=0), return_tensors="pt").pixel_values
         pixel_values = pixel_values.to(gpu_device)
-        with torch.no_grad():
+        with torch.inference_mode():
             encoded = model.encoder(pixel_values).pooler_output.to(cpu_device)
         all_encoded += encoded
         del images
