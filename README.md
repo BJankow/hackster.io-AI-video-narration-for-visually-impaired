@@ -50,7 +50,7 @@ Software:
 
 ## Installation
 
-As we stated, we only use Linux for this project (and for others too :wink:).
+For this project we use only Linux.
 The first step is to install AMD GPU drivers and this process varies between different distros.
 You will find the official description here: https://rocm.docs.amd.com/projects/install-on-linux/en/latest/
 
