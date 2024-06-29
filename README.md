@@ -2,21 +2,23 @@
 
 ## Introduction
 
-The problem I aim to address is the lack of accessibility to visual content for visually impaired individuals. While movies and videos are a significant form of entertainment and communication in today's society, those who are blind or visually impaired often miss out on the visual aspects of these mediums.
+Visual content is a almost an inseparable part of the modern digital world. While movies and videos are a significant form of entertainment and communication in today's society, those who are visually impaired often miss out on the visual aspects of these mediums.
+The problem I aim to address is the lack of accessibility to visual content for visually impaired. 
+I wanted to create a generative tool for voice narration that would describe to the listener the situation that is happening on the screen. This would be an audio substitution for a visual content, just as it happens in books.
 
 ## Solution idea
 
-I will build an AI-driven video narration system tailored specifically for visually impaired individuals. Unlike existing solutions, which often rely on pre-recorded audio descriptions, my system will utilize technologies such as convolutional neural networks (CNN) for human pose detection and description, along with an open-source language model (LLM) for scene interpretation.
+I built an AI-driven video narration system tailored specifically for visually impaired. Unlike existing solutions, which often rely on pre-recorded audio descriptions, my system utilizes technologies such as convolutional neural networks (CNN) for human pose detection and description, along with an open-source language model (LLM) for scene interpretation.
 
-To enhance accuracy and relevance, I'll fine-tune these models using datasets sourced from platforms like OpenDataLab. Furthermore, I plan to employ a hyperparameter tuning framework to optimize the performance of the system.
+To enhance accuracy and relevance, I fine-tuned these models using datasets sourced from platforms like OpenDataLab. Furthermore, I plan to employ a hyperparameter tuning framework to optimize the performance of the system.
 
-This approach sets my solution apart by offering dynamic descriptions that adapt to the content being viewed, ultimately providing visually impaired individuals with a more immersive and engaging viewing experience.
+This approach sets my solution apart by offering dynamic descriptions that adapt to the content being viewed, ultimately providing visually impaired users with a more immersive and engaging experience.
 
 ## Main features of the solution
 
-My solution will involve testing multiple Language Model architectures to determine the most suitable one. During this process, I will assess potential limitations of the AMD Radeon PRO W7900 GPU when working with these models. The results of these tests will be documented in the project summary.
+My solution involves testing multiple Language Model architectures to determine the most suitable one. During this process, I assessed potential limitations of the AMD Radeon PRO W7900 GPU when working with these models. The results of these tests are documented in the project summary.
 
-The efficiency of our visual narration system relies heavily on high-performance GPUs with sufficient VRAM to ensure smooth interpretation speed, measured in FPS (frames per second). Training AI models for such systems demands substantial compute capability. The AMD Radeon PRO W7900 GPU, boasting 48 GB of VRAM and offering 61 TFLOPS for float32 or 122 TFLOPS for float16 aligns with these requirements. Opting for a stationary solution over a cloud-based one enables us to utilize local data, minimizing network usage and overhead, especially considering the potentially large sizes of the datasets involved, often exceeding 150GB.
+The efficiency of our visual narration system relies heavily on high-performance GPUs with sufficient VRAM to ensure smooth interpretation speed, measured in FPS (frames per second). Training AI models for such systems demands substantial compute capability. The AMD Radeon PRO W7900 GPU, boasting 48 GB of VRAM and offering 61 TFLOPS for float32 or 122 TFLOPS for float16 aligns with these requirements. Opting for a stationary solution over a cloud-based one enabled us to utilize local data, minimizing network usage and overhead, especially considering the potentially large sizes of the datasets involved, often exceeding 150 GB.
 
 Main Features:
 
@@ -26,6 +28,10 @@ Main Features:
 
 ## Hardware and software used to build solution
 
+List for system requirements and supported GPUs:
+
+<https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html>
+
 Hardware:
 
 - AMD Radeon PRO W7900 GPU
@@ -34,7 +40,8 @@ Hardware:
 - 64 GB RAM
 
 Software:
-- OS: Linux Ubuntu
+
+- OS: Linux (tried Ubuntu 22.04.4 LTS and Manjaro)
 - AMD ROCm Software
 - Deep learning frameworks (TensorFlow or PyTorch) for AI development.
 - Computer vision and natural language processing libraries.
