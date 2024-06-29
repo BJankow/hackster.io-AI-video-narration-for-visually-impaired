@@ -275,6 +275,8 @@ print(f"Is CUDA available?: {torch.cuda.is_available()}")
 print(f"Number of GPUs: {torch.cuda.device_count()}")
 for i in range(torch.cuda.device_count()):
     print(f"index: {i}; device name: {torch.cuda.get_device_name(i)}")
+
+
 ```
 
 Expect something like:
