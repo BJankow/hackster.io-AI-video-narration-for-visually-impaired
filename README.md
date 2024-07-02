@@ -83,7 +83,7 @@ And that is all! :sunglasses:
 
 ### Manjaro
 
-This distribution is our favorite
+This distribution is our favorite.
 It is not officially supported by AMD, but it is not a problem at all.
 The Arch repository covers all needed packages, just install `rocm-hip-sdk` via Pamac GUI or run this in terminal:
 
@@ -121,6 +121,7 @@ Packages (1) rocminfo-6.0.2-1
 
 ---
 
+<!-- Separate -->
 Now we are complete with the drivers. **Verify drivers installation** with the following commands to ensure you can see your GPU:
 
 Command:
@@ -204,20 +205,30 @@ Helpful resources:
 - https://rocm.blogs.amd.com/artificial-intelligence/llava-next/README.html
 - https://huggingface.co/amd
 
+<!-- Teraz mamy już za sobą kwestię sterowników i możemy przystąpić do środowiska -->
+Now we can jump to environment setup.
+
 ---
 
-### Conda
+### Conda installation
 
-We use Conda to make our environment reproducible and least dependent on the used OS.
+<!-- Chcemy odseparować środowisko -->
+<!-- Conda zapewnia niezależność paczek od systemu -->
+We use Conda to make our environment reproducible and rather independent on the used OS.
 Look at this [site](https://docs.anaconda.com/anaconda/install/linux/) to get into details.
 
+<!-- przerobić -->
 To follow our steps download and run the Anaconda installation script. Accept all default options:
+
+
+<!-- yes no -->
 
 ```shell
 wget https://repo.anaconda.com/archive/Anaconda3-2024.02-1-Linux-x86_64.sh
 bash Anaconda3-2024.02-1-Linux-x86_64.sh
 ```
 
+<!-- zastosować wszędzie tryb rozkazujący -->
 **Verify with the following command**. It lists installed packages in a conda environment:
 
 ```shell
@@ -225,7 +236,7 @@ conda list
 ```
 
 
-### Conda environment
+### Conda environment setup
 
 Now you may want to create and activate a new conda environment, e.g.:
 
@@ -234,7 +245,7 @@ conda create -n ai-video-narration-for-visually-impaired-rocm python=3.10
 conda activate ai-video-narration-for-visually-impaired-rocm
 ```
 
-Display your environments to ensure it was created. 
+Display your environments to ensure it was activated. 
 If you haven't had any before, then you should see only `base` and `ai-video-narration-for-visually-impaired-rocm`.
 
 ```shell
@@ -250,23 +261,27 @@ base                     /home/<user>/anaconda3
 ai-video-narration-for-visually-impaired-rocm  *  /home/<user>/anaconda3/envs/ai-video-narration-for-visually-impaired-rocm
 ```
 
+### Conda installing packages
+
 > [!NOTE]
 > From now on, we will install all Python packages in this environment.
 
 
-First, start by installing PyTorch for AMD ROCm:
+<!-- with some packages albo inaczej -->
+Start by installing PyTorch for AMD ROCm:
 
 ```shell
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm6.0
 ```
 
-Then proceed to install other remaining packages listed in [other_requirements.txt](other_requirements.txt):
+Proceed to install other remaining packages listed in [other_requirements.txt](other_requirements.txt):
 
 ```shell
 pip install -r other_requirements.txt
 ```
 
-To check if PyTorch sees your GPU and to list all visible, run in `python` CLI:
+<!-- write about cloning repo -->
+To check if PyTorch sees your GPU and to list all visible XXX, run in `python` CLI:
 
 ```python
 import torch
@@ -289,6 +304,7 @@ number of GPUs: 1
 ['AMD Radeon RX 7900 GRE']
 ```
 
+<!-- consider exporting single GPU -->
 If you see more than one device, consider exporting [`HIP_VISIBLE_DEVICES`](https://rocm.docs.amd.com/en/latest/conceptual/gpu-isolation.html#hip-visible-devices) variable before running Python.
 
 > [!IMPORTANT]
@@ -298,7 +314,7 @@ If you see more than one device, consider exporting [`HIP_VISIBLE_DEVICES`](http
 export HIP_VISIBLE_DEVICES=0
 ```
 
-In my case, the CPU's embedded GPU was also seen by PyTorch and it caused some troubles, which stopped me for a while. The errors weren't enough suggestive (the closest one I got was when I run [the Docker example](https://rocm.blogs.amd.com/artificial-intelligence/llava-next/README.html)), but the web search has found the solution for me. You may look at these link:
+In my case, the CPU's embedded GPU was also seen by PyTorch and it caused some troubles, which stopped me for a while. The errors weren't suggestive enough (the closest one I got was when I run [the Docker example](https://rocm.blogs.amd.com/artificial-intelligence/llava-next/README.html)), but the web search has found the solution for me. You may look at these links:
 
 - <https://github.com/pytorch/pytorch/issues/119637>
 - <https://www.reddit.com/r/ROCm/comments/17e2b5o/rocmpytorch_problem/>
