@@ -1,7 +1,7 @@
 # standard library imports
 import joblib
 from pathlib import Path
-from typing import Union, Tuple, List
+from typing import Union, Tuple, List, Optional
 
 
 # 3rd party library imports
@@ -32,17 +32,17 @@ class StagesProcessor(StagesProcessorInterface, StandardLogger):
             movie_handler: MovieHandlerInterface,
             scene_detector: SceneDetectorInterface,
             clip_descriptor: ClipDescriptorInterface,
-            summarizer: SummarizerInterface,
             voice_synthesizer: VoiceSynthesizerInterface,
-            movie_composer: MovieComposerInterface
+            movie_composer: MovieComposerInterface,
+            summarizer: Optional[SummarizerInterface] = None,
     ):
         super(StagesProcessor, self).__init__()
         self.movie_handler = movie_handler
         self.scene_detector = scene_detector
         self.clip_descriptor = clip_descriptor
-        self.summarizer = summarizer
         self.voice_synthesizer = voice_synthesizer
         self.movie_composer = movie_composer
+        self.summarizer = summarizer
 
         self.load_movie = mem.cache(self.load_movie)
         self.detect_scenes = mem.cache(self.detect_scenes)
@@ -85,7 +85,12 @@ class StagesProcessor(StagesProcessorInterface, StandardLogger):
         :param descriptions: Descriptions - one per scene
         :return: modified descriptions in the form of narrative.
         """
-        return self.summarizer.summarize(sentences=descriptions)
+        if self.summarizer is not None:
+            return self.summarizer.summarize(sentences=descriptions)
+        else:
+            self._logger.warning(f"Summarizer is set to {self.summarizer}. "
+                                 f"Passing descriptions through without changing.")
+            return descriptions
 
     def synthesize_descriptions(self, fp: Union[str, Path], descriptions: List[str], language: str) -> List:
         return self.voice_synthesizer.synthesize(texts=descriptions, language=language)

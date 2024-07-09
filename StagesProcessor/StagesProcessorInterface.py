@@ -42,6 +42,14 @@ class StagesProcessorInterface(ABC):
         :param scenes: scenes of given movie.
         :return: List of text descriptions.
         """
+    
+    @abstractmethod
+    def convert_descriptions_to_narration(self, descriptions: List[str]) -> List[str]:
+        """
+        Modifies descriptions so they briefly describe what happened in a video scene by scene. Narrative style.
+        :param descriptions: Descriptions - one per scene
+        :return: modified descriptions in the form of narrative.
+        """
 
     @abstractmethod
     def synthesize_descriptions(self, fp: Union[str, Path], descriptions: List[str], language: str) -> List:

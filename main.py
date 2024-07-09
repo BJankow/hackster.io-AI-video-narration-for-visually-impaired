@@ -24,7 +24,8 @@ DATASETS_FOLDER = "../datasets/"
 CURRENT_DATASET_FOLDER = os.path.join(DATASETS_FOLDER, "hackster.io-AI-video-narration-for-visually-impaired-dataset")
 CURRENT_DATASET_FOLDER_PROCESSED = CURRENT_DATASET_FOLDER + "_processed"
 os.makedirs(CURRENT_DATASET_FOLDER_PROCESSED, exist_ok=True)
-FILENAME = "big_buck_bunny_1080p_h264.mov"
+# FILENAME = "big_buck_bunny_1080p_h264.mov"
+FILENAME = "Spirit.Stallion.of.the.Cimarron.2002.1080p.BluRay.DDP.5.1.x265-EDGE2020.mkv"
 FILEPATH = os.path.join(CURRENT_DATASET_FOLDER, FILENAME)
 LANGUAGES = ['en']
 

@@ -29,7 +29,7 @@ class ClipDescriptorBase(ClipDescriptorInterface, StandardLogger):
         super(ClipDescriptorBase, self).__init__()
         self.preferred_device = torch.device("cpu")
         self._desired_data_type = torch.float16
-        self.__model_id = None
+        self._model_id = None
 
     def _reload_preferred_device(self):
         if torch.cuda.is_available():
@@ -47,15 +47,15 @@ class ClipDescriptorViTGPT2(ClipDescriptorBase):
     def __init__(self):
         super(ClipDescriptorViTGPT2, self).__init__()
         self.model: Optional[VisionEncoderDecoderModel] = None
-        self.__tokenizer: Optional[GPT2TokenizerFast] = None
-        self.__processor: Optional[ViTImageProcessor] = None  # resizes & normalizes
-        self.__model_id = "nlpconnect/vit-gpt2-image-captioning"
+        self._tokenizer: Optional[GPT2TokenizerFast] = None
+        self._processor: Optional[ViTImageProcessor] = None  # resizes & normalizes
+        self._model_id = "nlpconnect/vit-gpt2-image-captioning"
 
     def _load_models(self):
         self._reload_preferred_device()
         if self.model is None:
             model = VisionEncoderDecoderModel.from_pretrained(
-                self.__model_id,
+                self._model_id,
                 torch_dtype=self._desired_data_type,
                 device_map=self.preferred_device,
                 low_cpu_mem_usage=True  # requires Accelerate version >= 0.9.0
@@ -65,11 +65,11 @@ class ClipDescriptorViTGPT2(ClipDescriptorBase):
             model = torch.compile(model, mode='reduce-overhead')  # speeds up inference. torch >= 2.0.
             self.model = model
 
-        if self.__tokenizer is None:
-            self.__tokenizer = GPT2TokenizerFast.from_pretrained(self.__model_id)
+        if self._tokenizer is None:
+            self._tokenizer = GPT2TokenizerFast.from_pretrained(self._model_id)
 
-        if self.__processor is None:
-            self.__processor = ViTImageProcessor.from_pretrained(self.__model_id)
+        if self._processor is None:
+            self._processor = ViTImageProcessor.from_pretrained(self._model_id)
 
     def describe(self, video: VideoStreamCv2, scenes: List[Tuple[FrameTimecode, FrameTimecode]]) -> List[str]:
         self._load_models()
@@ -80,38 +80,38 @@ class ClipDescriptorViTGPT2(ClipDescriptorBase):
             video.seek(s[0])  # beginning of scene will be representation
             frames.append(torch.from_numpy(video.read(decode=True, advance=True)))
 
-        pixel_values = self.__processor(torch.stack(frames, dim=0), return_tensors="pt").pixel_values
+        pixel_values = self._processor(torch.stack(frames, dim=0), return_tensors="pt").pixel_values
         pixel_values = pixel_values.to(self.preferred_device)
 
         with torch.inference_mode():
             output_ids = self.model.generate(pixel_values)
 
-        descriptions = self.__tokenizer.batch_decode(output_ids, skip_special_tokens=True)
+        descriptions = self._tokenizer.batch_decode(output_ids, skip_special_tokens=True)
 
-        self.__free_memory()
+        self._free_memory()
         descriptions = [description.strip() for description in descriptions]
         return descriptions
 
-    def __free_memory(self):
+    def _free_memory(self):
         del self.model
-        del self.__processor
-        del self.__tokenizer
+        del self._processor
+        del self._tokenizer
 
 
 class ClipDescriptorLLaVA15(ClipDescriptorBase):
     def __init__(self):
         super(ClipDescriptorLLaVA15, self).__init__()
         self.model: Optional[LlavaForConditionalGeneration] = None
-        self.__processor: Optional[LlavaProcessor] = None  # resizes & normalizes
-        self.__prompt = "USER: <image>\nWhat's the content of the image?\nASSISTANT:"
-        self.__model_id = "llava-hf/llava-1.5-7b-hf"
+        self._processor: Optional[LlavaProcessor] = None  # resizes & normalizes
+        self._prompt = "USER: <image>\nWhat's the content of the image?\nASSISTANT:"
+        self._model_id = "llava-hf/llava-1.5-7b-hf"
 
     def _load_models(self):
         self._reload_preferred_device()
 
         if self.model is None:
             model = LlavaForConditionalGeneration.from_pretrained(
-                self.__model_id,
+                self._model_id,
                 device_map=self.preferred_device,
                 torch_dtype=self._desired_data_type,
                 low_cpu_mem_usage=True  # requires Accelerate version >= 0.9.0
@@ -121,9 +121,9 @@ class ClipDescriptorLLaVA15(ClipDescriptorBase):
             model = torch.compile(model, mode='reduce-overhead')  # speeds up inference. torch >= 2.0.
             self.model = model
 
-        if self.__processor is None:
-            self.__processor = AutoProcessor.from_pretrained(self.__model_id)
-            # self.__processor.tokenizer.padding_side = "left"
+        if self._processor is None:
+            self._processor = AutoProcessor.from_pretrained(self._model_id)
+            # self._processor.tokenizer.padding_side = "left"
 
     def describe(self, video: VideoStreamCv2, scenes: List[Tuple[FrameTimecode, FrameTimecode]]) -> List[str]:
         self._load_models()
@@ -139,8 +139,8 @@ class ClipDescriptorLLaVA15(ClipDescriptorBase):
         sub_frames_list = [frames[i * PER_ITER: (i+1) * PER_ITER] for i in range(math.ceil(len(frames) / PER_ITER))]
         with torch.inference_mode():
             for sub_frames in tqdm(sub_frames_list, desc="Describing images..."):
-                inputs = self.__processor(
-                    [self.__prompt] * sub_frames.__len__(),
+                inputs = self._processor(
+                    [self._prompt] * sub_frames._len_(),
                     sub_frames,
                     # padding=True,
                     return_tensors="pt"
@@ -150,71 +150,79 @@ class ClipDescriptorLLaVA15(ClipDescriptorBase):
                     max_new_tokens=200,
                     do_sample=False
                 )
-                descriptions += self.__processor.batch_decode(
+                descriptions += self._processor.batch_decode(
                     output_ids,
                     skip_special_tokens=True,
                     # clean_up_tokenization_spaces=False
                 )
 
-        self.__free_memory()
+        self._free_memory()
         descriptions = [description.split("ASSISTANT: ")[1] for description in descriptions]
         return descriptions
 
-    def __free_memory(self):
+    def _free_memory(self):
         del self.model
-        del self.__processor
+        del self._processor
 
 
 class ClipDescriptorVideoLLava(ClipDescriptorBase):
     def __init__(self):
         super(ClipDescriptorVideoLLava, self).__init__()
         self.model: Optional[VideoLlavaForConditionalGeneration] = None
-        self.__processor: Optional[VideoLlavaProcessor] = None  # resizes & normalizes
-        self.__scene_descriptions = {}
-        self.__model_id = "LanguageBind/Video-LLaVA-7B-hf"
+        self._processor: Optional[VideoLlavaProcessor] = None  # resizes & normalizes
+        self._scene_descriptions = {}
+        self._model_id = "LanguageBind/Video-LLaVA-7B-hf"
 
-    def __prompt(self) -> str:
+    def _prompt(self) -> str:
         # https://www.reddit.com/r/LocalLLaMA/comments/1asyo9m/llava_16_how_to_write_proper_prompt_that_will/
         # (FinancialNailer answer is helpful to get rid of repeating "The image/video shows...")
+        #
         scenes_string = ""
-        for idx, description in self.__scene_descriptions.items():
-            scenes_string += f"{description} "
+        style_examples = (f"STYLE EXAMPLES:\n"
+                          "- Sunrise over the African savanna.\n"
+                          "- Animals gather at Pride Rock.\n"
+                          "- Mufasa and Sarabi present their newborn son, Simba.\n"
+                          "- Rafiki blesses him and lifts him up.\n"
+                          "- They cheer and bow.\n"
+                          "- The Pride Lands under the rising sun.\n"
+                          # "- A green field with blue sky.\n"
+                          # "- A house with several chairs and a woman standing in the middle of the living room. She is smiling\n"
+                          # "- Ocean with a small ship sailing though it.\n"
+                          "\n")
+        for idx, description in self._scene_descriptions.items():
+            scenes_string += f"\n {idx + 1}: {description}"
 
         # prompt = ("USER: <video>\n"
         #           "Describe the video scene briefly (in a laconic way), only the most important facts.\n"
         #           "Skip auxiliary words and helping verbs.\n"
-        #           "ASSISTANT:")
-        prompt = ("USER: <video>\n"
-                  "Act as a narrator, focusing on behaviour of characters that appear in the video. "
-                  "Your description should be brief, and collect only the most important facts. "
-                  "You are ordered to skip auxiliary words and helping verbs. "
-                  "You are also ordered not to mention about camera.\n"
-                  "ASSISTANT:")
-        # if scenes_string == "":
-        #     prompt = ("USER: <video>\n"
-        #               "Act as an narrator, focusing on characters that appear in the video and their behaviour. "
-        #               "Your description should be brief, and collect only the most important facts. "
-        #               "You are ordered to skip auxiliary words and helping verbs.\n"
-        #               "ASSISTANT:")
-        # else:
-        #     for description in self.__scene_descriptions.values():
-        #
-        #     prompt = ("USER: <video>\n"
-        #               f"Video context: '{scenes_string}' "
-        #               "Given video shows next shot from the film - describe it briefly (in a laconic way), only the most important facts. Tell only new facts. "
-        #               "Skip auxiliary words and helping verbs. "
-        #               "ASSISTANT:")
-        for description in self.__scene_descriptions.values():
-            print(description)
-        # print(prompt)
+        #           "NARRATION:")
+        if scenes_string == "":
+            prompt = (f"{style_examples}"
+                      "CURRENT SCENE: <video>\n"
+                      "TASK: Directly describe the scene without starting with auxiliary words or helping verbs. "
+                      "Use pronouns (like 'it', 'she', 'he') where appropriate to avoid repetition. "
+                      "Your description should be brief, and collect only the most important facts.\n"
+                      "DESCRIPTION:")
+        else:
+            prompt = (f"{style_examples}"
+                      f"PREVIOUS SCENE DESCRIPTIONS:{scenes_string}\n\n"
+                      "CURRENT SCENE:\n<video>\n"
+                      "TASK: Directly describe the scene without starting with auxiliary words or helping verbs. "
+                      "Use pronouns (like 'it', 'she', 'he') where appropriate to avoid repetition. "
+                      "The style of your description should be similar to given STYLE EXAMPLES given above."
+                      "Your description should be brief, and collect only the most important facts."
+                      "Keep in mind PREVIOUS SCENE DESCRIPTIONS given above - your description should try to be coherent continuation of the narration\n"
+                      "DESCRIPTION:")
+
+        print(prompt)
         return prompt
 
-    def __load_models(self):
+    def _load_models(self):
         self._reload_preferred_device()
 
         if self.model is None:
             model = (VideoLlavaForConditionalGeneration.from_pretrained(
-                self.__model_id,
+                self._model_id,
                 device_map=self.preferred_device,
                 torch_dtype=self._desired_data_type,
                 low_cpu_mem_usage=True  # requires Accelerate version >= 0.9.0
@@ -224,25 +232,25 @@ class ClipDescriptorVideoLLava(ClipDescriptorBase):
             model = torch.compile(model, mode='reduce-overhead')  # speeds up inference. torch >= 2.0.
             self.model = model
 
-        if self.__processor is None:
-            self.__processor = VideoLlavaProcessor.from_pretrained(self.__model_id)
+        if self._processor is None:
+            self._processor = VideoLlavaProcessor.from_pretrained(self._model_id)
 
     def describe(self, video: VideoStreamCv2, scenes: List[Tuple[FrameTimecode, FrameTimecode]]) -> List[str]:
-        self.__load_models()
+        self._load_models()
         # pick frame - take frame that is in 10% from beginning
         video.reset()  # make sure video is at the beginning
 
         s_idx = 0
         with torch.inference_mode():
-            for s in tqdm(scenes[:20], desc="Describing clips..."):
+            for s in tqdm(scenes[:30], desc="Describing clips..."):
                 clip = []
                 chosen_frames = np.linspace(start=s[0].frame_num, stop=s[1].frame_num, num=10, dtype=int)
                 for c_f in chosen_frames[1:-1]:
                     video.seek(int(c_f))
                     clip.append(torch.from_numpy(video.read()[:, :, ::-1].copy()))  # BGR2RGB conversion
                 clip = torch.stack(clip)
-                inputs = self.__processor(
-                    text=self.__prompt(),
+                inputs = self._processor(
+                    text=self._prompt(),
                     videos=clip,
                     # padding=True,
                     return_tensors="pt"
@@ -252,37 +260,37 @@ class ClipDescriptorVideoLLava(ClipDescriptorBase):
                     max_new_tokens=200,
                     do_sample=False
                 )
-                self.__scene_descriptions.update({
-                    s_idx: self.__processor.batch_decode(
+                self._scene_descriptions.update({
+                    s_idx: self._processor.batch_decode(
                         output_ids,
                         skip_special_tokens=True,
-                        # clean_up_tokenization_spaces=False
-                    )[0].split("ASSISTANT: ")[1]
+                        clean_up_tokenization_spaces=False
+                    )[0].split("DESCRIPTION: ")[1]
                 })
                 s_idx += 1
 
-        self.__free_memory()
-        return self.__scene_descriptions.values()
+        self._free_memory()
+        return self._scene_descriptions.values()
 
-    def __free_memory(self):
+    def _free_memory(self):
         del self.model
-        del self.__processor
+        del self._processor
 
 
 class ClipDescriptorLLaVAMistral16(ClipDescriptorBase):
     def __init__(self):
         super(ClipDescriptorLLaVAMistral16, self).__init__()
         self.model: Optional[LlavaNextForConditionalGeneration] = None
-        self.__processor: Optional[LlavaProcessor] = None  # resizes & normalizes
-        self.__prompt = "[INST] <image>\nWhat is shown in this image? [/INST]"
-        self.__model_id = "llava-hf/llava-v1.6-mistral-7b-hf"
+        self._processor: Optional[LlavaProcessor] = None  # resizes & normalizes
+        self._prompt = "[INST] <image>\nWhat is shown in this image? [/INST]"
+        self._model_id = "llava-hf/llava-v1.6-mistral-7b-hf"
 
-    def __load_models(self):
+    def _load_models(self):
         self._reload_preferred_device()
 
         if self.model is None:
             model = (LlavaNextForConditionalGeneration.from_pretrained(
-                self.__model_id,
+                self._model_id,
                 device_map=self.preferred_device,
                 torch_dtype=self._desired_data_type,
                 low_cpu_mem_usage=True  # requires Accelerate version >= 0.9.0
@@ -292,11 +300,11 @@ class ClipDescriptorLLaVAMistral16(ClipDescriptorBase):
             model = torch.compile(model, mode='reduce-overhead')  # speeds up inference. torch >= 2.0.
             self.model = model
 
-        if self.__processor is None:
-            self.__processor = LlavaNextProcessor.from_pretrained(self.__model_id)
+        if self._processor is None:
+            self._processor = LlavaNextProcessor.from_pretrained(self._model_id)
 
     def describe(self, video: VideoStreamCv2, scenes: List[Tuple[FrameTimecode, FrameTimecode]]) -> List[str]:
-        self.__load_models()
+        self._load_models()
         # pick frame - take frame that is in 10% from beginning
         video.reset()  # make sure video is at the beginning
         frames = []
@@ -310,8 +318,8 @@ class ClipDescriptorLLaVAMistral16(ClipDescriptorBase):
         with torch.inference_mode():
             for sub_frames in tqdm(sub_frames_list, desc="Describing images..."):
                 print(f"OBWAZANEK")
-                inputs = self.__processor(
-                    self.__prompt,
+                inputs = self._processor(
+                    self._prompt,
                     sub_frames[0],
                     # padding=True,
                     return_tensors="pt"
@@ -321,34 +329,34 @@ class ClipDescriptorLLaVAMistral16(ClipDescriptorBase):
                     **inputs,
                     max_new_tokens=100
                 )
-                descriptions += self.__processor.decode(
+                descriptions += self._processor.decode(
                     output_ids[0],
                     skip_special_tokens=True,
                 )
 
-        self.__free_memory()
+        self._free_memory()
         descriptions = [description.split("ASSISTANT: ")[1] for description in descriptions]
         return descriptions
 
-    def __free_memory(self):
+    def _free_memory(self):
         del self.model
-        del self.__processor
+        del self._processor
 
 
 class ClipDescriptorLLaVANextVideo34B(ClipDescriptorBase):
     def __init__(self):
         super(ClipDescriptorLLaVANextVideo34B, self).__init__()
         self.model: Optional[LlavaForConditionalGeneration] = None
-        self.__processor: Optional[LlavaProcessor] = None  # resizes & normalizes
-        self.__prompt = "USER: <image>\nWhat's the content of the image? ASSISTANT:"
-        self.__model_id = "llava-hf/LLaVA-NeXT-Video-34B-hf"
+        self._processor: Optional[LlavaProcessor] = None  # resizes & normalizes
+        self._prompt = "USER: <image>\nWhat's the content of the image? ASSISTANT:"
+        self._model_id = "llava-hf/LLaVA-NeXT-Video-34B-hf"
 
-    def __load_models(self):
+    def _load_models(self):
         self._reload_preferred_device()
 
         if self.model is None:
             model = LlavaNextForConditionalGeneration.from_pretrained(
-                self.__model_id,
+                self._model_id,
                 device_map=self.preferred_device,
                 torch_dtype=self._desired_data_type,
                 low_cpu_mem_usage=True  # requires Accelerate version >= 0.9.0
@@ -358,28 +366,28 @@ class ClipDescriptorLLaVANextVideo34B(ClipDescriptorBase):
             model = torch.compile(model, mode='reduce-overhead')  # speeds up inference. torch >= 2.0.
             self.model = model
 
-        if self.__processor is None:
-            self.__processor = AutoProcessor.from_pretrained(self.__model_id)
+        if self._processor is None:
+            self._processor = AutoProcessor.from_pretrained(self._model_id)
 
 
 class ClipDescriptorGPT4o(ClipDescriptorBase):
     def __init__(self, open_ai_key_fp: Union[str, Path]):
         super(ClipDescriptorGPT4o, self).__init__()
-        self.__open_ai_key_fp = open_ai_key_fp
+        self._open_ai_key_fp = open_ai_key_fp
         self.cpu_device = torch.device("cpu")
         self.preferred_device = torch.device("cpu")
         self.client: Optional[OpenAI] = None
 
-    def __load_models(self):
-        # self.__reload_preferred_device()
-        with open(self.__open_ai_key_fp, "r") as f:
+    def _load_models(self):
+        # self._reload_preferred_device()
+        with open(self._open_ai_key_fp, "r") as f:
             key = f.readline().strip('\n')
 
         if self.client is None:
             self.client = OpenAI(api_key=key)
 
     def describe(self, video: VideoStreamCv2, scenes: List[Tuple[FrameTimecode, FrameTimecode]]) -> List[str]:
-        self.__load_models()
+        self._load_models()
         # pick frame - take frame that is in 10% from beginning
         video.reset()  # make sure video is at the beginning
         base_64_frames_per_scene = []
@@ -410,10 +418,10 @@ class ClipDescriptorGPT4o(ClipDescriptorBase):
             max_tokens=300
         )
 
-        self.__free_memory()
+        self._free_memory()
         return descriptions
 
-    def __free_memory(self):
+    def _free_memory(self):
         del self.client
 
 

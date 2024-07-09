@@ -19,18 +19,18 @@ class MovieHandlerBase(MovieHandlerInterface, StandardLogger):
 
     def __init__(self):
         super(MovieHandlerInterface, self).__init__()
-        self.__video: Optional[VideoStreamCv2] = None
-        self.__audio: Optional[AudioSegment] = None
+        self._video: Optional[VideoStreamCv2] = None
+        self._audio: Optional[AudioSegment] = None
 
     def load(self, fp: Union[str, Path]) -> Tuple[VideoStreamCv2, AudioSegment]:
-        self.__video = VideoStreamCv2(fp)
-        self.__audio = AudioSegment.from_file(fp)
+        self._video = VideoStreamCv2(fp)
+        self._audio = AudioSegment.from_file(fp)
 
-        return self.__video, self.__audio
+        return self._video, self._audio
 
     def get_video(self) -> Optional[VideoStreamCv2]:
-        return self.__video
+        return self._video
 
     def get_audio(self) -> Optional[AudioFileClip]:
-        return self.__audio
+        return self._audio
 

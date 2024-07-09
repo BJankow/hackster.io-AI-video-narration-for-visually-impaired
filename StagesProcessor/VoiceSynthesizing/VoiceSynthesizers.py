@@ -30,9 +30,9 @@ LANGUAGE2READER = {
     'en': os.path.join(READERS_FOLDER, 'lector_en.wav'),
     # 'pl': os.path.join(READERS_FOLDER, 'Knapik.mp3'),
     # 'pl': os.path.join(READERS_FOLDER, 'Knapik2.mp3'),
-    'pl': os.path.join(READERS_FOLDER, 'BARTEK.mp3'),
+    # 'pl': os.path.join(READERS_FOLDER, 'BARTEK.mp3'),
     # 'pl': os.path.join(READERS_FOLDER, 'DariuszSzpakowski.mp3'),
-    # 'pl': os.path.join(READERS_FOLDER, 'lektor_pl.wav')
+    'pl': os.path.join(READERS_FOLDER, 'lektor_pl.wav')
     # 'pl': os.path.join(READERS_FOLDER, 'MagdalenaSchejbal.mp3')
 }
 
