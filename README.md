@@ -50,7 +50,7 @@ You will find the official description here: <https://rocm.docs.amd.com/projects
 > <https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html>
 
 I tried 2 distributions: Ubuntu 22.04.4 LTS and Manjaro.
-Here is how we did it:
+Here is how I did it:
 
 ---
 
@@ -84,7 +84,7 @@ The Arch repository covers all needed packages, just install `rocm-hip-sdk` via 
 sudo pacman -Sy rocm-hip-sdk
 ```
 
-The packages we installed:
+The packages I installed:
 
 ```shell
 Packages (42) cmake-3.29.3-1  comgr-6.0.2-1  composable-kernel-6.0.2-1  cppdap-1.58.0-1  hip-runtime-amd-6.0.2-4  hipblas-6.0.2-1  hipcub-6.0.2-1  hipfft-6.0.2-1  hiprand-6.0.2-1  hipsolver-6.0.2-1  hipsparse-6.0.2-1  hsa-rocr-6.0.2-2  hsakmt-roct-6.0.0-2  jsoncpp-1.9.5-2
@@ -99,7 +99,7 @@ Optionally install an additional app for reporting system info:
 sudo pacman -Sy rocminfo
 ```
 
-The version we used:
+The version I used:
 
 ```shell
 Packages (1) rocminfo-6.0.2-1
