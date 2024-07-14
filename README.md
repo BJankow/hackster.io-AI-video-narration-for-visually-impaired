@@ -22,7 +22,7 @@ Main features:
 - Identification of objects, actions, and scenes.
 - Synchronized narration with video playback.
 
-## Hardware and software used to build solution
+## Hardware and software used to build my solution
 
 List for system requirements and supported GPUs:
 
