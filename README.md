@@ -37,7 +37,7 @@ Software:
 - AMD ROCm Software
 - Deep learning framework - PyTorch for AI development.
 - Computer vision and natural language processing libraries ([OpenCV](https://github.com/opencv/opencv-python), [Transformers](https://huggingface.co/docs/transformers/index) :hugs:, [Pydub](https://github.com/jiaaro/pydub), [PySceneDetect](https://www.scenedetect.com/)).
-- Video playback software with synchronization capabilities.
+- Video playback software with synchronization capabilities ([VLC media player](https://www.videolan.org)).
 
 ## Drivers installation
 
