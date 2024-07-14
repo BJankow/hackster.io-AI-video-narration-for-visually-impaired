@@ -24,10 +24,6 @@ Main features:
 
 ## Hardware and software used to build my solution
 
-List for system requirements and supported GPUs:
-
-<https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html>
-
 Hardware:
 
 - AMD Radeon PRO W7900 GPU
@@ -46,11 +42,14 @@ Software:
 
 ## Drivers installation
 
-For this project we use only Linux.
+For this project I use Linux only.
 The first step is to install AMD GPU drivers and this process varies between different Linux distributions.
 You will find the official description here: <https://rocm.docs.amd.com/projects/install-on-linux/en/latest/>
 
-We tried 2 distributions: Ubuntu 22.04.4 LTS and Manjaro.
+> List of system requirements and supported GPUs:
+> <https://rocm.docs.amd.com/projects/install-on-linux/en/latest/reference/system-requirements.html>
+
+I tried 2 distributions: Ubuntu 22.04.4 LTS and Manjaro.
 Here is how we did it:
 
 ---
