@@ -10,8 +10,6 @@ I wanted to create a generative tool for voice narration that would describe to 
 
 I built an AI-driven video narration system tailored specifically for visually impaired. Unlike existing solutions, which often rely on pre-recorded audio descriptions, my system utilizes technologies such as convolutional neural networks (CNN) for human pose detection and description, along with an open-source language model (LLM) for scene interpretation.
 
-To enhance accuracy and relevance, I fine-tuned these models using datasets sourced from platforms like OpenDataLab. Furthermore, I plan to employ a hyperparameter tuning framework to optimize the performance of the system.
-
 This approach sets my solution apart by offering dynamic descriptions that adapt to the content being viewed, ultimately providing visually impaired users with a more immersive and engaging experience.
 
 ## Main features of the solution
