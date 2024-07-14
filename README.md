@@ -36,7 +36,7 @@ Software:
 - OS: Linux (tried Ubuntu 22.04.4 LTS and Manjaro)
 - AMD ROCm Software
 - Deep learning framework - PyTorch for AI development.
-- Computer vision and natural language processing libraries.
+- Computer vision and natural language processing libraries ([OpenCV](https://github.com/opencv/opencv-python), [Transformers](https://huggingface.co/docs/transformers/index) :hugs:, [Pydub](https://github.com/jiaaro/pydub), [PySceneDetect](https://www.scenedetect.com/)).
 - Video playback software with synchronization capabilities.
 
 ## Drivers installation
