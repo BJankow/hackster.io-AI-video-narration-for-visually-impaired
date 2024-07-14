@@ -4,7 +4,7 @@
 
 Visual content is almost an inseparable part of the modern digital world. While movies and videos are a significant form of entertainment and communication in today's society, those who are visually impaired often miss out on the visual aspects of these mediums.
 The problem I aim to address is the lack of accessibility to visual content for visually impaired.
-I wanted to create a generative tool for voice narration that would describe to the listener the situation that is happening on the screen. This would be an audio complement for a visual content, just as it happens in books.
+I wanted to create a generative tool for voice narration that would describe to the listener the situation that is happening on the screen - narrator.
 
 ## Solution idea
 
