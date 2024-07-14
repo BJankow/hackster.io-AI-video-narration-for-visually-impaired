@@ -14,7 +14,7 @@ This approach sets my solution apart by offering dynamic descriptions that adapt
 
 ## Main features of the solution
 
-<!-- Here we are going to put a scheme, but we don't know it yet -->
+> TODO: Here we are going to put a scheme, but we don't know it yet
 
 Main features:
 
