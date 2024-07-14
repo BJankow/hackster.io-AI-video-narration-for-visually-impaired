@@ -38,7 +38,6 @@ Software:
 - Deep learning framework - PyTorch for AI development.
 - Computer vision and natural language processing libraries.
 - Video playback software with synchronization capabilities.
-- Tools for building ML pipeline (e.g. MLflow, kubeflow, git).
 
 ## Drivers installation
 
