@@ -189,8 +189,8 @@ class ClipDescriptorVideoLLava(ClipDescriptorBase):
                           # "- A house with several chairs and a woman standing in the middle of the living room. She is smiling\n"
                           # "- Ocean with a small ship sailing though it.\n"
                           "\n")
-        for idx, description in self._scene_descriptions.items():
-            scenes_string += f"\n {idx + 1}: {description}"
+        for idx, description in list(self._scene_descriptions.items())[-15:]:
+            scenes_string += f"\nScene {idx + 1}: {description}"
 
         # prompt = ("USER: <video>\n"
         #           "Describe the video scene briefly (in a laconic way), only the most important facts.\n"
@@ -209,7 +209,7 @@ class ClipDescriptorVideoLLava(ClipDescriptorBase):
                       "CURRENT SCENE:\n<video>\n"
                       "TASK: Directly describe the scene without starting with auxiliary words or helping verbs. "
                       "Use pronouns (like 'it', 'she', 'he') where appropriate to avoid repetition. "
-                      "The style of your description should be similar to given STYLE EXAMPLES given above."
+                      "The style of your description should be similar to STYLE EXAMPLES given above."
                       "Your description should be brief, and collect only the most important facts."
                       "Keep in mind PREVIOUS SCENE DESCRIPTIONS given above - your description should try to be coherent continuation of the narration\n"
                       "DESCRIPTION:")
@@ -242,7 +242,7 @@ class ClipDescriptorVideoLLava(ClipDescriptorBase):
 
         s_idx = 0
         with torch.inference_mode():
-            for s in tqdm(scenes[:30], desc="Describing clips..."):
+            for s in tqdm(scenes, desc="Describing clips..."):
                 clip = []
                 chosen_frames = np.linspace(start=s[0].frame_num, stop=s[1].frame_num, num=10, dtype=int)
                 for c_f in chosen_frames[1:-1]:
