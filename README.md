@@ -35,7 +35,7 @@ Software:
 
 - OS: Linux (tried Ubuntu 22.04.4 LTS and Manjaro)
 - AMD ROCm Software
-- Deep learning frameworks (TensorFlow or PyTorch) for AI development.
+- Deep learning framework - PyTorch for AI development.
 - Computer vision and natural language processing libraries.
 - Video playback software with synchronization capabilities.
 - Tools for building ML pipeline (e.g. MLflow, kubeflow, git).
