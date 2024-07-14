@@ -8,13 +8,13 @@ I wanted to create a generative tool for voice narration that would describe to 
 
 ## Solution idea
 
-I built an AI-driven video narration system tailored specifically for visually impaired. Unlike existing solutions, which often rely on pre-recorded audio descriptions, my system utilizes technologies such as open-source large language models (LLMs) for scene interpretation and Python libraries for video and audio processing.
+I built an AI-driven video narration system tailored specifically for visually impaired. Unlike existing solutions, which often rely on pre-recorded audio descriptions, my system utilizes technologies such as open-source Large Language Models (LLMs) for scene interpretation and Python libraries for video and audio processing.
 
 This approach sets my solution apart by offering dynamic descriptions that adapt to the content being viewed, ultimately providing visually impaired users with a more immersive and engaging experience.
 
 ## Main features of the solution
 
-My solution involves testing multiple Language Model architectures to determine the most suitable one. During this process, I assessed potential limitations of the AMD Radeon PRO W7900 GPU when working with these models. The results of these tests are documented in the project summary.
+My solution involves testing multiple Large Language Model architectures to determine the most suitable one. During this process, I assessed potential limitations of the AMD Radeon PRO W7900 GPU when working with these models. The results of these tests are documented in the project summary.
 
 The efficiency of our visual narration system relies heavily on high-performance GPUs with sufficient VRAM to ensure smooth interpretation speed, measured in FPS (frames per second). Training AI models for such systems demands substantial compute capability. The AMD Radeon PRO W7900 GPU, boasting 48 GB of VRAM and offering 61 TFLOPS for float32 or 122 TFLOPS for float16 aligns with these requirements. Opting for a stationary solution over a cloud-based one enabled us to utilize local data, minimizing network usage and overhead, especially considering the potentially large sizes of the datasets involved, often exceeding 150 GB.
 
