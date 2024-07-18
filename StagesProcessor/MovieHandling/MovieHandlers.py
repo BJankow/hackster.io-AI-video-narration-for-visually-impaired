@@ -4,6 +4,7 @@ from copy import deepcopy
 from pathlib import Path
 from typing import Union, Optional, Tuple
 
+import numpy as np
 # 3rd party library imports
 from moviepy.editor import VideoFileClip, AudioFileClip
 from pydub import AudioSegment
@@ -27,6 +28,17 @@ class MovieHandlerBase(MovieHandlerInterface, StandardLogger):
         self._audio = AudioSegment.from_file(fp)
 
         return self._video, self._audio
+
+    def get_frame(self, idx: float) -> np.array:
+        """
+        Obtains single frame of Video
+
+        :param idx:
+        :return:
+        """
+        self._video.seek(idx)
+        frame = self._video.read()
+        return frame
 
     def get_video(self) -> Optional[VideoStreamCv2]:
         return self._video

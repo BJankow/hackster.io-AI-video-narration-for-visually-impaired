@@ -104,6 +104,23 @@ class ClipDescriptorLLaVA15(ClipDescriptorBase):
         self.model: Optional[LlavaForConditionalGeneration] = None
         self._processor: Optional[LlavaProcessor] = None  # resizes & normalizes
         self._prompt = "USER: <image>\nWhat's the content of the image?\nASSISTANT:"
+        # style_examples = (f"STYLE EXAMPLES:\n"
+        #                   "- Sunrise over the African savanna.\n"
+        #                   "- Animals gather at Pride Rock.\n"
+        #                   "- Mufasa and Sarabi present their newborn son, Simba.\n"
+        #                   "- Rafiki blesses him and lifts him up.\n"
+        #                   "- They cheer and bow.\n"
+        #                   "- The Pride Lands under the rising sun.\n"
+        #                   # "- A green field with blue sky.\n"
+        #                   # "- A house with several chairs and a woman standing in the middle of the living room. She is smiling\n"
+        #                   # "- Ocean with a small ship sailing though it.\n"
+        #                   "\n")
+        # self._prompt = (f"{style_examples}"
+        #                 "CURRENT SCENE: <image>\n"
+        #                 "TASK: Directly describe the scene without starting with auxiliary words or helping verbs. "
+        #                 "Use pronouns (like 'it', 'she', 'he') where appropriate to avoid repetition. "
+        #                 "Your description should be brief, and collect only the most important facts.\n"
+        #                 "DESCRIPTION:")
         self._model_id = "llava-hf/llava-1.5-7b-hf"
 
     def _load_models(self):
@@ -159,6 +176,30 @@ class ClipDescriptorLLaVA15(ClipDescriptorBase):
         self._free_memory()
         descriptions = [description.split("ASSISTANT: ")[1] for description in descriptions]
         return descriptions
+
+    def describe_single_image(self, image: np.array):
+        self._load_models()
+
+        with torch.inference_mode():
+            inputs = self._processor(
+                self._prompt,
+                image,
+                # padding=True,
+                return_tensors="pt"
+            ).to(self.preferred_device, self._desired_data_type)
+            output_ids = self.model.generate(
+                **inputs,
+                max_new_tokens=200,
+                do_sample=False
+            )
+            description = self._processor.batch_decode(
+                output_ids,
+                skip_special_tokens=True,
+                # clean_up_tokenization_spaces=False
+            )[0]
+
+        self._free_memory()
+        return description
 
     def _free_memory(self):
         del self.model
@@ -370,59 +411,6 @@ class ClipDescriptorLLaVANextVideo34B(ClipDescriptorBase):
             self._processor = AutoProcessor.from_pretrained(self._model_id)
 
 
-class ClipDescriptorGPT4o(ClipDescriptorBase):
-    def __init__(self, open_ai_key_fp: Union[str, Path]):
-        super(ClipDescriptorGPT4o, self).__init__()
-        self._open_ai_key_fp = open_ai_key_fp
-        self.cpu_device = torch.device("cpu")
-        self.preferred_device = torch.device("cpu")
-        self.client: Optional[OpenAI] = None
-
-    def _load_models(self):
-        # self._reload_preferred_device()
-        with open(self._open_ai_key_fp, "r") as f:
-            key = f.readline().strip('\n')
-
-        if self.client is None:
-            self.client = OpenAI(api_key=key)
-
-    def describe(self, video: VideoStreamCv2, scenes: List[Tuple[FrameTimecode, FrameTimecode]]) -> List[str]:
-        self._load_models()
-        # pick frame - take frame that is in 10% from beginning
-        video.reset()  # make sure video is at the beginning
-        base_64_frames_per_scene = []
-        for s in tqdm(scenes[1:2], desc="Encoding frames..."):
-            # video.seek(s[0])  # beginning of scene will be representation
-            scene_frames = []
-            while video.frame_number < s[1].frame_num:
-                frame = video.read(decode=True, advance=True)
-                _, buffer = cv2.imencode(".jpg", frame)
-                scene_frames.append(base64.b64encode(buffer).decode("utf-8"))
-            base_64_frames_per_scene.append(scene_frames)
-
-        prompt_messages = [
-            {
-                "role": "user",
-                "content": [
-                    "These are frames from a video scene that I want to depict. Explain what is in the scene shortly.",
-                    *map(lambda x: {"image": x, "resize": 768}, base_64_frames)
-                ]
-            } for base_64_frames in base_64_frames_per_scene
-        ]
-        # You are assistant that describes
-
-        descriptions = self.client.chat.completions.create(
-            # model="gpt-4o",
-            model="gpt-3.5-turbo",
-            messages=prompt_messages,
-            max_tokens=300
-        )
-
-        self._free_memory()
-        return descriptions
-
-    def _free_memory(self):
-        del self.client
 
 
 

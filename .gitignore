@@ -7,11 +7,15 @@
 ### log files ###
 *.log*
 
+### GIMP
+*.xcf
+
 ### Torch Lightning
 lightning_logs
 
 ### Directories ###
 grouping_frames_into_scenes/scene_detect_cache
+single_frame_description_output/
 
 ### conda ###
 *condaenv*.txt
