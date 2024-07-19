@@ -512,3 +512,10 @@ During this process, I assessed potential limitations of the AMD Radeon PRO W790
 The results of these tests are documented in the project summary.
 
 The efficiency of our visual narration system relies heavily on high-performance GPUs with sufficient VRAM to ensure smooth interpretation speed, measured in FPS (frames per second). Training AI models for such systems demands substantial compute capability. The AMD Radeon PRO W7900 GPU, boasting 48 GB of VRAM and offering 61 TFLOPS for float32 or 122 TFLOPS for float16 aligns with these requirements. Opting for a stationary solution over a cloud-based one enabled us to utilize local data, minimizing network usage and overhead, especially considering the potentially large sizes of the datasets involved, often exceeding 150 GB.
+
+## License
+
+[Big Buck Bunny](https://peach.blender.org/) is licensed under the
+[Creative Commons Attribution 3.0 license](http://creativecommons.org/licenses/by/3.0/).
+
+(c) copyright 2008, Blender Foundation / www.bigbuckbunny.org
