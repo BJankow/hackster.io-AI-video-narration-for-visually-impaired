@@ -230,7 +230,7 @@ class ClipDescriptorVideoLLava(ClipDescriptorBase):
                           # "- A house with several chairs and a woman standing in the middle of the living room. She is smiling\n"
                           # "- Ocean with a small ship sailing though it.\n"
                           "\n")
-        for idx, description in list(self._scene_descriptions.items())[-15:]:
+        for idx, description in list(self._scene_descriptions.items())[-15:]:  # consider only N last descriptions
             scenes_string += f"\nScene {idx + 1}: {description}"
 
         # prompt = ("USER: <video>\n"
@@ -255,7 +255,6 @@ class ClipDescriptorVideoLLava(ClipDescriptorBase):
                       "Keep in mind PREVIOUS SCENE DESCRIPTIONS given above - your description should try to be coherent continuation of the narration\n"
                       "DESCRIPTION:")
 
-        print(prompt)
         return prompt
 
     def _load_models(self):
@@ -358,14 +357,12 @@ class ClipDescriptorLLaVAMistral16(ClipDescriptorBase):
         sub_frames_list = [frames[i * PER_ITER: (i+1) * PER_ITER] for i in range(math.ceil(len(frames) / PER_ITER))]
         with torch.inference_mode():
             for sub_frames in tqdm(sub_frames_list, desc="Describing images..."):
-                print(f"OBWAZANEK")
                 inputs = self._processor(
                     self._prompt,
                     sub_frames[0],
                     # padding=True,
                     return_tensors="pt"
                 ).to(self.preferred_device)
-                print(f"INPUTS: {inputs}")
                 output_ids = self.model.generate(
                     **inputs,
                     max_new_tokens=100

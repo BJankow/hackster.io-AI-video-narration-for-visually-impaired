@@ -11,7 +11,7 @@ from moviepy.editor import VideoFileClip, AudioFileClip
 
 # local imports
 from StagesProcessor import StagesProcessor
-from StagesProcessor.ClipDescribing import (ClipDescriptorViTGPT2, ClipDescriptorLLaVA15, ClipDescriptorGPT4o,
+from StagesProcessor.ClipDescribing import (ClipDescriptorViTGPT2, ClipDescriptorLLaVA15,
                                             ClipDescriptorLLaVAMistral16, ClipDescriptorLLaVANextVideo34B,
                                             ClipDescriptorVideoLLava)
 from StagesProcessor.MovieComposing import MovieComposerBase
@@ -24,7 +24,9 @@ DATASETS_FOLDER = "../datasets/"
 CURRENT_DATASET_FOLDER = os.path.join(DATASETS_FOLDER, "hackster.io-AI-video-narration-for-visually-impaired-dataset")
 CURRENT_DATASET_FOLDER_PROCESSED = CURRENT_DATASET_FOLDER + "_processed"
 os.makedirs(CURRENT_DATASET_FOLDER_PROCESSED, exist_ok=True)
-FILENAME = "big_buck_bunny_1080p_h264.mov"
+# FILENAME = "big_buck_bunny_1080p_h264.mov"
+# FILENAME = "Episode 1 - Winter is Coming.mp4"
+FILENAME = "02 - Samotny cyborg.mp4"
 # FILENAME = "Spirit.Stallion.of.the.Cimarron.2002.1080p.BluRay.DDP.5.1.x265-EDGE2020.mkv"
 FILEPATH = os.path.join(CURRENT_DATASET_FOLDER, FILENAME)
 LANGUAGES = ['en']
@@ -78,3 +80,5 @@ if __name__ == '__main__':
             synthesized_descriptions=synthesized_descriptions
         )
 
+# MEMORY PROBLEMS? MAYBE IT HELPS
+# Can't guarantee it will work, but I think you just have to call llama_kv_cache_tokens_rm(ctx, -1, -1); before every new input
