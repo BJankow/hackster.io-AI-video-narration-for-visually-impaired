@@ -16,6 +16,8 @@ This approach sets my solution apart by offering dynamic descriptions that adapt
 
 ![scheme](doc/img/MainFeatures.png)
 
+The above image shows general idea of the solution. From the left side we can see a shot from a movie ("Big Buck Bunny" in this case). The shot along with prepared promped is passed to the neural network. The AI model generates text that describes current situation. At the end the description is synthesized into speech and added to video playback/
+
 - Descriptions of video scenes.
 - Identification of objects, actions, and scenes.
 - Synchronized narration with video playback.
