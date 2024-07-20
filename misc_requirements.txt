@@ -14,5 +14,7 @@ scenedetect[opencv]  # FROM: https://www.scenedetect.com/
 scikit-learn
 soundfile
 transformers
+torchsummary
+torchmetrics
 TTS
 tqdm

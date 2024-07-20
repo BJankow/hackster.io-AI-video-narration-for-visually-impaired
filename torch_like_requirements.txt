@@ -1,4 +1,0 @@
-torch
-torchmetrics
-torchsummary
-torchvision
