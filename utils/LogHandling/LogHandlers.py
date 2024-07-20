@@ -31,7 +31,11 @@ class CustomFormatter(logging.Formatter):
     """
 
     grey = "\x1b[37;20m"
+    cyan = "\x1b[36;20m"
+    violet = "\x1b[35;20m"
+    blue = "\x1b[34;20m"
     yellow = "\x1b[33;20m"
+    green = "\x1b[32;20m"
     red = "\x1b[31;20m"
     bold_red = "\x1b[31;1m"
     reset = "\x1b[0m"
@@ -39,7 +43,7 @@ class CustomFormatter(logging.Formatter):
 
     FORMATS = {
         logging.DEBUG: grey + f + reset,
-        logging.INFO: grey + f + reset,
+        logging.INFO: green + f + reset,
         logging.WARNING: yellow + f + reset,
         logging.ERROR: red + f + reset,
         logging.CRITICAL: bold_red + f + reset

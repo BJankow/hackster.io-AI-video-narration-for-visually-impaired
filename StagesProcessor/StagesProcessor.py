@@ -51,6 +51,7 @@ class StagesProcessor(StagesProcessorInterface, StandardLogger):
         # self.compose_movie = mem.cache(self.compose_movie, ignore=['out_fp', 'scenes', 'synthesized_descriptions'])
 
     def load_movie(self, fp: Union[str, Path]) -> Tuple:
+        self._logger.info("Loading movie...")
         return self.movie_handler.load(fp=fp)
 
     def detect_scenes(
@@ -59,6 +60,7 @@ class StagesProcessor(StagesProcessorInterface, StandardLogger):
             *args,
             **kwargs
     ) -> List:
+        self._logger.info("Detecting scenes...")
         self.load_movie(fp=fp)
         return self.scene_detector.detect_scenes(video=self.movie_handler.get_video())
 
@@ -75,6 +77,7 @@ class StagesProcessor(StagesProcessorInterface, StandardLogger):
         :return: List of text descriptions.
         """
 
+        self._logger.info("Generating descriptions...")
         self.load_movie(fp=fp)
         descriptions = self.clip_descriptor.describe(video=self.movie_handler.get_video(), scenes=scenes)
         return descriptions
@@ -85,6 +88,8 @@ class StagesProcessor(StagesProcessorInterface, StandardLogger):
         :param descriptions: Descriptions - one per scene
         :return: modified descriptions in the form of narrative.
         """
+
+        self._logger.info("Converting descriptions to narration...")
         if self.summarizer is not None:
             return self.summarizer.summarize(sentences=descriptions)
         else:
@@ -93,6 +98,7 @@ class StagesProcessor(StagesProcessorInterface, StandardLogger):
             return descriptions
 
     def synthesize_descriptions(self, fp: Union[str, Path], descriptions: List[str], language: str) -> List:
+        self._logger.info("Synthesizing descriptions...")
         return self.voice_synthesizer.synthesize(texts=descriptions, language=language)
 
     def compose_movie(
@@ -110,6 +116,8 @@ class StagesProcessor(StagesProcessorInterface, StandardLogger):
         :param synthesized_descriptions: descriptions as audio.
         :return:
         """
+
+        self._logger.info("Composing movie...")
         self.movie_composer.compose(
             video_fp=fp,
             audio_fp=fp,
