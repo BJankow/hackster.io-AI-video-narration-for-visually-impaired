@@ -428,3 +428,5 @@ terraform.rc
 
 ### My Special Files ###
 !Dataflow_Stages.png
+
+!doc/**
