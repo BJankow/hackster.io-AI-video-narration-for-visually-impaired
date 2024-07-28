@@ -6,7 +6,25 @@ Visual content is almost an inseparable part of the modern digital world. While 
 The problem I aim to address is the lack of accessibility to visual content for visually impaired.
 I wanted to create a generative voice narration tool that would describe to the listener the situation happening on the screen.
 
+Main difficulties that can be faced:
+
+- various content of input movies (many objects of different colors, background types, characters, behaviour, etc.)
+- catching information of nuances and gestures
+- plot understanding (not only single scene)
+- understanding beginning and ending of the scene
+
 ## Solution
+
+Considering main difficulties mentioned in previous section it seems that Machine Learning **Transformers** models 
+may be a quite good approach to face the problem. Transformers have developed very well over the last couple of years. 
+Many researchers have put their effort into developing **state-of-the-art** solutions that pushed transformer's capabilities
+even further.
+For example GPT-4o model that has been released lately is achieving outstanding results. 
+Therefore, considering the use of Transformers seems like reasonable approach. 
+Additionally, there are multiple open-source transformer models for images and several for videos over the internet 
+which are easy to use (after meeting hardware requirements).
+
+> TODO: work on this description
 
 I built an AI-driven video narration system tailored specifically for visually impaired. Unlike existing solutions, which often rely on pre-recorded audio descriptions, my system utilizes technologies such as open-source Large Language Models (LLMs) for scene interpretation and Python libraries for video and audio processing.
 
@@ -20,7 +38,7 @@ Ultimately this improves accessibility for the visually impaired users by provid
 
 ![scheme](doc/img/MainFeatures.png)
 
-The above image shows the general idea of the solution. On the left side we can see a shot from the movie "Big Buck Bunny". The shot, along with prepared promped, is passed to the neural network. The AI model generates a text that describes current situation. Finally, the description is synthesized into a speech and added to the video playback.
+The above image shows the general idea of the solution. On the left side we can see a shot from the movie "Big Buck Bunny". The shot, along with prepared prompt, is passed to the neural network. The AI model generates a text that describes current situation. Finally, the description is synthesized into a speech and added to the video playback.
 
 In summary, the main features of the solution are:
 
@@ -33,7 +51,14 @@ In summary, the main features of the solution are:
 
 ## Results
 
-> TODO: prezentacja przykładowego filmu, chyba najlapiej wstawić link do filmu na YT
+Below is an image with link to YouTube video that shows result of processing "Big Buck Bunny" movie through my system.
+Narrator is already embedded into the movie.
+
+[![IMAGE ALT TEXT HERE](doc/img/Thumbnail.png)](https://www.youtube.com/watch?v=F4pD0IXFhg4)
+
+## Solution Details
+
+> TODO: add scheme explaining step-by-step how the solutions works.
 
 ## Used hardware and software (BOM)
 
