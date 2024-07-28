@@ -1,7 +1,7 @@
 # standard library imports
 import joblib
 from pathlib import Path
-from typing import Union, Tuple, List, Optional
+from typing import Union, Tuple, List, Optional, Iterable
 
 import numpy as np
 # 3rd party library imports

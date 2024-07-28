@@ -1,8 +1,9 @@
 # standard library imports
+from argparse import ArgumentParser
 from io import BytesIO
 import os
 
-from typing import List, Tuple
+from typing import List, Tuple, Optional, Set
 
 # 3rd party library imports
 from deep_translator import GoogleTranslator
@@ -18,18 +19,14 @@ from StagesProcessor.MovieComposing import MovieComposerBase
 from StagesProcessor.MovieHandling import MovieHandlerBase
 from StagesProcessor.ScenesDetecting import SceneDetectorBase
 from StagesProcessor.VoiceSynthesizing import VoiceSynthesizerBase
+from utils.LogHandling.LogHandlers import StandardLogger
 
-
-DATASETS_FOLDER = "../datasets/"
-CURRENT_DATASET_FOLDER = os.path.join(DATASETS_FOLDER, "hackster.io-AI-video-narration-for-visually-impaired-dataset")
-CURRENT_DATASET_FOLDER_PROCESSED = CURRENT_DATASET_FOLDER + "_processed"
-os.makedirs(CURRENT_DATASET_FOLDER_PROCESSED, exist_ok=True)
 # FILENAME = "big_buck_bunny_1080p_h264.mov"
 # FILENAME = "Episode 1 - Winter is Coming.mp4"
-FILENAME = "02 - Samotny cyborg.mp4"
+# FILENAME = "02 - Samotny cyborg.mp4"
 # FILENAME = "Spirit.Stallion.of.the.Cimarron.2002.1080p.BluRay.DDP.5.1.x265-EDGE2020.mkv"
-FILEPATH = os.path.join(CURRENT_DATASET_FOLDER, FILENAME)
-LANGUAGES = ['en']
+
+AVAILABLE_LANGUAGES = ['en', 'pl']
 
 
 def translate(texts: List[str], target_language: str) -> List[str]:
@@ -38,6 +35,49 @@ def translate(texts: List[str], target_language: str) -> List[str]:
 
 
 if __name__ == '__main__':
+    logger = StandardLogger()
+    parser = ArgumentParser()
+    parser.add_argument(
+        "--fp",
+        help="path to movie file",
+        type=str,
+        required=True
+    )
+    parser.add_argument(
+        "--out-dir",
+        help="Directory for processed movie. Default: same directory as the input file.",
+        type=Optional[str],
+        default=None,
+        required=False
+    )
+    parser.add_argument(
+        "--languages",
+        help="Choose narrator's language. If more than one given Multiple output files will be create: 1 per language. "
+             "Available: ['en', 'pl']",
+        action="append",
+        default=[],
+        required=False
+    )
+
+    args = parser.parse_args()
+    fp = args.fp
+    if not os.path.exists(fp):
+        raise FileNotFoundError(f"File: {fp} does not exist.")
+
+    out_dir: Optional[str] = args.out_dir
+    if out_dir is None:
+        out_dir = os.path.dirname(fp)  # same folder as input file
+    os.makedirs(out_dir, exist_ok=True)  # creating output directory
+    logger._logger.info(f"Output directory: {os.path.abspath(out_dir)}")
+
+    languages: Set[str] = set(args.languages)
+    if languages.__len__() == 0:
+        languages = {'en'}
+    print(f"{languages=}")
+    for language in languages:
+        if language not in AVAILABLE_LANGUAGES:
+            raise ValueError(f"{language=} is not valid, {AVAILABLE_LANGUAGES=}.")
+
     stages_processor = StagesProcessor(
         movie_handler=MovieHandlerBase(),
         scene_detector=SceneDetectorBase(),
@@ -51,12 +91,12 @@ if __name__ == '__main__':
         movie_composer=MovieComposerBase()
     )
     scenes = stages_processor.detect_scenes(
-        fp=FILEPATH,
-        time_start=0.0,  # [s]
-        time_stop=90.0  # [s]
+        fp=fp,
+        # time_start=0.0,  # [s]
+        # time_stop=90.0  # [s]
     )
     english_descriptions = stages_processor.generate_descriptions(
-        fp=FILEPATH,
+        fp=fp,
         scenes=scenes,
     )
 
@@ -64,7 +104,7 @@ if __name__ == '__main__':
         descriptions=english_descriptions
     )
 
-    for language in LANGUAGES:
+    for language in languages:
         print(f"Processing for language: '{language}'")
 
         # Translation may be needed
@@ -74,14 +114,17 @@ if __name__ == '__main__':
             narration = english_narration
 
         synthesized_descriptions = stages_processor.synthesize_descriptions(
-            fp=FILEPATH,
+            fp=fp,
             descriptions=narration,
             language=language
         )
 
         stages_processor.compose_movie(
-            fp=FILEPATH,
-            out_fp=os.path.join(CURRENT_DATASET_FOLDER_PROCESSED, os.path.splitext(FILENAME)[0] + "_" + language + ".mkv"),
+            fp=fp,
+            out_fp=os.path.join(
+                out_dir,
+                os.path.splitext(os.path.basename(fp))[0] + "_" + language + os.path.splitext(os.path.basename(fp))[1]
+            ),
             scenes=scenes,
             synthesized_descriptions=synthesized_descriptions
         )

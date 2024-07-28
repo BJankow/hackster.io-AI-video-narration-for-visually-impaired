@@ -168,4 +168,5 @@ class MovieComposerBase(MovieComposerInterface, StandardLogger):
         assert self.__audio_tmp_fp is not None
         assert os.path.isfile(self.__audio_tmp_fp.name)
 
+        self._logger.info(f"Saving movie to: {os.path.abspath(out_fp)}")
         os.system(f"ffmpeg -y -i \"{self.__video_tmp_fp.name}\" -i \"{self.__audio_tmp_fp.name}\" -c:v copy -c:a copy \"{out_fp}\"")
