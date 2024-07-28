@@ -25,12 +25,20 @@ class StagesProcessorInterface(ABC):
         """
 
     @abstractmethod
-    def detect_scenes(self, fp: Union[str, Path], *args, **kwargs) -> List:
+    def detect_scenes(
+            self,
+            fp: Union[str, Path],
+            time_stop: float,
+            time_start: float,
+            *args,
+            **kwargs) -> List:
         """
         Detects scenes in movie.
 
         :param fp: path to movie file.
-        :return:
+        :param time_stop: (seconds) in what moment of the movie to stop processing.
+        :param time_start: (seconds) in what moment of the movie to start processing.
+        :return: List with information identifying scenes.
         """
 
     @abstractmethod

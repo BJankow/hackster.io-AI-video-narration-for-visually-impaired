@@ -10,7 +10,11 @@ from typing import List
 class ClipDescriptorInterface(ABC):
 
     @abstractmethod
-    def describe(self, video, scenes: List) -> List[str]:
+    def describe(
+            self,
+            video,
+            scenes: List,
+    ) -> List[str]:
         """
         Generates a text caption for given sequence of frames.
 

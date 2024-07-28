@@ -50,13 +50,19 @@ if __name__ == '__main__':
         voice_synthesizer=VoiceSynthesizerBase(),
         movie_composer=MovieComposerBase()
     )
-    scenes = stages_processor.detect_scenes(fp=FILEPATH)
+    scenes = stages_processor.detect_scenes(
+        fp=FILEPATH,
+        time_start=0.0,  # [s]
+        time_stop=90.0  # [s]
+    )
     english_descriptions = stages_processor.generate_descriptions(
         fp=FILEPATH,
         scenes=scenes,
     )
 
-    english_narration = stages_processor.convert_descriptions_to_narration(descriptions=english_descriptions)
+    english_narration = stages_processor.convert_descriptions_to_narration(
+        descriptions=english_descriptions
+    )
 
     for language in LANGUAGES:
         print(f"Processing for language: '{language}'")

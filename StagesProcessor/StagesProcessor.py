@@ -3,7 +3,7 @@ import joblib
 from pathlib import Path
 from typing import Union, Tuple, List, Optional
 
-
+import numpy as np
 # 3rd party library imports
 from moviepy.editor import VideoFileClip, AudioFileClip
 from pydub.audio_segment import AudioSegment
@@ -44,8 +44,8 @@ class StagesProcessor(StagesProcessorInterface, StandardLogger):
         self.movie_composer = movie_composer
         self.summarizer = summarizer
 
-        self.load_movie = mem.cache(self.load_movie)
-        self.detect_scenes = mem.cache(self.detect_scenes)
+        # self.load_movie = mem.cache(self.load_movie)
+        # self.detect_scenes = mem.cache(self.detect_scenes)
         # self.generate_descriptions = mem.cache(self.generate_descriptions, ignore=['scenes'])
         # self.synthesize_descriptions = mem.cache(self.synthesize_descriptions)
         # self.compose_movie = mem.cache(self.compose_movie, ignore=['out_fp', 'scenes', 'synthesized_descriptions'])
@@ -57,17 +57,32 @@ class StagesProcessor(StagesProcessorInterface, StandardLogger):
     def detect_scenes(
             self,
             fp: Union[str, Path],
+            time_stop=np.inf,
+            time_start=0.0,
             *args,
             **kwargs
     ) -> List:
+        """
+        Detects scenes in a given movie.
+
+        :param fp: path to movie file.
+        :param time_stop: (seconds) in what moment of the movie to stop processing. Default: np.inf.
+        :param time_start: (seconds) in what moment of the movie to start processing. Default: 0.0.
+        :return: List of tuples with information about position (in a time domain) of scenes in a movie.
+        """
+
         self._logger.info("Detecting scenes...")
         self.load_movie(fp=fp)
-        return self.scene_detector.detect_scenes(video=self.movie_handler.get_video())
+        return self.scene_detector.detect_scenes(
+            video=self.movie_handler.get_video(),
+            time_stop=time_stop,
+            time_start=time_start,
+        )
 
     def generate_descriptions(
             self,
             fp: Union[str, Path],
-            scenes: List[Tuple[FrameTimecode, FrameTimecode]]
+            scenes: List[Tuple[FrameTimecode, FrameTimecode]],
     ) -> List:
         """
         Generates descriptions for every shot/scene. Generated descriptions are in english ('en') language.
@@ -79,7 +94,10 @@ class StagesProcessor(StagesProcessorInterface, StandardLogger):
 
         self._logger.info("Generating descriptions...")
         self.load_movie(fp=fp)
-        descriptions = self.clip_descriptor.describe(video=self.movie_handler.get_video(), scenes=scenes)
+        descriptions = self.clip_descriptor.describe(
+            video=self.movie_handler.get_video(),
+            scenes=scenes,
+        )
         return descriptions
 
     def convert_descriptions_to_narration(self, descriptions: List[str]) -> List[str]:

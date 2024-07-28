@@ -24,6 +24,7 @@ class MovieHandlerBase(MovieHandlerInterface, StandardLogger):
         self._audio: Optional[AudioSegment] = None
 
     def load(self, fp: Union[str, Path]) -> Tuple[VideoStreamCv2, AudioSegment]:
+        self._logger.info(f"Loading movie: {fp}")
         self._video = VideoStreamCv2(fp)
         self._audio = AudioSegment.from_file(fp)
 

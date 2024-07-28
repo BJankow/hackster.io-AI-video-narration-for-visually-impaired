@@ -99,7 +99,7 @@ class MovieComposerBase(MovieComposerInterface, StandardLogger):
         audio_duration = audio.duration_seconds  # [s]
         audio_frame_rate = len(audio) / audio_duration  # [FPS]
 
-        freeze_command = f"ffmpeg -an -y -i {video_fp}"
+        freeze_command = f"ffmpeg -an -y -i \"{video_fp}\""
         freeze_command_sequence = "PTS-STARTPTS"
 
         new_audio = AudioSegment.empty()
@@ -153,7 +153,7 @@ class MovieComposerBase(MovieComposerInterface, StandardLogger):
 
         # Modify Movie
         self.__video_tmp_fp = NamedTemporaryFile(suffix=".mov")
-        freeze_command += f" -vsync cfr {self.__video_tmp_fp.name}"
+        freeze_command += f" -vsync cfr \"{self.__video_tmp_fp.name}\""
         os.system(freeze_command)
 
     def save(self, out_fp: Union[str, Path]):
@@ -168,4 +168,4 @@ class MovieComposerBase(MovieComposerInterface, StandardLogger):
         assert self.__audio_tmp_fp is not None
         assert os.path.isfile(self.__audio_tmp_fp.name)
 
-        os.system(f"ffmpeg -y -i {self.__video_tmp_fp.name} -i {self.__audio_tmp_fp.name} -c:v copy -c:a copy {out_fp}")
+        os.system(f"ffmpeg -y -i \"{self.__video_tmp_fp.name}\" -i \"{self.__audio_tmp_fp.name}\" -c:v copy -c:a copy \"{out_fp}\"")

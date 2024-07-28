@@ -39,7 +39,11 @@ class ClipDescriptorBase(ClipDescriptorInterface, StandardLogger):
             self.preferred_device = torch.device("cpu")
             self._logger.info(f"Utilized device - CPU")
 
-    def describe(self, video: VideoStreamCv2, scenes: List[Tuple[FrameTimecode, FrameTimecode]]) -> List[str]:
+    def describe(
+            self,
+            video: VideoStreamCv2,
+            scenes: List[Tuple[FrameTimecode, FrameTimecode]],
+    ) -> List[str]:
         raise NotImplementedError
 
 
@@ -226,11 +230,9 @@ class ClipDescriptorVideoLLava(ClipDescriptorBase):
                           "- Rafiki blesses him and lifts him up.\n"
                           "- They cheer and bow.\n"
                           "- The Pride Lands under the rising sun.\n"
-                          # "- A green field with blue sky.\n"
-                          # "- A house with several chairs and a woman standing in the middle of the living room. She is smiling\n"
-                          # "- Ocean with a small ship sailing though it.\n"
                           "\n")
-        for idx, description in list(self._scene_descriptions.items())[-15:]:  # consider only N last descriptions
+
+        for idx, description in list(self._scene_descriptions.items())[-5:]:  # consider only N last descriptions
             scenes_string += f"\nScene {idx + 1}: {description}"
 
         # prompt = ("USER: <video>\n"
@@ -242,6 +244,9 @@ class ClipDescriptorVideoLLava(ClipDescriptorBase):
                       "CURRENT SCENE: <video>\n"
                       "TASK: Directly describe the scene without starting with auxiliary words or helping verbs. "
                       "Use pronouns (like 'it', 'she', 'he') where appropriate to avoid repetition. "
+                      "Prefer using complex sentences instead of several simple sentences. "
+                      "The style of your description should be similar to STYLE EXAMPLES given above."
+                      "Ommit describing colors. "
                       "Your description should be brief, and collect only the most important facts.\n"
                       "DESCRIPTION:")
         else:
@@ -275,7 +280,11 @@ class ClipDescriptorVideoLLava(ClipDescriptorBase):
         if self._processor is None:
             self._processor = VideoLlavaProcessor.from_pretrained(self._model_id)
 
-    def describe(self, video: VideoStreamCv2, scenes: List[Tuple[FrameTimecode, FrameTimecode]]) -> List[str]:
+    def describe(
+            self,
+            video: VideoStreamCv2,
+            scenes: List[Tuple[FrameTimecode, FrameTimecode]],
+    ) -> List[str]:
         self._load_models()
         # pick frame - take frame that is in 10% from beginning
         video.reset()  # make sure video is at the beginning
@@ -287,7 +296,11 @@ class ClipDescriptorVideoLLava(ClipDescriptorBase):
                 chosen_frames = np.linspace(start=s[0].frame_num, stop=s[1].frame_num, num=10, dtype=int)
                 for c_f in chosen_frames[1:-1]:
                     video.seek(int(c_f))
-                    clip.append(torch.from_numpy(video.read()[:, :, ::-1].copy()))  # BGR2RGB conversion
+                    frame = video.read()[:, :, ::-1].copy()
+                    # cv2.imshow('a', frame)
+                    # cv2.waitKey()
+                    # cv2.destroyWindow('a')
+                    clip.append(torch.from_numpy(frame))  # BGR2RGB conversion
                 clip = torch.stack(clip)
                 inputs = self._processor(
                     text=self._prompt(),
@@ -297,20 +310,24 @@ class ClipDescriptorVideoLLava(ClipDescriptorBase):
                 ).to(self.preferred_device, self._desired_data_type)
                 output_ids = self.model.generate(
                     **inputs,
-                    max_new_tokens=200,
+                    max_new_tokens=50,
                     do_sample=False
                 )
+                current_descriptions = self._processor.batch_decode(
+                    output_ids,
+                    skip_special_tokens=True,
+                    clean_up_tokenization_spaces=False
+                )[0].split("DESCRIPTION: ")[1]
+                if current_descriptions.__len__() > 0:
+                    if not current_descriptions[-1].endswith('.'):  # not finished
+                        current_descriptions = '.'.join(current_descriptions.split('.')[:-1]) + '.'
                 self._scene_descriptions.update({
-                    s_idx: self._processor.batch_decode(
-                        output_ids,
-                        skip_special_tokens=True,
-                        clean_up_tokenization_spaces=False
-                    )[0].split("DESCRIPTION: ")[1]
+                    s_idx: current_descriptions
                 })
                 s_idx += 1
 
         self._free_memory()
-        return self._scene_descriptions.values()
+        return list(self._scene_descriptions.values())
 
     def _free_memory(self):
         del self.model
