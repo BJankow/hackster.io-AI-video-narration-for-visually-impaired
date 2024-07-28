@@ -2,48 +2,75 @@
 
 ## Introduction
 
-Visual content is almost an inseparable part of the modern digital world. While movies and videos are a significant form of entertainment and communication in today's society, those who are visually impaired often miss out on the visual aspects of these mediums.
+Visual content is almost an inseparable part of the modern digital world. While movies and videos are an important form of entertainment and communication in today's society, those who are visually impaired often miss out on the visual aspects of these mediums.
 The problem I aim to address is the lack of accessibility to visual content for visually impaired.
-I wanted to create a generative tool for voice narration that would describe to the listener the situation that is happening on the screen.
+I wanted to create a generative voice narration tool that would describe to the listener the situation happening on the screen.
 
-## Solution idea
+## Solution
 
 I built an AI-driven video narration system tailored specifically for visually impaired. Unlike existing solutions, which often rely on pre-recorded audio descriptions, my system utilizes technologies such as open-source Large Language Models (LLMs) for scene interpretation and Python libraries for video and audio processing.
 
+> TODO: nie do końca tak jest
 This approach sets my solution apart by offering dynamic descriptions that adapt to the content being viewed, ultimately providing visually impaired users with a more immersive and engaging experience.
+
+This approach sets my solution apart by offering generative descriptions and availability to everyone.
+Ultimately this improves accessibility for the visually impaired users by providing a more immersive and engaging experience.
 
 ## Main features of the solution
 
 ![scheme](doc/img/MainFeatures.png)
 
-The above image shows general idea of the solution. From the left side we can see a shot from a movie ("Big Buck Bunny" in this case). The shot along with prepared promped is passed to the neural network. The AI model generates text that describes current situation. At the end the description is synthesized into speech and added to video playback.
+The above image shows the general idea of the solution. On the left side we can see a shot from the movie "Big Buck Bunny". The shot, along with prepared promped, is passed to the neural network. The AI model generates a text that describes current situation. Finally, the description is synthesized into a speech and added to the video playback.
+
+In summary, the main features of the solution are:
 
 - Describing video scenes.
 - Identification of objects, actions, and scenes.
+- Keeping context between scenes.
 - Synchronized narration with video playback.
 
+> TODO: coś na temat m.in. transformersów
+
+## Results
+
+> TODO: prezentacja przykładowego filmu, chyba najlapiej wstawić link do filmu na YT
+
 ## Used hardware and software (BOM)
+
+The main part of this project is the AMD Radeon PRO W7900 card.
+To take the full advantage of it, I used the following setup:
 
 Hardware:
 
 - AMD Radeon PRO W7900 GPU
 - AMD Ryzen 9 7950X
 - 1000W power supply
-- 64GB RAM
+- 64GB DDR5 RAM running at 5200 MT/s
+- 2TB M.2 PCIe Gen4x4 NVMe SSD
 
 Software:
 
 - OS: Linux (tried Ubuntu 22.04.4 LTS and Manjaro)
 - AMD ROCm Software
 - Deep learning framework - PyTorch for AI development
-- Computer vision and natural language processing libraries, mainly:
+- Essential computer vision and natural language processing libraries:
   - [OpenCV](https://github.com/opencv/opencv-python)
   - [Transformers](https://huggingface.co/docs/transformers/index)
   - [Pydub](https://github.com/jiaaro/pydub)
   - [PySceneDetect](https://www.scenedetect.com/)
 - Video playback software with synchronization capabilities ([VLC media player](https://www.videolan.org)).
 
-## AMD GPU drivers and ROCm installation
+All required Python packages are listed in requirements files:
+
+- [torch](torch_requirenebts.txt)
+- [other_requirements](misc_requirements.txt)
+
+## Environemnt setup
+
+The guide shows how to install AMD GPU drivers and ROCm software.
+It also walks through Conda installation and environment setup.
+
+### AMD GPU drivers and ROCm installation
 
 For this project I use Linux only.
 The first step is to install AMD GPU drivers and ROCm stack and this process varies between different Linux distributions.
@@ -266,13 +293,10 @@ Agent 2
 
 Helpful resources:
 
-- <https://wiki.archlinux.org/title/GPGPU#ROCm> (Troubleshooting tips - good source of information)
-- <https://github.com/rocm-arch/rocm-arch> (installation of ROCm dependencies)
-- <https://pytorch.org/get-started/locally/> (torch for python on ROCm)
-- <https://archlinux.org/packages/extra/x86_64/python-pytorch-rocm/> (Install python-pytorch-rocm)
-
-- <https://rocm.blogs.amd.com/artificial-intelligence/llava-next/README.html>
-- <https://huggingface.co/amd>
+- [Arch Linux Wiki on AMD GPU drivers and ROCm installation](https://wiki.archlinux.org/title/GPGPU#ROCm)
+- [PyTorch installation command generator](https://pytorch.org/get-started/locally/) 
+- [An AMD blog post about running LLaVa on ROCm with an example](https://rocm.blogs.amd.com/artificial-intelligence/llava-next/README.html)
+- [An AMD post about running Transformers on ROCm](https://huggingface.co/amd)
 
 The drivers installation phase is done and we can proceed to the environment setup.
 
@@ -432,7 +456,7 @@ The errors weren't suggestive enough (the closest one I got was when I run [the 
 Resources:
 
 - Check out this official [guide](https://huggingface.co/amd) for ROCm dependent Python libraries.
-- we are using the [`transformers`](https://huggingface.co/docs/transformers/index) library,
+- [`Transformers`](https://huggingface.co/docs/transformers/index) library page,
 
 ### Other resources
 
