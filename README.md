@@ -15,18 +15,21 @@ Main difficulties that can be faced:
 
 ## Solution
 
-Considering main difficulties mentioned in previous section it seems that Machine Learning **Transformers** models 
+Considering main difficulties mentioned in the previous section it seems that Machine Learning **Transformers** models 
 may be a quite good approach to face the problem. Transformers have developed very well over the last couple of years. 
 Many researchers have put their effort into developing **state-of-the-art** solutions that pushed transformer's capabilities
 even further.
 For example GPT-4o model that has been released lately is achieving outstanding results. 
-Therefore, considering the use of Transformers seems like reasonable approach. 
+Therefore, considering the use of Transformers seems like a reasonable approach. 
 Additionally, there are multiple open-source transformer models for images and several for videos over the internet 
 which are easy to use (after meeting hardware requirements).
 
 > TODO: work on this description
 
-I built an AI-driven video narration system tailored specifically for visually impaired. Unlike existing solutions, which often rely on pre-recorded audio descriptions, my system utilizes technologies such as open-source Large Language Models (LLMs) for scene interpretation and Python libraries for video and audio processing.
+The solution I built is an AI-driven video narration system tailored specifically for visually impaired. 
+Unlike existing solutions, which often rely on pre-recorded audio descriptions, my system utilizes technologies such as open-source Large Language Models (LLMs) provided by 
+[HuggingFace Transformers library](https://huggingface.co/docs/transformers/en/index) for scene interpretation 
+and Python libraries for scene detection and general video and audio processing.
 
 > TODO: nie do końca tak jest
 This approach sets my solution apart by offering dynamic descriptions that adapt to the content being viewed, ultimately providing visually impaired users with a more immersive and engaging experience.
