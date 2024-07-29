@@ -40,7 +40,7 @@ The above image shows the general idea of the solution:
 1. On the left side we can see a shot from the movie "Big Buck Bunny". 
 2. The shot, along with prepared prompt, is passed to the neural network. 
 3. The AI model generates a text that describes current situation. 
-4. Finally, the description is synthesized into a speech and added to the video playback.
+4. Finally, the description is synthesized into a speech (which later will be added to the video playback).
 
 In summary, the main features of the solution are:
 
