@@ -17,7 +17,7 @@ Main difficulties that can be faced:
 
 Considering main difficulties mentioned in the previous section it seems that Machine Learning **Transformers** models 
 may be a quite good approach to face the problem. **Transformers** have developed immensely over the last couple of years. 
-Many researchers have put their effort into developing **state-of-the-art** solutions that pushed transformer's capabilities
+Many researchers have put their effort into achieving **state-of-the-art** solutions that pushed transformer's capabilities
 even further.
 For example GPT-4o model that has been released lately is achieving outstanding results. 
 Therefore, considering the use of Transformers seems like a reasonable approach. 
