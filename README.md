@@ -16,11 +16,11 @@ Main difficulties that can be faced:
 ## Solution
 
 Considering main difficulties mentioned in the previous section it seems that Machine Learning **Transformers** models 
-may be a quite good approach to face the problem. **Transformers** have developed immensely over the last couple of years. 
+may be a quite good approach to face the problem. **Transformers** have immensely developed over the last couple of years. 
 Many researchers have put their effort into achieving **state-of-the-art** solutions that pushed transformer's capabilities
 even further.
 For example GPT-4o model that has been released lately is achieving outstanding results. 
-Therefore, considering the use of Transformers seems like a reasonable approach. 
+Therefore, considering the use of **Transformers** seems like a reasonable approach. 
 Additionally, there are multiple open-source transformer models for images and several for videos over the internet 
 which are easy to use (after meeting hardware requirements).
 
