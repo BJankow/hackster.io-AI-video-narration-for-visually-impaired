@@ -24,17 +24,13 @@ Therefore, considering the use of **Transformers** seems like a reasonable appro
 Additionally, there are multiple open-source transformer models for images and several for videos over the internet 
 which are easy to use (after meeting hardware requirements).
 
-The solution I built is an AI-driven video narration system tailored specifically for visually impaired. 
+The solution I built is an AI-driven video narration system specifically tailored for visually impaired. 
 Unlike existing solutions, which often rely on pre-recorded audio descriptions my approach offers generative descriptions and availability to everyone.
-Ultimately this improves accessibility for the visually impaired users by providing a more immersive and engaging experience.
+Ultimately, this improves accessibility for the visually impaired users, providing a more immersive and engaging experience.
 
 My system utilizes technologies such as open-source Large Language Models (LLMs) provided by 
 [HuggingFace Transformers library](https://huggingface.co/docs/transformers/en/index) for scene interpretation 
 and Python libraries for scene detection and general video and audio processing.
-
-> TODO: nie do końca tak jest
-This approach sets my solution apart by offering dynamic descriptions that adapt to the content being viewed, ultimately providing visually impaired users with a more immersive and engaging experience.
-
 
 ## Main features of the solution
 
@@ -49,12 +45,14 @@ In summary, the main features of the solution are:
 - Keeping context between scenes.
 - Synchronized narration with video playback.
 
-> TODO: coś na temat m.in. transformersów
+> TODO: keeping context between scenes
 
 ## Results
 
-Below is an image with link to YouTube video that shows result of processing "Big Buck Bunny" movie through my system.
-Narrator is already embedded into the movie.
+Below is an image with link to YouTube video that shows the result of processing "Big Buck Bunny" movie through my system.
+Narrator is already embedded into the movie. 
+Sometimes there may be a pause at the beginning of a scene (freeze of first frame). 
+This freeze creates space for the narrator to have time to speak.
 
 [![IMAGE ALT TEXT HERE](doc/img/Thumbnail.png)](https://www.youtube.com/watch?v=F4pD0IXFhg4)
 
