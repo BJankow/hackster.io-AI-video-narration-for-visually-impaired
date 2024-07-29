@@ -8,8 +8,8 @@ I wanted to create a generative voice narration tool that would describe to the 
 
 Main difficulties that can be faced:
 
-- various content of input movies (many objects of different colors, background types, characters, behaviour, etc.)
-- catching information of nuances and gestures
+- various content of input movies (many objects of different colors, background types, characters, behaviours, etc.)
+- catching information from nuances and gestures
 - plot understanding (not only single scene)
 - understanding beginning and ending of the scene
 
@@ -25,15 +25,16 @@ Additionally, there are multiple open-source transformer models for images and s
 which are easy to use (after meeting hardware requirements).
 
 The solution I built is an AI-driven video narration system tailored specifically for visually impaired. 
-Unlike existing solutions, which often rely on pre-recorded audio descriptions, my system utilizes technologies such as open-source Large Language Models (LLMs) provided by 
+Unlike existing solutions, which often rely on pre-recorded audio descriptions my approach offers generative descriptions and availability to everyone.
+Ultimately this improves accessibility for the visually impaired users by providing a more immersive and engaging experience.
+
+My system utilizes technologies such as open-source Large Language Models (LLMs) provided by 
 [HuggingFace Transformers library](https://huggingface.co/docs/transformers/en/index) for scene interpretation 
 and Python libraries for scene detection and general video and audio processing.
 
 > TODO: nie do końca tak jest
 This approach sets my solution apart by offering dynamic descriptions that adapt to the content being viewed, ultimately providing visually impaired users with a more immersive and engaging experience.
 
-This approach sets my solution apart by offering generative descriptions and availability to everyone.
-Ultimately this improves accessibility for the visually impaired users by providing a more immersive and engaging experience.
 
 ## Main features of the solution
 
