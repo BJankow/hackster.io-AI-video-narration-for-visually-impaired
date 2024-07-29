@@ -36,7 +36,11 @@ and Python libraries for scene detection and general video and audio processing.
 
 ![scheme](doc/img/MainFeatures.png)
 
-The above image shows the general idea of the solution. On the left side we can see a shot from the movie "Big Buck Bunny". The shot, along with prepared prompt, is passed to the neural network. The AI model generates a text that describes current situation. Finally, the description is synthesized into a speech and added to the video playback.
+The above image shows the general idea of the solution:
+1. On the left side we can see a shot from the movie "Big Buck Bunny". 
+2. The shot, along with prepared prompt, is passed to the neural network. 
+3. The AI model generates a text that describes current situation. 
+4. Finally, the description is synthesized into a speech and added to the video playback.
 
 In summary, the main features of the solution are:
 
@@ -51,7 +55,7 @@ In summary, the main features of the solution are:
 
 Below is an image with link to YouTube video that shows the result of processing "Big Buck Bunny" movie through my system.
 Narrator is already embedded into the movie. 
-Sometimes there may be a pause at the beginning of a scene (freeze of first frame). 
+Sometimes there is a pause at the beginning of a scene (freeze of first frame). 
 This freeze creates space for the narrator to have time to speak.
 
 [![IMAGE ALT TEXT HERE](doc/img/Thumbnail.png)](https://www.youtube.com/watch?v=F4pD0IXFhg4)
