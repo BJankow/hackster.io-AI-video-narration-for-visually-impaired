@@ -24,8 +24,6 @@ Therefore, considering the use of Transformers seems like a reasonable approach.
 Additionally, there are multiple open-source transformer models for images and several for videos over the internet 
 which are easy to use (after meeting hardware requirements).
 
-> TODO: work on this description
-
 The solution I built is an AI-driven video narration system tailored specifically for visually impaired. 
 Unlike existing solutions, which often rely on pre-recorded audio descriptions, my system utilizes technologies such as open-source Large Language Models (LLMs) provided by 
 [HuggingFace Transformers library](https://huggingface.co/docs/transformers/en/index) for scene interpretation 
