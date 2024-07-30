@@ -91,6 +91,10 @@ moments. Sometimes there is not enough space in particular scene for the synthes
 In that case the initial frame of the scene is being frozen for a short duration of time to create required space. 
 Additionally, detection of the first speech moment in the scene is implemented to avoid a situation where the narrator overlaps with the speech of some other character from that scene.
 
+### Prompt Construction (examples and results)
+
+### Experience of working with AMD GPU W7900
+
 ## Example usage
 Here are several command line examples showing how to add narration to a clip.
 ```commandline
