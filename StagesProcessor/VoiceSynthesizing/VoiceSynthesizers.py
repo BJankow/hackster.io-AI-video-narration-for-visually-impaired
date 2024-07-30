@@ -24,16 +24,10 @@ import pyttsx3
 # local imports
 from .VoiceSynthesizerInterface import VoiceSynthesizerInterface
 
-READERS_FOLDER = os.path.join(Path.home(), 'Projects', 'datasets', 'hackster.io-AI-video-narration-for-visually-impaired-lectors')
+READERS_FOLDER = os.path.join('../../voice_samples/')
 LANGUAGE2READER = {
-    # 'en': os.path.join(READERS_FOLDER, 'AlanWatts.mp3'),
-    'en': os.path.join(READERS_FOLDER, 'lector_en.wav'),
-    # 'pl': os.path.join(READERS_FOLDER, 'Knapik.mp3'),
-    # 'pl': os.path.join(READERS_FOLDER, 'Knapik2.mp3'),
-    # 'pl': os.path.join(READERS_FOLDER, 'BARTEK.mp3'),
-    # 'pl': os.path.join(READERS_FOLDER, 'DariuszSzpakowski.mp3'),
-    'pl': os.path.join(READERS_FOLDER, 'lektor_pl.wav')
-    # 'pl': os.path.join(READERS_FOLDER, 'MagdalenaSchejbal.mp3')
+    'en': os.path.join(READERS_FOLDER, 'en.wav'),
+    'pl': os.path.join(READERS_FOLDER, 'pl.wav')
 }
 
 
@@ -46,6 +40,9 @@ class VoiceSynthesizerBase(VoiceSynthesizerInterface):
     def synthesize(self, texts: List[str], language: str) -> List[AudioSegment]:
 
         # synthesized_texts = [gTTS(text=text, lang='en', slow=False) for text in texts]
+        if language not in LANGUAGE2READER.keys():
+            raise ValueError(f"Given language ({language}) is not supported. "
+                             f"Supported languages: {LANGUAGE2READER.keys()}")
 
         tts = TTS("tts_models/multilingual/multi-dataset/xtts_v2", gpu=True, progress_bar=True)
         tts.eval()
@@ -58,7 +55,6 @@ class VoiceSynthesizerBase(VoiceSynthesizerInterface):
             tts.tts_to_file(
                 text=text,
                 file_path=f,
-                # speaker="Sofia Hellen",
                 speaker_wav=LANGUAGE2READER[language],
                 language=language,
                 temperature=0.3,
@@ -66,17 +62,14 @@ class VoiceSynthesizerBase(VoiceSynthesizerInterface):
                 length_penalty=30,  # Default: 1.0
                 top_k=1,  # Default: 50
                 top_p=0.0,  # Default: 0.8
+                split_sentences=False,
                 enable_text_splitting=False  # Default: True
-                # speed=1.3,
-                # emotion="happy"
             )
         audio_segments = []
 
         def inner(idx: int, file: BytesIO):
             audio_segment = AudioSegment.from_file(file)
             audio_segments.append((idx, audio_segment))
-
-        # a = AudioSegment(data=np.array(synthesized_texts[0]), sample_width=1, channels=1, frame_rate=44100)
 
         with ThreadPoolExecutor(max_workers=20) as executor:
             futures = [executor.submit(inner, idx, f) for idx, f in enumerate(synthesized_text_files)]

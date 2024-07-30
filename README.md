@@ -64,21 +64,38 @@ This freeze creates space for the narrator to have time to speak.
 
 Following the idea of "divide and conquer", the solution to the problem is divided into several parts (called stages). 
 Each stage has its specific task and brings us closer to the result. 
-The detailed stages of the solution are shown in the image below. The pipeline is split into following parts:
-1. Loading a movie - a movie is being loaded. It requires a path that indicates location of the movie in the local 
-filesystem.
-2. Splitting into scenes - 
-3. Generating description for every scene -
-4. (Optional step) Translation to other language -
-5. Synthesizing text description to voice description -
-6. Adding synthesized voice to original movie - utilizes ffmpeg tool to add synthesized voices into movie in the proper 
-moments. Sometimes there is not enough space in particular scene for the synthesized voice to talk. 
-In that case the initial frame of the scene is being frozen for a short duration of time to create required space.
+The detailed stages of the solution are shown in the image below.
 
 ![Alt text](doc/img/Dataflow_Stages.png "Movie Processing Stages")
 
+The pipeline is split into the following parts:
+1. **Loading a movie** - a movie is being loaded. It requires a path that indicates location of the movie in the local 
+filesystem.
+2. **Splitting into scenes** - indicates frames that are beginnings and endings of the scenes. 
+[PySceneDetect](https://www.scenedetect.com/) library is used mainly in this stage.
+3. **Generating description for every scene** - bases on the results from previous stage. 
+As it is known when scenes begin and end we can extract frames of particular scene and interpret it. 
+[Transformers Video-LLaVA](https://huggingface.co/docs/transformers/model_doc/video_llava) model is used to process this task. 
+One of the most time-consuming parts of this stage is to construct a suitable **prompt** - it expresses our expectations to model.
+Well constructed **prompt** improves quality of the descriptions. Description's base language is english.
+4. **(Optional step) Translation to other language** - uses [deep_translator.GoogleTranslator](https://deep-translator.readthedocs.io/en/latest/usage.html) to translate english descriptions to other language. 
+5. **Synthesizing text description to voice description** - Converts descriptions from previous stages to audio voice narration. 
+Uses [TTS](https://pypi.org/project/TTS/) Python library to process this task. Particularly xtts_v2 model is used.
+This model requires speaker voice reference to clone the voice tone.
+Example narrator voice samples are included in **voice_samples/** directory. 
+Currently supported languages: Polish, English. 
+**Expanding supported languages** can be easily done by adding more narrator voice samples to this folder 
+and modifying **LANGUAGE2READER** dictionary in **StagesProcessor/VoiceSynthesizing/VoiceSynthesizers.py** file.
+6. **Adding synthesized voice to original movie** - utilizes [ffmpeg](https://linux.die.net/man/1/ffmpeg) tool to add synthesized voices into movie in the proper 
+moments. Sometimes there is not enough space in particular scene for the synthesized voice to talk. 
+In that case the initial frame of the scene is being frozen for a short duration of time to create required space. 
+Additionally, detection of the first speech moment in the scene is implemented to avoid a situation where the narrator overlaps with the speech of some other character from that scene.
 
-> TODO: add scheme explaining step-by-step how the solutions works.
+## Example usage
+```commandline
+python3 main.py --fp CLIP_PATH.mov  # this will create CLIP_PATH_en.mov file in the given clip directory (beside CLIP_PATH.mov file)
+python3 main.py --fp CLIP_PATH.mov --out_dir /home/$USER/videos  # this will create CLIP_PATH_en.mov file in the /home/$USER/videos directory
+```
 
 ## Used hardware and software (BOM)
 
