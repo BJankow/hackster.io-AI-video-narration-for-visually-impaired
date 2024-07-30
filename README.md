@@ -93,7 +93,7 @@ Additionally, detection of the first speech moment in the scene is implemented t
 
 ### Prompt Construction (examples and results)
 
-### Experience of working with AMD GPU W7900
+### Working with AMD GPU W7900 (quick summary)
 
 ## Example usage
 Here are several command line examples showing how to add narration to a clip.
