@@ -92,6 +92,7 @@ In that case the initial frame of the scene is being frozen for a short duration
 Additionally, detection of the first speech moment in the scene is implemented to avoid a situation where the narrator overlaps with the speech of some other character from that scene.
 
 ## Example usage
+Here are several command line examples showing how to add narration to a clip.
 ```commandline
 python3 main.py --fp CLIP_PATH.mov  # this will create CLIP_PATH_en.mov file in the given clip directory (beside CLIP_PATH.mov file)
 python3 main.py --fp CLIP_PATH.mov --out_dir /home/$USER/videos  # this will create CLIP_PATH_en.mov file in the /home/$USER/videos directory
