@@ -62,7 +62,18 @@ This freeze creates space for the narrator to have time to speak.
 
 ## Solution Details
 
-
+Following the idea of "divide and conquer", the solution to the problem is divided into several parts (called stages). 
+Each stage has its specific task and brings us closer to the result. 
+The detailed stages of the solution are shown in the image below. The pipeline is split into following parts:
+1. Loading a movie - a movie is being loaded. It requires a path that indicates location of the movie in the local 
+filesystem.
+2. Splitting into scenes - 
+3. Generating description for every scene -
+4. (Optional step) Translation to other language -
+5. Synthesizing text description to voice description -
+6. Adding synthesized voice to original movie - utilizes ffmpeg tool to add synthesized voices into movie in the proper 
+moments. Sometimes there is not enough space in particular scene for the synthesized voice to talk. 
+In that case the initial frame of the scene is being frozen for a short duration of time to create required space.
 
 ![Alt text](doc/img/Dataflow_Stages.png "Movie Processing Stages")
 
