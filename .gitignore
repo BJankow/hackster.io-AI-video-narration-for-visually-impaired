@@ -69,7 +69,7 @@ single_frame_description_output/
 *.webp
 
 # Portable Network Graphics
-*.png
+*.png*
 
 # Animated Portable Network Graphics
 *.apng

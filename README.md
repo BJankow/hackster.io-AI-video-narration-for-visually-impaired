@@ -62,6 +62,11 @@ This freeze creates space for the narrator to have time to speak.
 
 ## Solution Details
 
+
+
+![Alt text](doc/img/Dataflow_Stages.png "Movie Processing Stages")
+
+
 > TODO: add scheme explaining step-by-step how the solutions works.
 
 ## Used hardware and software (BOM)
