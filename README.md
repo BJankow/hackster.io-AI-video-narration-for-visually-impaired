@@ -96,11 +96,15 @@ Additionally, detection of the first speech moment in the scene is implemented t
 ### Working with AMD GPU W7900 (quick summary)
 
 ## Example usage
+### Generate clip with narration
 Here are several command line examples showing how to add narration to a clip.
+> TODO: how long this process may take?
 ```commandline
 python3 main.py --fp CLIP_PATH.mov  # this will create CLIP_PATH_en.mov file in the given clip directory (beside CLIP_PATH.mov file)
 python3 main.py --fp CLIP_PATH.mov --out_dir /home/$USER/videos  # this will create CLIP_PATH_en.mov file in the /home/$USER/videos directory
 ```
+
+### How to expand supported languages
 
 ## Used hardware and software (BOM)
 
