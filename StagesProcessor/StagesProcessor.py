@@ -16,6 +16,7 @@ from . import SceneDetectorInterface
 from . import SummarizerInterface
 from . import MovieComposerInterface
 from . import MovieHandlerInterface
+from . import TranslatorInterface
 from . import VoiceSynthesizerInterface
 from . import StagesProcessorInterface
 from utils.LogHandling.LogHandlers import StandardLogger

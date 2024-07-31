@@ -179,11 +179,12 @@ python3 main.py --fp CLIP_PATH.mov --out_dir /home/$USER/videos  # this will cre
 ### How to select a language
 
 ![img](doc/img/peple-talking-different-languages/people_talking_languages.jpg)\
-[Designed by Freepik](http://www.freepik.com)\
+[Designed by Freepik](http://www.freepik.com)
+
 When launching *main.py* script you can **add *--languages* flag** multiple times. This will create a list of required languages.\
 **Language** that you are setting **must be available** for [deep_translator.GoogleTranslator](https://deep-translator.readthedocs.io/en/latest/usage.html) for translation stage and
 **must have set up its voice sample** (described in [How to add custom voice sample](#how-to-add-custom-voice-sample) section below).\
-To check available languages and their abbreviations run following python script (based on: [source](https://deep-translator.readthedocs.io/en/latest/usage.html#check-supported-languages)).
+To check available languages and their abbreviations run following `python` script (based on: [source](https://deep-translator.readthedocs.io/en/latest/usage.html#check-supported-languages)).
 
 ```python
 # pip install deep_translator
@@ -194,8 +195,8 @@ langs_dict = GoogleTranslator().get_supported_languages(as_dict=True)
 
 For every required language the system will create one output file with narration.\
 **Setting particular language multiple times** will cause program to generate narration for particular language
-only once as the initial list of requested languages is converted to set (which reduces amount of repeating elements to 1).\
-**Not setting** *--languages* flag at all will generate english narration by default.
+**only once** as the initial list of requested languages is converted to set (which reduces the amount of repeating elements to 1).\
+**Not setting** *--languages* flag at all will generate **only english** narration by default.
 
 ```shell
 # Below command will create CLIP_PATH_pl.mov file in the given clip directory 
@@ -587,6 +588,8 @@ ai-video-narration-for-visually-impaired-rocm  *  /home/<user>/anaconda3/envs/ai
 ### Conda installing packages
 
 All packages should be installed during the environment setup.
+
+> TODO: XXX?
 
 To check if PyTorch sees your GPU and to list all visible XXX, run in `python` CLI and paste this:
 

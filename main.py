@@ -2,7 +2,7 @@
 from argparse import ArgumentParser
 from io import BytesIO
 import os
-
+from time import perf_counter_ns
 from typing import List, Tuple, Optional, Set
 
 # 3rd party library imports
@@ -18,13 +18,9 @@ from StagesProcessor.ClipDescribing import (ClipDescriptorViTGPT2, ClipDescripto
 from StagesProcessor.MovieComposing import MovieComposerBase
 from StagesProcessor.MovieHandling import MovieHandlerBase
 from StagesProcessor.ScenesDetecting import SceneDetectorBase
+from StagesProcessor import TranslatorBase
 from StagesProcessor.VoiceSynthesizing import VoiceSynthesizerBase, LANGUAGE2READER
 from utils.LogHandling.LogHandlers import StandardLogger
-
-# FILENAME = "big_buck_bunny_1080p_h264.mov"
-# FILENAME = "Episode 1 - Winter is Coming.mp4"
-# FILENAME = "02 - Samotny cyborg.mp4"
-# FILENAME = "Spirit.Stallion.of.the.Cimarron.2002.1080p.BluRay.DDP.5.1.x265-EDGE2020.mkv"
 
 t = GoogleTranslator()
 supported_languages = t.get_supported_languages(as_dict=True)
@@ -46,12 +42,9 @@ for language in LANGUAGE2READER.keys():
 AVAILABLE_LANGUAGES = list(set(LANGUAGE2READER.keys()) & AVAILABLE_LANGUAGES_IN_GOOGLE_TRANSLATOR)
 
 
-def translate(texts: List[str], target_language: str) -> List[str]:
-    translator = GoogleTranslator(source='en', target=target_language)
-    return [translator.translate(text=text) for text in texts]
-
-
 if __name__ == '__main__':
+    time_start = perf_counter_ns() / 1e9  # [s]
+
     logger = StandardLogger()
     parser = ArgumentParser()
     parser.add_argument(
@@ -98,12 +91,7 @@ if __name__ == '__main__':
     stages_processor = StagesProcessor(
         movie_handler=MovieHandlerBase(),
         scene_detector=SceneDetectorBase(),
-        # clip_descriptor=ClipDescriptorLLaVA15(),
         clip_descriptor=ClipDescriptorVideoLLava(),
-        # clip_descriptor=ClipDescriptorLLaVAMistral16(),
-        # clip_descriptor=ClipDescriptorLLaVANextVideo34B(),
-        # clip_descriptor=ClipDescriptorViTGPT2(),
-        # clip_descriptor=ClipDescriptorGPT4o(open_ai_key_fp="./keys/open_ai.key"),
         voice_synthesizer=VoiceSynthesizerBase(),
         movie_composer=MovieComposerBase()
     )
@@ -126,7 +114,8 @@ if __name__ == '__main__':
 
         # Translation may be needed
         if language != 'en':
-            narration = translate(texts=english_narration, target_language=language)
+            translator = TranslatorBase(source_language='en', target_language=language)
+            narration = translator.batch_translate(texts=english_narration)
         else:
             narration = english_narration
 
@@ -145,6 +134,8 @@ if __name__ == '__main__':
             scenes=scenes,
             synthesized_descriptions=synthesized_descriptions
         )
+
+    logger._logger.info(f"The process took: {perf_counter_ns() / 1e9 - time_start} [s]")
 
 # MEMORY PROBLEMS? MAYBE IT HELPS
 # Can't guarantee it will work, but I think you just have to call llama_kv_cache_tokens_rm(ctx, -1, -1); before every new input
