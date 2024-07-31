@@ -171,9 +171,6 @@ Its aim is to visualise the process of creating desired prompt.
 
 ### Working with AMD Radeon PRO W7900 (quick summary)
 
-
-> TODO: describe how you used this GPU
-
 Working with AMD Radeon W7900 was something new to me. Here are my obervations:
 - It is important to make sure that GPU is well ventilated during work
 - When working GPU temperature sets at level of 82 °C
