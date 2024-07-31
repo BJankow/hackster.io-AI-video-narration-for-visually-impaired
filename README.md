@@ -96,9 +96,12 @@ Additionally, detection of the first speech moment in the scene is implemented t
 
 General project structure can be defined as follows:
 
-- Each stage was implemented as a class.
-- Each class has a defined interface (located in *...Interface.py* files).
-- Interface defines methods which are expected in particular stage.
+- Each stage is implemented as a class.
+- Each class has a defined interface (*...Interface.py* file).
+- Interfaces ensure that implemented class will be a modular part of the system.
+They enable to easily implement and test different implementations of particular class.
+They define methods that must be implemented in particular class.
+Those methods ensure continuity of connection between components (solid pipeline).
 
 ![Alt text](doc/img/Dataflow_Stages_Interfaces.png "Movie Processing Stages with interfaces")
 
