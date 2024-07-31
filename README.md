@@ -171,9 +171,10 @@ Its aim is to visualise the process of creating desired prompt.
 
 ### Working with AMD Radeon PRO W7900 (quick summary)
 
-Below image shows installation of AMD Radeon Pro W7900 in my PC. The GPU does not take too much space. 
-However, what suprised me, is that this GPU needs 3 slots to be installed. In my opinion 2 would be enough. 
-I have seen over the internet that AMD figured it out already and created 2-slot version.
+The image below shows the AMD Radeon PRO W7900 installed in my PC. The GPU does not take up too much space.\
+However, I was surprised that this GPU needs 3 slots to be installed. In my opinion, 2 would be enough.\
+I saw on the internet that AMD has already figured this out and created a 2-slot version.
+
 ![img](doc/img/PC_with_W7900.png)
 
 Working with AMD Radeon W7900 was something new to me. Here are my obervations:
