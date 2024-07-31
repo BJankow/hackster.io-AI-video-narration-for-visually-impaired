@@ -93,16 +93,18 @@ In that case the initial frame of the scene is being frozen for a short duration
 Additionally, detection of the first speech moment in the scene is implemented to avoid a situation where the narrator overlaps with the speech of some other character from that scene.
 
 ### Project Structure
->
+
 > TODO: add scheme with CLASSES to STAGES
 > TODO: maybe create Translation class
 
 Each stage (except Translation which is too short to maintain class for it) has adequate class that implements all necessary functionalities.\
 Interface classes (located in *...Interface.py files*) define methods that are expected to exist in developed classes.
+
 > TODO: jak sie nazywaja te klasy ktore nie sa abstrakcyjne (interfejsami) tylko juz robocze.
 
 ![Alt text](doc/img/Dataflow_Stages_Interfaces.png "Movie Processing Stages with interfaces")
-```
+
+```text
 project/
 │   environment.yml  # contains configuration file for conda environment
 │   freezed_requirements.txt  # Frozen versions of libraries. Can not be used directly because of ROCm versions
@@ -143,20 +145,21 @@ project/
         │   LogHandlers.py  # contains StandardLogger class that is resposible for informative logging (colors etc.)
 ```
 
-
 ### Prompt Construction (examples with results)
 
 As mentioned earlier formulating correct prompt is crucial to obtain desired descriptions.
-This section shows examples of prompts and descriptions that were results. 
+This section shows examples of prompts and descriptions that were results.
 Its aim is to visualise the process of creating desired prompt.
 
-##### 1. The most basic prompt
+#### 1. The most basic prompt
 
-##### 2. The most basic prompt
-##### 3. The most basic prompt
-##### 4. The most basic prompt
-##### 5. The most basic prompt
+#### 2. The most basic prompt
 
+#### 3. The most basic prompt
+
+#### 4. The most basic prompt
+
+#### 5. The most basic prompt
 
 > TODO: show examples of prompts and what adding every sentence changed.
 
@@ -214,17 +217,19 @@ python3 main.py --fp CLIP_PATH.mov --languages pl --languages en
 If you want to introduce a new language to be available to use or you want to substitute particular voice sample with
 one prepared by yourself you need to:
 
-1. Add your voice sample to [voice_samples/](voice_samples) directory.\
-Voice sample should be not too short and not too long.
-Currently [en.wav](voice_samples/en.wav) lasts 5 seconds and [pl.wav](voice_samples/pl.wav) lasts 4 seconds. What may be difficult to achieve is:
-   - **clean voice** - clean articulation of each tone without mumbling.
-   - **clean background** - clearing noises from the background helps voice synthesizing algorithm to extract tone and
-   reduce artifacts in synthesized speech.
+1. Add your voice sample to [voice_samples/](voice_samples) directory.
+
+    Voice sample should be not too short and not too long.
+    Currently [en.wav](voice_samples/en.wav) lasts 5 seconds and [pl.wav](voice_samples/pl.wav) lasts 4 seconds. What may be difficult to achieve is:
+    - **clean voice** - clean articulation of each tone without mumbling.
+    - **clean background** - clearing noises from the background helps voice synthesizing algorithm to extract tone and
+    reduce artifacts in synthesized speech.
+
 2. Modify **LANGUAGE2READER** dictionary in [VoiceSynthesizers.py](StagesProcessor/VoiceSynthesizing/VoiceSynthesizers.py) file where:
-   - **Key** is indicator of the language you want to use. It must match one of [deep_translator.GoogleTranslator supported languages](https://deep-translator.readthedocs.io/en/latest/usage.html#check-supported-languages)
-   or their abbreviations.
-   - **Value** is the path indicating voice sample file (preferably placed inside [voice_samples/](voice_samples) directory)
-   you want to use with language indicated by **Key**.
+    - **Key** is indicator of the language you want to use. It must match one of [deep_translator.GoogleTranslator supported languages](https://deep-translator.readthedocs.io/en/latest/usage.html#check-supported-languages)
+    or their abbreviations.
+    - **Value** is the path indicating voice sample file (preferably placed inside [voice_samples/](voice_samples) directory)
+    you want to use with language indicated by **Key**.
 
     ```python
     # StagesProcessor/VoiceSynthesizing/VoiceSynthesizers.py
@@ -589,9 +594,7 @@ ai-video-narration-for-visually-impaired-rocm  *  /home/<user>/anaconda3/envs/ai
 
 All packages should be installed during the environment setup.
 
-> TODO: XXX?
-
-To check if PyTorch sees your GPU and to list all visible XXX, run in `python` CLI and paste this:
+To check if PyTorch sees any of your GPUs, run `python` CLI and paste this:
 
 ```python
 import torch
