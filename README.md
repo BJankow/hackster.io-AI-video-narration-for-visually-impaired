@@ -179,10 +179,10 @@ I saw on the internet that AMD has already figured this out and created a 2-slot
 ![img](doc/img/PC_with_W7900.png)
 
 Here are my obervations about working with AMD Radeon PRO W7900:
-- It is important to make sure that GPU is well ventilated during work
-- When working GPU temperature sets at level of 82 °C (see chart below)
-- GPU is working quietly
-- Power consumption at 100% of usage sets on 250 W
+- It is important to make sure that GPU is well ventilated during work.
+- When working GPU temperature sets at level of 82 °C (see chart below).
+- GPU is working quietly.
+- Power consumption at 100% of usage sets below 250 W.
 
 ![img](doc/img/W7900_usage_chart.png)
 ## Example usage
