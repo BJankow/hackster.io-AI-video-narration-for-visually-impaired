@@ -114,35 +114,35 @@ project/
 ├──   README.md
 │
 ├── StagesProcessor/
-│   ├─── StagesProcessor.py  # contains StagesProcessor class for processing Stages. It inherits from StagesProcessorInterface
+│   ├── StagesProcessor.py  # contains StagesProcessor class for processing Stages. It inherits from StagesProcessorInterface
 │   │    StagesProcessorInterface.py  # defines abstract class with methods that are needed to process through Stages
 │   │
-│   ├─── ClipDescribing/
-│   │    ├─ ClipDescriptorInterface.py  # defines abstract class with describe() method that must be implemented for describing given scene
-│   │    └─ ClipDescriptors.py  # contains classes for describing scene. These classes inherit from ClipDescriptorInterface
+│   ├── ClipDescribing/
+│   │   ├─ ClipDescriptorInterface.py  # defines abstract class with describe() method that must be implemented for describing given scene
+│   │   └─ ClipDescriptors.py  # contains classes for describing scene. These classes inherit from ClipDescriptorInterface
 │   │
-│   ├─── MovieComposing/
-│   │    ├─ MovieComposerInterface.py  # defines abstract class with compose() method that must be implemented for composing new movie
-│   │    └─ MovieComposers.py  # contains classes for composing clip from audio and video. These classes inherit from MovieComposerInterface
+│   ├── MovieComposing/
+│   │   ├─ MovieComposerInterface.py  # defines abstract class with compose() method that must be implemented for composing new movie
+│   │   └─ MovieComposers.py  # contains classes for composing clip from audio and video. These classes inherit from MovieComposerInterface
 │   │
-│   ├─── MovieHandling/
-│   │    ├─ MovieHandlerInterface.py  # defines abstract class with load() method that must be implemented for obtaining audio and video from the movie
-│   │    └─ MovieHandlers.py  # contains classes for handling clips. These classes inherit from MovieHandlerInterface
+│   ├── MovieHandling/
+│   │   ├─ MovieHandlerInterface.py  # defines abstract class with load() method that must be implemented for obtaining audio and video from the movie
+│   │   └─ MovieHandlers.py  # contains classes for handling clips. These classes inherit from MovieHandlerInterface
 │   │
-│   ├─── ScenesDetecting/
-│   │    ├─ SceneDetectorInterface.py  # defines abstract class with detect() method that must be implemented for scene deteection
-│   │    └─ SceneDetectors.py  # contains classes for detecting scene. These classes inherit from SceneDetectorInterface
+│   ├── ScenesDetecting/
+│   │   ├─ SceneDetectorInterface.py  # defines abstract class with detect() method that must be implemented for scene deteection
+│   │   └─ SceneDetectors.py  # contains classes for detecting scene. These classes inherit from SceneDetectorInterface
 │   │
-│   ├─── Translating/
-│   │    ├─ TranslatorInterface.py  # defines abstract class with translate() and batch_translate() methods that must be implemented for translation task
-│   │    └─ Translators.py  # contains classes for translation that inherit from TranslatorInterface
+│   ├── Translating/
+│   │   ├─ TranslatorInterface.py  # defines abstract class with translate() and batch_translate() methods that must be implemented for translation task
+│   │   └─ Translators.py  # contains classes for translation that inherit from TranslatorInterface
 │   │
-│   └─── VoiceSynthesizing/
-│        ├─ VoiceSynthesizerInterface.py  # defines abstract class with synthesize() method that must be implemented for speech synthezation
-│        └─ VoiceSynthesizers.py  # contains classes for synthesizing speech. These classes inherit from VoiceSynthesizerInterface
+│   └── VoiceSynthesizing/
+│       ├─ VoiceSynthesizerInterface.py  # defines abstract class with synthesize() method that must be implemented for speech synthezation
+│       └─ VoiceSynthesizers.py  # contains classes for synthesizing speech. These classes inherit from VoiceSynthesizerInterface
 │   
 └── utils/
-    ├─── LogHandling/
+    └─ LogHandling/
          └─ LogHandlers.py  # contains StandardLogger class that is resposible for informative logging (colors etc.)
 ```
 
