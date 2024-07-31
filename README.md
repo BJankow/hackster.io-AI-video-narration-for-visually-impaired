@@ -114,32 +114,32 @@ project/
 ├── README.md
 │
 ├── StagesProcessor/
-│   ├── StagesProcessor.py  # contains StagesProcessor class for processing Stages. It inherits from StagesProcessorInterface
-│   │   StagesProcessorInterface.py  # defines abstract class with methods that are needed to process through Stages
+│   ├── StagesProcessor.py
+│   │   StagesProcessorInterface.py
 │   │
 │   ├── ClipDescribing/
-│   │   ├─ ClipDescriptorInterface.py  # defines abstract class with describe() method that must be implemented for describing given scene
-│   │   └─ ClipDescriptors.py  # contains classes for describing scene. These classes inherit from ClipDescriptorInterface
+│   │   ├─ ClipDescriptorInterface.py
+│   │   └─ ClipDescriptors.py
 │   │
 │   ├── MovieComposing/
-│   │   ├─ MovieComposerInterface.py  # defines abstract class with compose() method that must be implemented for composing new movie
-│   │   └─ MovieComposers.py  # contains classes for composing clip from audio and video. These classes inherit from MovieComposerInterface
+│   │   ├─ MovieComposerInterface.py
+│   │   └─ MovieComposers.py
 │   │
 │   ├── MovieHandling/
-│   │   ├─ MovieHandlerInterface.py  # defines abstract class with load() method that must be implemented for obtaining audio and video from the movie
-│   │   └─ MovieHandlers.py  # contains classes for handling clips. These classes inherit from MovieHandlerInterface
+│   │   ├─ MovieHandlerInterface.py
+│   │   └─ MovieHandlers.py
 │   │
 │   ├── ScenesDetecting/
-│   │   ├─ SceneDetectorInterface.py  # defines abstract class with detect() method that must be implemented for scene deteection
-│   │   └─ SceneDetectors.py  # contains classes for detecting scene. These classes inherit from SceneDetectorInterface
+│   │   ├─ SceneDetectorInterface.py
+│   │   └─ SceneDetectors.py
 │   │
 │   ├── Translating/
-│   │   ├─ TranslatorInterface.py  # defines abstract class with translate() and batch_translate() methods that must be implemented for translation task
-│   │   └─ Translators.py  # contains classes for translation that inherit from TranslatorInterface
+│   │   ├─ TranslatorInterface.py
+│   │   └─ Translators.py
 │   │
 │   └── VoiceSynthesizing/
-│       ├─ VoiceSynthesizerInterface.py  # defines abstract class with synthesize() method that must be implemented for speech synthezation
-│       └─ VoiceSynthesizers.py  # contains classes for synthesizing speech. These classes inherit from VoiceSynthesizerInterface
+│       ├─ VoiceSynthesizerInterface.py
+│       └─ VoiceSynthesizers.py
 │   
 └── utils/
     └─ LogHandling/
