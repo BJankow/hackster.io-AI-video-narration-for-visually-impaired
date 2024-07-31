@@ -18,7 +18,7 @@ from StagesProcessor.ClipDescribing import (ClipDescriptorViTGPT2, ClipDescripto
 from StagesProcessor.MovieComposing import MovieComposerBase
 from StagesProcessor.MovieHandling import MovieHandlerBase
 from StagesProcessor.ScenesDetecting import SceneDetectorBase
-from StagesProcessor.VoiceSynthesizing import VoiceSynthesizerBase
+from StagesProcessor.VoiceSynthesizing import VoiceSynthesizerBase, LANGUAGE2READER
 from utils.LogHandling.LogHandlers import StandardLogger
 
 # FILENAME = "big_buck_bunny_1080p_h264.mov"
@@ -26,7 +26,24 @@ from utils.LogHandling.LogHandlers import StandardLogger
 # FILENAME = "02 - Samotny cyborg.mp4"
 # FILENAME = "Spirit.Stallion.of.the.Cimarron.2002.1080p.BluRay.DDP.5.1.x265-EDGE2020.mkv"
 
-AVAILABLE_LANGUAGES = ['en', 'pl']
+t = GoogleTranslator()
+supported_languages = t.get_supported_languages(as_dict=True)
+AVAILABLE_TRANSLATOR_LANGUAGES = list(supported_languages.keys())
+AVAILABLE_TRANSLATOR_ABBREVIATIONS = list(supported_languages.values())
+AVAILABLE_LANGUAGES_IN_GOOGLE_TRANSLATOR = set(AVAILABLE_TRANSLATOR_LANGUAGES + AVAILABLE_TRANSLATOR_ABBREVIATIONS)
+
+# Verify if LANGUAGE2READER.keys() are setup properly
+for language in LANGUAGE2READER.keys():
+    if language not in AVAILABLE_LANGUAGES_IN_GOOGLE_TRANSLATOR:
+        raise ValueError(
+            f"Language: {language} configured as a key in LANGUAGE2READER dict from "
+            f"StagesProcessor/VoiceSynthesizing/VoiceSynthesizers.py file is not available in "
+            f"deep_translator.GoogleTranslator. "
+            f"Available languages in deep_translator.GoogleTranslator: {AVAILABLE_LANGUAGES_IN_GOOGLE_TRANSLATOR}"
+        )
+
+# Intersection of languages available for translator and prepared voice samples.
+AVAILABLE_LANGUAGES = list(set(LANGUAGE2READER.keys()) & AVAILABLE_LANGUAGES_IN_GOOGLE_TRANSLATOR)
 
 
 def translate(texts: List[str], target_language: str) -> List[str]:

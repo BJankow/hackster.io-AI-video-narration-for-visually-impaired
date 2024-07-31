@@ -82,10 +82,9 @@ Well constructed **prompt** improves quality of the descriptions. Description's 
 5. **Synthesizing text description to voice description** - Converts descriptions from previous stages to audio voice narration. 
 Uses [TTS](https://pypi.org/project/TTS/) Python library to process this task. Particularly xtts_v2 model is used.
 This model requires speaker voice reference to clone the voice tone.
-Example narrator voice samples are included in **voice_samples/** directory. 
-Currently supported languages: Polish, English. 
-**Adding custom voice samples** can be easily done by adding more narrator voice samples to this directory 
-and modifying **LANGUAGE2READER** dictionary in **StagesProcessor/VoiceSynthesizing/VoiceSynthesizers.py** file.
+Example narrator voice samples are included in **voice_samples/** directory.\
+Currently supported languages: Polish (pl), English (en).\
+**Adding custom voice samples** can be easily done and is described in [How to add custom voice sample](#how-to-add-custom-voice-sample) section.
 6. **Adding synthesized voice to original movie** - utilizes [ffmpeg](https://linux.die.net/man/1/ffmpeg) tool to add synthesized voices into movie in the proper 
 moments. Sometimes there is not enough space in particular scene for the synthesized voice to talk. 
 In that case the initial frame of the scene is being frozen for a short duration of time to create required space. 
@@ -95,6 +94,8 @@ Additionally, detection of the first speech moment in the scene is implemented t
 > TODO: add scheme with CLASSES to STAGES
 
 ### Prompt Construction (examples with results)
+As mentioned earlier formulating correct prompt is crucial to obtain desired descriptions.
+
 > TODO: show examples of prompts and what adding every sentence changed.
 
 ### Working with AMD GPU W7900 (quick summary)
@@ -110,11 +111,59 @@ python3 main.py --fp CLIP_PATH.mov --out_dir /home/$USER/videos  # this will cre
 ```
 
 ### How to select a language
-> TODO: command line how to generate clip with chosen language
+![img](doc/img/peple-talking-different-languages/people_talking_languages.jpg)\
+[Designed by Freepik](http://www.freepik.com)\
+When launching *main.py* script you can **add *--languages* flag** multiple times. This will create a list of required languages.\
+**Language** that you are setting **must be available** for [deep_translator.GoogleTranslator](https://deep-translator.readthedocs.io/en/latest/usage.html) for translation stage and 
+**must have set up its voice sample** (described in [How to add custom voice sample](#how-to-add-custom-voice-sample) section below).\
+To check available languages and their abbreviations run following python script (based on: [source](https://deep-translator.readthedocs.io/en/latest/usage.html#check-supported-languages)).
+```python
+# pip install deep_translator
+from deep_translator import GoogleTranslator
+langs_dict = GoogleTranslator().get_supported_languages(as_dict=True)
+# output: {"arabic": "ar", "french": "fr", "english": "en" etc...}
+```
+For every required language the system will create one output file with narration.\
+**Setting particular language multiple times** will cause program to generate narration for particular language 
+only once as the initial list of requested languages is converted to set (which reduces amount of repeating elements to 1).\
+**Not setting** *--languages* flag at all will generate english narration by default.
+```commandline
+# Below command will create CLIP_PATH_pl.mov file in the given clip directory 
+# (beside CLIP_PATH.mov file). This file will have polish (pl) narration.
+python3 main.py --fp CLIP_PATH.mov --languages pl
+
+# Below command will create CLIP_PATH_pl.mov and CLIP_PATH_en.mov files in the given clip directory (beside CLIP_PATH.mov file). 
+# These files will have polish (pl) and english (en) narration.
+python3 main.py --fp CLIP_PATH.mov --languages pl --languages en
+```
 
 ### How to add custom voice sample
-> TODO: mention about preparing your own voice sample
-
+![scheme](doc/img/voice.png)\
+If you want to introduce a new language to be available to use or you want to substitute particular voice sample with 
+one prepared by yourself you need to:
+1. Add your voice sample to [voice_samples/](voice_samples) directory.\
+Voice sample should be not too short and not too long. 
+Currently [en.wav](voice_samples/en.wav) lasts 5 seconds and [pl.wav](voice_samples/pl.wav) lasts 4 seconds. What may be difficult to achieve is:
+   - **clean voice** - clean articulation of each tone without mumbling.
+   - **clean background** - clearing noises from the background helps voice synthesizing algorithm to extract tone and 
+   reduce artifacts in synthesized speech.
+2. Modify **LANGUAGE2READER** dictionary in [VoiceSynthesizers.py](StagesProcessor/VoiceSynthesizing/VoiceSynthesizers.py) file where:
+   - **Key** is indicator of the language you want to use. It must match one of [deep_translator.GoogleTranslator supported languages](https://deep-translator.readthedocs.io/en/latest/usage.html#check-supported-languages) 
+   or their abbreviations.
+   - **Value** is the path indicating voice sample file (preferably placed inside [voice_samples/](voice_samples) directory) 
+   you want to use with language indicated by **Key**.
+    ```python
+    # StagesProcessor/VoiceSynthesizing/VoiceSynthesizers.py
+    # Modifying LANGUAGE2READER dictionary
+    ...
+    import os
+    READERS_FOLDER = os.path.join('../../voice_samples/')
+    LANGUAGE2READER = {
+        'en': os.path.join(READERS_FOLDER, 'en.wav'),
+        'pl': os.path.join(READERS_FOLDER, 'pl.wav')
+    }
+    ...
+    ```
 
 ## Used hardware and software (BOM)
 
