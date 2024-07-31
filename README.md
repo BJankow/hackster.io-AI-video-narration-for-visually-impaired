@@ -229,7 +229,7 @@ python3 main.py --fp CLIP_PATH.mov --languages pl
 python3 main.py --fp CLIP_PATH.mov --languages pl --languages en
 ```
 
-### How to add custom voice sample
+### How to add a custom voice sample
 
 ![scheme](doc/img/voice.png)\
 If you want to introduce a new language to be available to use or you want to substitute particular voice sample with
@@ -237,7 +237,7 @@ one prepared by yourself you need to:
 
 1. Add your voice sample to [voice_samples/](voice_samples) directory.
 
-    Voice sample should be not too short and not too long.
+    Voice sample should not be too short nor too long.
     Currently [en.wav](voice_samples/en.wav) lasts 5 seconds and [pl.wav](voice_samples/pl.wav) lasts 4 seconds. What may be difficult to achieve is:
     - **clean voice** - clean articulation of each tone without mumbling.
     - **clean background** - clearing noises from the background helps voice synthesizing algorithm to extract tone and

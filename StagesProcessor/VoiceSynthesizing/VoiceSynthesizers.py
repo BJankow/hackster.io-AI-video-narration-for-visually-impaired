@@ -23,15 +23,16 @@ import pyttsx3
 
 # local imports
 from .VoiceSynthesizerInterface import VoiceSynthesizerInterface
+from utils.LogHandling.LogHandlers import StandardLogger
 
-READERS_FOLDER = os.path.join('../../voice_samples/')
+READERS_FOLDER = os.path.join('./voice_samples/')
 LANGUAGE2READER = {
     'en': os.path.join(READERS_FOLDER, 'en.wav'),
     'pl': os.path.join(READERS_FOLDER, 'pl.wav')
 }
 
 
-class VoiceSynthesizerBase(VoiceSynthesizerInterface):
+class VoiceSynthesizerBase(VoiceSynthesizerInterface, StandardLogger):
 
     def __init__(self):
         super(VoiceSynthesizerBase, self).__init__()
@@ -51,6 +52,12 @@ class VoiceSynthesizerBase(VoiceSynthesizerInterface):
 
         # You can check all Coqui available speakers with the following command:
         # tts --model_name tts_models/multilingual/multi-dataset/xtts_v2 --list_speaker_idx
+
+        if not os.path.exists(LANGUAGE2READER[language]):
+            err_msg = f"Language sample path: {os.path.abspath(LANGUAGE2READER[language])=} does not exist"
+            self._logger.error(err_msg)
+            raise ValueError(err_msg)
+
         for f, text in zip(synthesized_text_files, texts):
             tts.tts_to_file(
                 text=text,

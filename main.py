@@ -83,7 +83,7 @@ if __name__ == '__main__':
     languages: Set[str] = set(args.languages)
     if languages.__len__() == 0:
         languages = {'en'}
-    print(f"{languages=}")
+    logger._logger.info(f"Languages chosen: {languages}")
     for language in languages:
         if language not in AVAILABLE_LANGUAGES:
             raise ValueError(f"{language=} is not valid, {AVAILABLE_LANGUAGES=}.")
@@ -99,8 +99,8 @@ if __name__ == '__main__':
     )
     scenes = stages_processor.detect_scenes(
         fp=fp,
-        # time_start=0.0,  # [s]
-        # time_stop=90.0  # [s]
+        time_start=0.0,  # [s]
+        time_stop=90.0  # [s]
     )
     english_descriptions = stages_processor.generate_descriptions(
         fp=fp,
@@ -112,7 +112,7 @@ if __name__ == '__main__':
     )
 
     for language in languages:
-        print(f"Processing for language: '{language}'")
+        logger._logger.info(f"Processing for language: '{language}'")
 
         # Translation may be needed
         if language != 'en':
