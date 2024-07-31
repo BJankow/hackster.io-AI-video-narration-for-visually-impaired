@@ -114,6 +114,8 @@ project/
 ├── torch_requirements.txt  # contains PyTorch libraries that need to be installed from external repository (ROCm)
 ├── README.md
 │
+├── doc/  # documentation related files
+│
 ├── StagesProcessor/
 │   ├── StagesProcessor.py
 │   │   StagesProcessorInterface.py
