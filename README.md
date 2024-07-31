@@ -93,7 +93,9 @@ In that case the initial frame of the scene is being frozen for a short duration
 Additionally, detection of the first speech moment in the scene is implemented to avoid a situation where the narrator overlaps with the speech of some other character from that scene.
 
 ### Project Structure
+
 General project structure can be defined as follows:
+
 - Each stage was implemented as a class.
 - Each class has defined its own interface (located in *...Interface.py* files).
 - Interface helps to define that are expected in particular stage.
