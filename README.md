@@ -182,7 +182,7 @@ Here are my obervations about working with AMD Radeon PRO W7900:
 - It is important to make sure that GPU is well ventilated during work.
 - The temperature sets at level of 82 °C under load (see the chart below).
 - The noise level is acceptable (it's pretty quiet).
-- Power consumption at 100% of usage sets below 250 W. That is great score for me.
+- Power consumption at 100% of usage sets below 250 W - doesn't require powerful power supply.
 
 ![img](doc/img/W7900_usage_chart.png)
 ## Example usage
