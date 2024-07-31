@@ -84,7 +84,7 @@ Uses [TTS](https://pypi.org/project/TTS/) Python library to process this task. P
 This model requires speaker voice reference to clone the voice tone.
 Example narrator voice samples are included in **voice_samples/** directory. 
 Currently supported languages: Polish, English. 
-**Expanding supported languages** can be easily done by adding more narrator voice samples to this folder 
+**Adding custom voice samples** can be easily done by adding more narrator voice samples to this directory 
 and modifying **LANGUAGE2READER** dictionary in **StagesProcessor/VoiceSynthesizing/VoiceSynthesizers.py** file.
 6. **Adding synthesized voice to original movie** - utilizes [ffmpeg](https://linux.die.net/man/1/ffmpeg) tool to add synthesized voices into movie in the proper 
 moments. Sometimes there is not enough space in particular scene for the synthesized voice to talk. 
@@ -92,8 +92,10 @@ In that case the initial frame of the scene is being frozen for a short duration
 Additionally, detection of the first speech moment in the scene is implemented to avoid a situation where the narrator overlaps with the speech of some other character from that scene.
 
 ### Prompt Construction (examples with results)
+> TODO: show examples of prompts and what adding every sentence changed.
 
 ### Working with AMD GPU W7900 (quick summary)
+> TODO: describe how you used this GPU
 
 ## Example usage
 ### Generate clip with narration
@@ -104,8 +106,12 @@ python3 main.py --fp CLIP_PATH.mov  # this will create CLIP_PATH_en.mov file in 
 python3 main.py --fp CLIP_PATH.mov --out_dir /home/$USER/videos  # this will create CLIP_PATH_en.mov file in the /home/$USER/videos directory
 ```
 
-### How to expand supported languages (you can even prepare and add YOUR voice)
+### How to select a language
+> TODO: command line how to generate clip with chosen language
+
+### How to add custom voice sample
 > TODO: mention about preparing your own voice sample
+
 
 ## Used hardware and software (BOM)
 
