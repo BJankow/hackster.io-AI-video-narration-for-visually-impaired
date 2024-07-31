@@ -150,7 +150,7 @@ project/
 
 ### Prompt Construction (examples with results)
 
-As mentioned earlier formulating correct prompt is crucial to obtain desired descriptions.
+Correct prompt is crucial to obtain desired descriptions.
 This section shows examples of prompts and descriptions that were results.
 Its aim is to visualise the process of creating desired prompt.
 
