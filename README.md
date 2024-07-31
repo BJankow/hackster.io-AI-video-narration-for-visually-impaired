@@ -141,9 +141,11 @@ project/
 │       ├─ VoiceSynthesizerInterface.py
 │       └─ VoiceSynthesizers.py
 │   
-└── utils/
-    └─ LogHandling/
-       └─ LogHandlers.py  # informative logging (colors in terminal etc.)
+├── utils/
+│   └─ LogHandling/
+│      └─ LogHandlers.py  # informative logging (colors in terminal etc.)
+│
+└── voice_samples/  # contains samples for VoiceSynthesizing
 ```
 
 ### Prompt Construction (examples with results)
