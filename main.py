@@ -28,19 +28,6 @@ AVAILABLE_TRANSLATOR_LANGUAGES = list(supported_languages.keys())
 AVAILABLE_TRANSLATOR_ABBREVIATIONS = list(supported_languages.values())
 AVAILABLE_LANGUAGES_IN_GOOGLE_TRANSLATOR = set(AVAILABLE_TRANSLATOR_LANGUAGES + AVAILABLE_TRANSLATOR_ABBREVIATIONS)
 
-# Verify if LANGUAGE2READER.keys() are setup properly
-for language in LANGUAGE2READER.keys():
-    if language not in AVAILABLE_LANGUAGES_IN_GOOGLE_TRANSLATOR:
-        raise ValueError(
-            f"Language: {language} configured as a key in LANGUAGE2READER dict from "
-            f"StagesProcessor/VoiceSynthesizing/VoiceSynthesizers.py file is not available in "
-            f"deep_translator.GoogleTranslator. "
-            f"Available languages in deep_translator.GoogleTranslator: {AVAILABLE_LANGUAGES_IN_GOOGLE_TRANSLATOR}"
-        )
-
-# Intersection of languages available for translator and prepared voice samples.
-AVAILABLE_LANGUAGES = list(set(LANGUAGE2READER.keys()) & AVAILABLE_LANGUAGES_IN_GOOGLE_TRANSLATOR)
-
 
 if __name__ == '__main__':
     time_start = perf_counter_ns() / 1e9  # [s]
@@ -80,6 +67,19 @@ if __name__ == '__main__':
     os.makedirs(out_dir, exist_ok=True)  # creating output directory
     logger._logger.info(f"Output directory: {os.path.abspath(out_dir)}")
 
+    # Verify if LANGUAGE2READER.keys() are setup properly
+    for language in LANGUAGE2READER.keys():
+        if language not in AVAILABLE_LANGUAGES_IN_GOOGLE_TRANSLATOR:
+            raise ValueError(
+                f"Language: {language} configured as a key in LANGUAGE2READER dict from "
+                f"StagesProcessor/VoiceSynthesizing/VoiceSynthesizers.py file is not available in "
+                f"deep_translator.GoogleTranslator. "
+                f"Available languages in deep_translator.GoogleTranslator: {AVAILABLE_LANGUAGES_IN_GOOGLE_TRANSLATOR}"
+            )
+
+    # Intersection of languages available for translator and prepared voice samples.
+    AVAILABLE_LANGUAGES = list(set(LANGUAGE2READER.keys()) & AVAILABLE_LANGUAGES_IN_GOOGLE_TRANSLATOR)
+
     languages: Set[str] = set(args.languages)
     if languages.__len__() == 0:
         languages = {'en'}
@@ -87,6 +87,8 @@ if __name__ == '__main__':
     for language in languages:
         if language not in AVAILABLE_LANGUAGES:
             raise ValueError(f"{language=} is not valid, {AVAILABLE_LANGUAGES=}.")
+
+    logger._logger.info("Languages verified - OK")
 
     stages_processor = StagesProcessor(
         movie_handler=MovieHandlerBase(),

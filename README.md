@@ -175,6 +175,7 @@ Its aim is to visualise the process of creating desired prompt.
 > TODO: describe how you used this GPU
 
 ![img](doc/img/PC_with_W7900.png)
+![img](doc/img/W7900_usage_chart.png)
 ## Example usage
 
 ### Generate clip with narration

@@ -5,7 +5,7 @@ from typing import List, Iterable
 from deep_translator import GoogleTranslator
 
 # local imports
-from TranslatorInterface import TranslatorInterface
+from .TranslatorInterface import TranslatorInterface
 
 
 class TranslatorBase(TranslatorInterface):
