@@ -242,7 +242,7 @@ one prepared by yourself you need to:
     - **clean voice** - clean articulation of each tone without mumbling.
     - **clean background** - clearing noises from the background helps voice synthesizing algorithm to extract tone and
     reduce artifacts in synthesized speech.
-    - for more information view [xtts guide](https://blog.unrealspeech.com/xtts-v2-ultimate-guide/).
+    - for more detailed information view [xtts guide](https://blog.unrealspeech.com/xtts-v2-ultimate-guide/).
 
 2. Modify **LANGUAGE2READER** dictionary in [VoiceSynthesizers.py](StagesProcessor/VoiceSynthesizing/VoiceSynthesizers.py) file where:
     - **Key** is indicator of the language you want to use. It must match one of [deep_translator.GoogleTranslator supported languages](https://deep-translator.readthedocs.io/en/latest/usage.html#check-supported-languages)
