@@ -254,7 +254,7 @@ one prepared by yourself you need to:
     # Modifying LANGUAGE2READER dictionary
     ...
     import os
-    READERS_FOLDER = os.path.join('../../voice_samples/')
+    READERS_FOLDER = os.path.join('./voice_samples/')
     LANGUAGE2READER = {
         'en': os.path.join(READERS_FOLDER, 'en.wav'),
         'pl': os.path.join(READERS_FOLDER, 'pl.wav')
