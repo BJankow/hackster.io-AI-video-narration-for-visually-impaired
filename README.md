@@ -442,6 +442,7 @@ conda list
 Now create and activate a new conda environment:
 
 ```shell
+conda env create -f environment.yml
 conda create -n ai-video-narration-for-visually-impaired-rocm python=3.10
 conda activate ai-video-narration-for-visually-impaired-rocm
 ```
