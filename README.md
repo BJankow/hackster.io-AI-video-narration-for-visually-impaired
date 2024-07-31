@@ -108,7 +108,7 @@ General project structure can be defined as follows:
 ```shell
 project/
 │   environment.yml  # contains configuration file for conda environment
-│   freezed_requirements.txt  # informative - frozen versions of libraries. Cannot be pip installed because of ROCm.
+│   freezed_requirements.txt  # informative only - frozen versions of libraries. Cannot be pip installed because of ROCm.
 │   misc_requirements.txt  # contains other required python libraries
 │   torch_requirements.txt  # contains torch python libraries that require separate source of installation (ROCm)
 │   README.md
