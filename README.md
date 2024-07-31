@@ -143,7 +143,7 @@ project/
 │   
 └── utils/
     └─ LogHandling/
-         └─ LogHandlers.py  # contains StandardLogger class that is resposible for informative logging (colors etc.)
+         └─ LogHandlers.py  # contains StandardLogger class that is responsible for informative logging (colors etc.)
 ```
 
 ### Prompt Construction (examples with results)
