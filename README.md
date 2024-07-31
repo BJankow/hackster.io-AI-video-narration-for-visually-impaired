@@ -145,7 +145,7 @@ project/
 │   └─ LogHandling/
 │      └─ LogHandlers.py  # informative logging (colors in terminal etc.)
 │
-└── voice_samples/  # contains samples for VoiceSynthesizing
+└── voice_samples/  # contains samples for voice synthesizing
 ```
 
 ### Prompt Construction (examples with results)
