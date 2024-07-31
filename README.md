@@ -171,8 +171,10 @@ Its aim is to visualise the process of creating desired prompt.
 
 ### Working with AMD Radeon PRO W7900 (quick summary)
 
+
 > TODO: describe how you used this GPU
 
+![img](doc/img/PC_with_W7900.png)
 ## Example usage
 
 ### Generate clip with narration
@@ -187,7 +189,7 @@ python3 main.py --fp CLIP_PATH.mov --out_dir /home/$USER/videos  # this will cre
 
 ### How to select a language
 
-![img](doc/img/peple-talking-different-languages/people_talking_languages.jpg)\
+![img](doc/img/people-talking-different-languages/people_talking_languages.jpg)\
 [Designed by Freepik](http://www.freepik.com)
 
 When launching *main.py* script you can **add *--languages* flag** multiple times. This will create a list of required languages.\
