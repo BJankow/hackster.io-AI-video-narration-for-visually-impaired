@@ -15,21 +15,21 @@ Main difficulties that can be faced:
 
 ## Solution
 
-Considering main difficulties mentioned in the previous section it seems that Machine Learning **Transformers** models 
-may be a quite good approach to face the problem. **Transformers** have immensely developed over the last couple of years. 
+Considering main difficulties mentioned in the previous section it seems that Machine Learning **Transformers** models
+may be a quite good approach to face the problem. **Transformers** have immensely developed over the last couple of years.
 Many researchers have put their effort into achieving **state-of-the-art** solutions that pushed transformer's capabilities
 even further.
-For example GPT-4o model that has been released lately is achieving outstanding results. 
-Therefore, considering the use of **Transformers** seems like a reasonable approach. 
-Additionally, there are multiple open-source transformer models for images and several for videos over the internet 
+For example GPT-4o model that has been released lately is achieving outstanding results.
+Therefore, considering the use of **Transformers** seems like a reasonable approach.
+Additionally, there are multiple open-source transformer models for images and several for videos over the internet
 which are easy to use (after meeting hardware requirements).
 
-The solution I built is an AI-driven video narration system specifically tailored for visually impaired. 
+The solution I built is an AI-driven video narration system specifically tailored for visually impaired.
 Unlike existing solutions, which often rely on pre-recorded audio descriptions my approach offers generative descriptions and availability to everyone.
 Ultimately, this improves accessibility for the visually impaired users, providing a more immersive and engaging experience.
 
-My system utilizes technologies such as open-source Large Language Models (LLMs) provided by 
-[HuggingFace Transformers library](https://huggingface.co/docs/transformers/en/index) for scene interpretation 
+My system utilizes technologies such as open-source Large Language Models (LLMs) provided by
+[HuggingFace Transformers library](https://huggingface.co/docs/transformers/en/index) for scene interpretation
 and Python libraries for scene detection and general video and audio processing.
 
 ## Main features of the solution
@@ -37,9 +37,10 @@ and Python libraries for scene detection and general video and audio processing.
 ![scheme](doc/img/MainFeatures.png)
 
 The above image shows the general idea of the solution:
-1. On the left side we can see a shot from the movie "Big Buck Bunny". 
-2. The shot, along with prepared prompt, is passed to the neural network. 
-3. The AI model generates a text that describes current situation. 
+
+1. On the left side we can see a shot from the movie "Big Buck Bunny".
+2. The shot, along with prepared prompt, is passed to the neural network.
+3. The AI model generates a text that describes current situation.
 4. Finally, the description is synthesized into a speech and added to the video playback.
 
 In summary, the main features of the solution are:
@@ -54,43 +55,46 @@ In summary, the main features of the solution are:
 ## Results
 
 Below is an image with the link to YouTube video that shows the result of processing [Big Buck Bunny](https://www.youtube.com/watch?v=aqz-KE-bpKQ) movie through my system.
-Narrator is already embedded into the movie. 
-Sometimes there is a pause at the beginning of a scene (freeze of the scene's first frame). 
+Narrator is already embedded into the movie.
+Sometimes there is a pause at the beginning of a scene (freeze of the scene's first frame).
 This freeze creates space for the narrator to have time to speak.
 
 [![IMAGE ALT TEXT HERE](doc/img/Thumbnail.png)](https://www.youtube.com/watch?v=F4pD0IXFhg4)
 
 ## Solution Details
 
-Following the idea of "divide and conquer", the solution to the problem is divided into several parts (called stages). 
-Each stage has its specific task and brings us closer to the result. 
+Following the idea of "divide and conquer", the solution to the problem is divided into several parts (called stages).
+Each stage has its specific task and brings us closer to the result.
 The detailed stages of the solution are shown in the image below.
 
 ![Alt text](doc/img/Dataflow_Stages.png "Movie Processing Stages")
 
 The pipeline is split into the following parts:
-1. **Loading a movie** - a movie is being loaded. It requires a path that indicates location of the movie in the local 
+
+1. **Loading a movie** - a movie is being loaded. It requires a path that indicates location of the movie in the local
 filesystem.
-2. **Splitting into scenes** - indicates frames that are beginnings and endings of the scenes. 
+2. **Splitting into scenes** - indicates frames that are beginnings and endings of the scenes.
 [PySceneDetect](https://www.scenedetect.com/) library is used mainly in this stage.
-3. **Generating description for every scene** - bases on the results from previous stage. 
-As it is known when scenes begin and end we can extract frames of particular scene and interpret it. 
-[Transformers Video-LLaVA](https://huggingface.co/docs/transformers/model_doc/video_llava) model is used to process this task. 
+3. **Generating description for every scene** - bases on the results from previous stage.
+As it is known when scenes begin and end we can extract frames of particular scene and interpret it.
+[Transformers Video-LLaVA](https://huggingface.co/docs/transformers/model_doc/video_llava) model is used to process this task.
 One of the most time-consuming parts of this stage is to construct a suitable **prompt** - it expresses our expectations to model.
 Well constructed **prompt** improves quality of the descriptions. Description's base language is english.
-4. **(Optional step) Translation to other language** - uses [deep_translator.GoogleTranslator](https://deep-translator.readthedocs.io/en/latest/usage.html) to translate english descriptions to other language. 
-5. **Synthesizing text description to voice description** - Converts descriptions from previous stages to audio voice narration. 
+4. **(Optional step) Translation to other language** - uses [deep_translator.GoogleTranslator](https://deep-translator.readthedocs.io/en/latest/usage.html) to translate english descriptions to other language.
+5. **Synthesizing text description to voice description** - Converts descriptions from previous stages to audio voice narration.
 Uses [TTS](https://pypi.org/project/TTS/) Python library to process this task. Particularly xtts_v2 model is used.
 This model requires speaker voice reference to clone the voice tone.
 Example narrator voice samples are included in **voice_samples/** directory.\
 Currently supported languages: Polish (pl), English (en).\
 **Adding custom voice samples** can be easily done and is described in [How to add custom voice sample](#how-to-add-custom-voice-sample) section.
-6. **Adding synthesized voice to original movie** - utilizes [ffmpeg](https://linux.die.net/man/1/ffmpeg) tool to add synthesized voices into movie in the proper 
-moments. Sometimes there is not enough space in particular scene for the synthesized voice to talk. 
-In that case the initial frame of the scene is being frozen for a short duration of time to create required space. 
+6. **Adding synthesized voice to original movie** - utilizes [ffmpeg](https://linux.die.net/man/1/ffmpeg) tool to add synthesized voices into movie in the proper
+moments. Sometimes there is not enough space in particular scene for the synthesized voice to talk.
+In that case the initial frame of the scene is being frozen for a short duration of time to create required space.
 Additionally, detection of the first speech moment in the scene is implemented to avoid a situation where the narrator overlaps with the speech of some other character from that scene.
 
 ### Project Structure
+>
+> TODO: add scheme with CLASSES to STAGES
 > TODO: maybe create Translation class
 
 Each stage (except Translation which is too short to maintain class for it) has adequate class that implements all necessary functionalities.\
@@ -141,6 +145,7 @@ project/
 
 
 ### Prompt Construction (examples with results)
+
 As mentioned earlier formulating correct prompt is crucial to obtain desired descriptions.
 This section shows examples of prompts and descriptions that were results. 
 Its aim is to visualise the process of creating desired prompt.
@@ -156,35 +161,43 @@ Its aim is to visualise the process of creating desired prompt.
 > TODO: show examples of prompts and what adding every sentence changed.
 
 ### Working with AMD GPU W7900 (quick summary)
+
 > TODO: describe how you used this GPU
 
 ## Example usage
+
 ### Generate clip with narration
+
 Here are several command line examples showing how to add narration to a clip.
 > TODO: how long this process may take? Is there a limit of a clip (should be shorter than...?)
-```commandline
+
+```shell
 python3 main.py --fp CLIP_PATH.mov  # this will create CLIP_PATH_en.mov file in the given clip directory (beside CLIP_PATH.mov file)
 python3 main.py --fp CLIP_PATH.mov --out_dir /home/$USER/videos  # this will create CLIP_PATH_en.mov file in the /home/$USER/videos directory
 ```
 
 ### How to select a language
+
 ![img](doc/img/peple-talking-different-languages/people_talking_languages.jpg)\
 [Designed by Freepik](http://www.freepik.com)\
 When launching *main.py* script you can **add *--languages* flag** multiple times. This will create a list of required languages.\
-**Language** that you are setting **must be available** for [deep_translator.GoogleTranslator](https://deep-translator.readthedocs.io/en/latest/usage.html) for translation stage and 
+**Language** that you are setting **must be available** for [deep_translator.GoogleTranslator](https://deep-translator.readthedocs.io/en/latest/usage.html) for translation stage and
 **must have set up its voice sample** (described in [How to add custom voice sample](#how-to-add-custom-voice-sample) section below).\
 To check available languages and their abbreviations run following python script (based on: [source](https://deep-translator.readthedocs.io/en/latest/usage.html#check-supported-languages)).
+
 ```python
 # pip install deep_translator
 from deep_translator import GoogleTranslator
 langs_dict = GoogleTranslator().get_supported_languages(as_dict=True)
 # output: {"arabic": "ar", "french": "fr", "english": "en" etc...}
 ```
+
 For every required language the system will create one output file with narration.\
-**Setting particular language multiple times** will cause program to generate narration for particular language 
+**Setting particular language multiple times** will cause program to generate narration for particular language
 only once as the initial list of requested languages is converted to set (which reduces amount of repeating elements to 1).\
 **Not setting** *--languages* flag at all will generate english narration by default.
-```commandline
+
+```shell
 # Below command will create CLIP_PATH_pl.mov file in the given clip directory 
 # (beside CLIP_PATH.mov file). This file will have polish (pl) narration.
 python3 main.py --fp CLIP_PATH.mov --languages pl
@@ -195,20 +208,23 @@ python3 main.py --fp CLIP_PATH.mov --languages pl --languages en
 ```
 
 ### How to add custom voice sample
+
 ![scheme](doc/img/voice.png)\
-If you want to introduce a new language to be available to use or you want to substitute particular voice sample with 
+If you want to introduce a new language to be available to use or you want to substitute particular voice sample with
 one prepared by yourself you need to:
+
 1. Add your voice sample to [voice_samples/](voice_samples) directory.\
-Voice sample should be not too short and not too long. 
+Voice sample should be not too short and not too long.
 Currently [en.wav](voice_samples/en.wav) lasts 5 seconds and [pl.wav](voice_samples/pl.wav) lasts 4 seconds. What may be difficult to achieve is:
    - **clean voice** - clean articulation of each tone without mumbling.
-   - **clean background** - clearing noises from the background helps voice synthesizing algorithm to extract tone and 
+   - **clean background** - clearing noises from the background helps voice synthesizing algorithm to extract tone and
    reduce artifacts in synthesized speech.
 2. Modify **LANGUAGE2READER** dictionary in [VoiceSynthesizers.py](StagesProcessor/VoiceSynthesizing/VoiceSynthesizers.py) file where:
-   - **Key** is indicator of the language you want to use. It must match one of [deep_translator.GoogleTranslator supported languages](https://deep-translator.readthedocs.io/en/latest/usage.html#check-supported-languages) 
+   - **Key** is indicator of the language you want to use. It must match one of [deep_translator.GoogleTranslator supported languages](https://deep-translator.readthedocs.io/en/latest/usage.html#check-supported-languages)
    or their abbreviations.
-   - **Value** is the path indicating voice sample file (preferably placed inside [voice_samples/](voice_samples) directory) 
+   - **Value** is the path indicating voice sample file (preferably placed inside [voice_samples/](voice_samples) directory)
    you want to use with language indicated by **Key**.
+
     ```python
     # StagesProcessor/VoiceSynthesizing/VoiceSynthesizers.py
     # Modifying LANGUAGE2READER dictionary
@@ -249,8 +265,8 @@ Software:
 
 All required Python packages are listed in requirements files:
 
-- [torch](torch_requirenebts.txt)
-- [other_requirements](misc_requirements.txt)
+- [PyTorch requirements](torch_requirements.txt)
+- [Other requirements](misc_requirements.txt)
 
 ## Environemnt setup
 
@@ -481,7 +497,7 @@ Agent 2
 Helpful resources:
 
 - [Arch Linux Wiki on AMD GPU drivers and ROCm installation](https://wiki.archlinux.org/title/GPGPU#ROCm)
-- [PyTorch installation command generator](https://pytorch.org/get-started/locally/) 
+- [PyTorch installation command generator](https://pytorch.org/get-started/locally/)
 - [An AMD blog post about running LLaVa on ROCm with an example](https://rocm.blogs.amd.com/artificial-intelligence/llava-next/README.html)
 - [An AMD post about running Transformers on ROCm](https://huggingface.co/amd)
 
@@ -549,7 +565,6 @@ Now create and activate a new conda environment:
 
 ```shell
 conda env create -f environment.yml
-conda create -n ai-video-narration-for-visually-impaired-rocm python=3.10
 conda activate ai-video-narration-for-visually-impaired-rocm
 ```
 
@@ -571,22 +586,7 @@ ai-video-narration-for-visually-impaired-rocm  *  /home/<user>/anaconda3/envs/ai
 
 ### Conda installing packages
 
-> [!NOTE]
-> All Python packages are installed in previously activated conda environment.
-
-Install PyTorch for AMD ROCm:
-
-```shell
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm6.0
-```
-
-Check if you cloned this repository.
-In the next step you will use the text file with list of requirements.
-Proceed to install other remaining packages listed in [other_requirements.txt](other_requirements.txt):
-
-```shell
-pip install -r other_requirements.txt
-```
+All packages should be installed during the environment setup.
 
 To check if PyTorch sees your GPU and to list all visible XXX, run in `python` CLI and paste this:
 
@@ -732,4 +732,4 @@ The efficiency of our visual narration system relies heavily on high-performance
 [Big Buck Bunny](https://peach.blender.org/) is licensed under the
 [Creative Commons Attribution 3.0 license](http://creativecommons.org/licenses/by/3.0/).
 
-(c) copyright 2008, Blender Foundation / www.bigbuckbunny.org
+(c) copyright 2008, Blender Foundation / <www.bigbuckbunny.org>
