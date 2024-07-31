@@ -98,7 +98,7 @@ General project structure can be defined as follows:
 
 - Each stage was implemented as a class.
 - Each class has a defined interface (located in *...Interface.py* files).
-- Interface helps to define that are expected in particular stage.
+- Interface helps to define methods which are expected in particular stage.
 
 ![Alt text](doc/img/Dataflow_Stages_Interfaces.png "Movie Processing Stages with interfaces")
 
