@@ -94,11 +94,8 @@ Additionally, detection of the first speech moment in the scene is implemented t
 
 ### Project Structure
 
-> TODO: add scheme with CLASSES to STAGES
-> TODO: maybe create Translation class
-
-Each stage (except Translation which is too short to maintain class for it) has adequate class that implements all necessary functionalities.\
-Interface classes (located in *...Interface.py files*) define methods that are expected to exist in developed classes.
+Each stage was implemented as a class.\
+Interface classes (located in *...Interface.py* files) define methods that are expected to exist in developed classes.
 
 > TODO: jak sie nazywaja te klasy ktore nie sa abstrakcyjne (interfejsami) tylko juz robocze.
 
@@ -133,7 +130,7 @@ project/
 │   │   │   SceneDetectors.py  # contains classes for detecting scene. These classes inherit from SceneDetectorInterface
 │   │
 │   └───Translating/
-│   │   │   TranslatorInterface.py  # defines abstract class with translate() method that must be implemented for translation task
+│   │   │   TranslatorInterface.py  # defines abstract class with translate() and batch_translate() methods that must be implemented for translation task
 │   │   │   Translators.py  # contains classes for translation that inherit from TranslatorInterface
 │   │
 │   └───VoiceSynthesizing/
@@ -163,7 +160,7 @@ Its aim is to visualise the process of creating desired prompt.
 
 > TODO: show examples of prompts and what adding every sentence changed.
 
-### Working with AMD GPU W7900 (quick summary)
+### Working with AMD Radeon PRO W7900 (quick summary)
 
 > TODO: describe how you used this GPU
 
