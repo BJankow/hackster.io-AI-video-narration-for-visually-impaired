@@ -91,10 +91,67 @@ In that case the initial frame of the scene is being frozen for a short duration
 Additionally, detection of the first speech moment in the scene is implemented to avoid a situation where the narrator overlaps with the speech of some other character from that scene.
 
 ### Project Structure
-> TODO: add scheme with CLASSES to STAGES
+> TODO: maybe create Translation class
+
+Each stage (except Translation which is too short to maintain class for it) has adequate class that implements all necessary functionalities.\
+Interface classes (located in *...Interface.py files*) define methods that are expected to exist in developed classes.
+> TODO: jak sie nazywaja te klasy ktore nie sa abstrakcyjne (interfejsami) tylko juz robocze.
+
+![Alt text](doc/img/Dataflow_Stages_Interfaces.png "Movie Processing Stages with interfaces")
+```
+project/
+│   environment.yml  # contains configuration file for conda environment
+│   freezed_requirements.txt  # Frozen versions of libraries. Can not be used directly because of ROCm versions
+│   misc_requirements.txt  # contains other required python libraries
+│   torch_requirements.txt  # contains torch python libraries that require separate source of installation (ROCm)
+│   README.md
+│
+└───StagesProcessor/
+│   │   StagesProcessor.py  # contains StagesProcessor class for processing Stages. It inherits from StagesProcessorInterface
+│   │   StagesProcessorInterface.py  # defines abstract class with methods that are needed to process through Stages
+│   │
+│   └───ClipDescribing/
+│   │   │   ClipDescriptorInterface.py  # defines abstract class with describe() method that must be implemented for describing given scene
+│   │   │   ClipDescriptors.py  # contains classes for describing scene. These classes inherit from ClipDescriptorInterface
+│   │
+│   └───MovieComposing/
+│   │   │   MovieComposerInterface.py  # defines abstract class with compose() method that must be implemented for composing new movie
+│   │   │   MovieComposers.py  # contains classes for composing clip from audio and video. These classes inherit from MovieComposerInterface
+│   │
+│   └───MovieHandling/
+│   │   │   MovieHandlerInterface.py  # defines abstract class with load() method that must be implemented for obtaining audio and video from the movie
+│   │   │   MovieHandlers.py  # contains classes for handling clips. These classes inherit from MovieHandlerInterface
+│   │
+│   └───ScenesDetecting/
+│   │   │   SceneDetectorInterface.py  # defines abstract class with detect() method that must be implemented for scene deteection
+│   │   │   SceneDetectors.py  # contains classes for detecting scene. These classes inherit from SceneDetectorInterface
+│   │
+│   └───Translating/
+│   │   │   TranslatorInterface.py  # defines abstract class with translate() method that must be implemented for translation task
+│   │   │   Translators.py  # contains classes for translation that inherit from TranslatorInterface
+│   │
+│   └───VoiceSynthesizing/
+│       │   VoiceSynthesizerInterface.py  # defines abstract class with synthesize() method that must be implemented for speech synthezation
+│       │   VoiceSynthesizers.py  # contains classes for synthesizing speech. These classes inherit from VoiceSynthesizerInterface
+│   
+└───utils/
+    └───LogHandling/
+        │   LogHandlers.py  # contains StandardLogger class that is resposible for informative logging (colors etc.)
+```
+
 
 ### Prompt Construction (examples with results)
 As mentioned earlier formulating correct prompt is crucial to obtain desired descriptions.
+This section shows examples of prompts and descriptions that were results. 
+Its aim is to visualise the process of creating desired prompt.
+
+##### 1. The most basic prompt
+
+##### 2. The most basic prompt
+##### 3. The most basic prompt
+##### 4. The most basic prompt
+##### 5. The most basic prompt
+
 
 > TODO: show examples of prompts and what adding every sentence changed.
 
