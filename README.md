@@ -107,13 +107,13 @@ General project structure can be defined as follows:
 
 ```shell
 project/
-│   environment.yml  # contains configuration file for conda environment
-│   freezed_requirements.txt  # informative only - frozen versions of libraries. Cannot be pip installed because of ROCm
-│   misc_requirements.txt  # contains Python libraries installed from default repositories
-│   torch_requirements.txt  # contains PyTorch libraries that need to be installed from external repository (ROCm)
-│   README.md
+├── environment.yml  # contains configuration file for conda environment
+├── freezed_requirements.txt  # informative only - frozen versions of libraries. Cannot be pip installed because of ROCm
+├── misc_requirements.txt  # contains Python libraries installed from default repositories
+├──   torch_requirements.txt  # contains PyTorch libraries that need to be installed from external repository (ROCm)
+├──   README.md
 │
-└── StagesProcessor/
+├── StagesProcessor/
 │   ├─── StagesProcessor.py  # contains StagesProcessor class for processing Stages. It inherits from StagesProcessorInterface
 │   │    StagesProcessorInterface.py  # defines abstract class with methods that are needed to process through Stages
 │   │
