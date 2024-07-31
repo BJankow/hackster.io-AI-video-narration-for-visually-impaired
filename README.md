@@ -171,13 +171,17 @@ Its aim is to visualise the process of creating desired prompt.
 
 ### Working with AMD Radeon PRO W7900 (quick summary)
 
+Below image shows installation of AMD Radeon Pro W7900 in my PC. The GPU does not take too much space. 
+However, what suprised me, is that this GPU needs 3 slots to be installed. In my opinion 2 would be enough. 
+I have seen over the internet that AMD figured it out already and created 2-slot version.
+![img](doc/img/PC_with_W7900.png)
+
 Working with AMD Radeon W7900 was something new to me. Here are my obervations:
 - It is important to make sure that GPU is well ventilated during work
-- When working GPU temperature sets at level of 82 °C
+- When working GPU temperature sets at level of 82 °C (see chart below)
 - GPU is working quietly
 - Power consumption at 100% of usage sets on 250 W
- 
-![img](doc/img/PC_with_W7900.png)
+
 ![img](doc/img/W7900_usage_chart.png)
 ## Example usage
 
