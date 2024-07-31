@@ -93,11 +93,10 @@ In that case the initial frame of the scene is being frozen for a short duration
 Additionally, detection of the first speech moment in the scene is implemented to avoid a situation where the narrator overlaps with the speech of some other character from that scene.
 
 ### Project Structure
-
-Each stage was implemented as a class.\
-Interface classes (located in *...Interface.py* files) define methods that are expected to exist in developed classes.
-
-> TODO: jak sie nazywaja te klasy ktore nie sa abstrakcyjne (interfejsami) tylko juz robocze.
+General procject structure can be defined as follows:
+- Each stage was implemented as a class.
+- Each class has defined its own interface (located in *...Interface.py* files).
+- Interface helps to define that are expected in particular stage.
 
 ![Alt text](doc/img/Dataflow_Stages_Interfaces.png "Movie Processing Stages with interfaces")
 
