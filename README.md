@@ -91,6 +91,9 @@ moments. Sometimes there is not enough space in particular scene for the synthes
 In that case the initial frame of the scene is being frozen for a short duration of time to create required space. 
 Additionally, detection of the first speech moment in the scene is implemented to avoid a situation where the narrator overlaps with the speech of some other character from that scene.
 
+### Project Structure
+> TODO: add scheme with CLASSES to STAGES
+
 ### Prompt Construction (examples with results)
 > TODO: show examples of prompts and what adding every sentence changed.
 
