@@ -8,10 +8,10 @@ I wanted to create a generative voice narration tool that would describe to the 
 
 Main difficulties that can be faced:
 
-- various content of input movies (many objects of different colors, background types, characters, behaviours, etc.)
-- catching information from nuances and gestures
-- plot understanding (not only single scene)
-- understanding beginning and ending of the scene
+- Various content of input movies (many objects of different colors, background types, characters, behaviours, etc.).
+- Catching information from nuances and gestures.
+- Plot understanding (not only single scene).
+- Understanding beginning and ending of the scene.
 
 ## Solution
 
@@ -86,7 +86,7 @@ Uses [TTS](https://pypi.org/project/TTS/) Python library to process this task. P
 This model requires speaker voice reference to clone the voice tone.
 Example narrator voice samples are included in **voice_samples/** directory.\
 Currently supported languages: Polish (pl), English (en).\
-**Adding custom voice samples** can be easily done and is described in [How to add custom voice sample](#how-to-add-custom-voice-sample) section.
+**Adding custom voice samples** can be easily done and is described in [How to add custom voice sample](#how-to-add-a-custom-voice-sample) section.
 6. **Adding synthesized voice to original movie** - utilizes [ffmpeg](https://linux.die.net/man/1/ffmpeg) tool to add synthesized voices into movie in the proper
 moments. Sometimes there is not enough space in particular scene for the synthesized voice to talk.
 In that case the initial frame of the scene is being frozen for a short duration of time to create required space.
@@ -239,10 +239,10 @@ one prepared by yourself you need to:
 
     Voice sample should not be too short nor too long.
     Currently [en.wav](voice_samples/en.wav) lasts 5 seconds and [pl.wav](voice_samples/pl.wav) lasts 4 seconds. What may be difficult to achieve is:
-    - **clean voice** - clean articulation of each tone without mumbling.
-    - **clean background** - clearing noises from the background helps voice synthesizing algorithm to extract tone and
+    - **Clean voice** - clean articulation of each tone without mumbling.
+    - **Clean background** - clearing noises from the background helps voice synthesizing algorithm to extract tone and
     reduce artifacts in synthesized speech.
-    - for more detailed information view [xtts guide](https://blog.unrealspeech.com/xtts-v2-ultimate-guide/).
+    - For more detailed information view [xtts guide](https://blog.unrealspeech.com/xtts-v2-ultimate-guide/).
 
 2. Modify **LANGUAGE2READER** dictionary in [VoiceSynthesizers.py](StagesProcessor/VoiceSynthesizing/VoiceSynthesizers.py) file where:
     - **Key** is indicator of the language you want to use. It must match one of [deep_translator.GoogleTranslator supported languages](https://deep-translator.readthedocs.io/en/latest/usage.html#check-supported-languages)
