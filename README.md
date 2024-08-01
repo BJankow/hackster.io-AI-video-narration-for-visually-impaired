@@ -190,7 +190,6 @@ Here are my obervations about working with AMD Radeon PRO W7900:
 ### Generate clip with narration
 
 Here are several command line examples showing how to add narration to a clip.
-> TODO: how long this process may take? Is there a limit of a clip (should be shorter than...?)
 
 ```shell
 python3 main.py --fp CLIP_PATH.mov  # this will create CLIP_PATH_en.mov file in the given clip directory (beside CLIP_PATH.mov file)
@@ -205,7 +204,7 @@ I will give an example of processing [Big Buck Bunny](https://www.youtube.com/wa
 
 It seems that number of detected scenes is the key factor influencing processing time.\
 The system has its limitations regarding acceptable length of the film due to [PyDub library]((https://github.com/jiaaro/pydub)) limitations. 
-I tried to process full length movie (1h 23min) and there are some issues connected to audio decoding process. 
+I tried to process full length movie (1h 23min) and there were some issues related to audio decoding process. 
 
 ### How to select a language
 
