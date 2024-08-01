@@ -1,4 +1,4 @@
-# hackster.io-AI-video-narration-for-visually-impaired
+# hackster.io AI video narration for visually impaired
 
 ## Introduction
 
@@ -79,7 +79,7 @@ One of the most time-consuming parts of this stage is to construct a suitable **
 Well constructed **prompt** improves quality of the descriptions. Description's base language is english.
 4. **(Optional step) Translation to other language** - uses [deep_translator.GoogleTranslator](https://deep-translator.readthedocs.io/en/latest/usage.html) to translate english descriptions to other language.
 5. **Synthesizing text description to voice description** - Converts descriptions from previous stages to audio voice narration.
-Uses [TTS](https://pypi.org/project/TTS/) Python library to process this task. Particularly xtts_v2 model is used.
+Uses [TTS](https://pypi.org/project/TTS/) Python library to process this task. Particularly [xtts_v2](https://huggingface.co/coqui/XTTS-v2) model is used.
 This model requires speaker voice reference to clone the voice tone.
 Example narrator voice samples are included in **voice_samples/** directory.\
 Currently supported languages: Polish (pl), English (en).\
@@ -284,9 +284,9 @@ I tried to process full length movie (1h 23min) and there were some issues relat
 ![img](doc/img/people-talking-different-languages/people_talking_languages.jpg)\
 [Designed by Freepik](http://www.freepik.com)
 
-When launching *main.py* script you can **add *--languages* flag** multiple times. This will create a list of required languages.\
+When launching *main.py* script you can **add *--languages* flag** multiple times. This will create a list of required languages.
 **Language** that you are setting **must be available** for [deep_translator.GoogleTranslator](https://deep-translator.readthedocs.io/en/latest/usage.html) for translation stage and
-**must have set up its voice sample** (described in [How to add a custom voice sample](#how-to-add-a-custom-voice-sample) section below).\
+**must have set up its voice sample** (described in [How to add a custom voice sample](#how-to-add-a-custom-voice-sample) section below).
 To check available languages and their abbreviations run following `python` script (based on: [source](https://deep-translator.readthedocs.io/en/latest/usage.html#check-supported-languages)).
 
 ```python
