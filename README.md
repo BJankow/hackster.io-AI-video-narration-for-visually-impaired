@@ -296,9 +296,9 @@ langs_dict = GoogleTranslator().get_supported_languages(as_dict=True)
 # output: {"arabic": "ar", "french": "fr", "english": "en" etc...}
 ```
 
-For every required language the system will create one output file with narration.\
+For every required language the system will create one output file with narration.
 **Setting particular language multiple times** will cause program to generate narration for particular language
-**only once** as the initial list of requested languages is converted to set (which reduces the amount of repeating elements to 1).\
+**only once** as the initial list of requested languages is converted to set (which reduces the amount of repeating elements to 1).
 **Not setting** *--languages* flag at all will generate **only english** narration by default.
 
 ```shell
@@ -313,7 +313,8 @@ python3 main.py --fp CLIP_PATH.mov --languages pl --languages en
 
 ### How to add a custom voice sample
 
-![scheme](doc/img/voice.png)\
+![scheme](doc/img/voice.png)
+
 If you want to introduce a new language to be available to use or you want to substitute particular voice sample with
 one prepared by yourself you need to:
 
