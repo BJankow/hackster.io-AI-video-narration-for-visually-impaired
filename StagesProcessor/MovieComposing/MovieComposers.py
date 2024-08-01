@@ -83,14 +83,6 @@ class MovieComposerBase(MovieComposerInterface, StandardLogger):
             scenes: List[Tuple[FrameTimecode, FrameTimecode]],
             synthesized_descriptions: List[AudioSegment]
     ):
-        """
-        Composes Video and Audio files into movie.
-        :param video_fp: filepath to video file.
-        :param audio_fp: filepath to audio file.
-        :param scenes: scenes as Tuple of FrameTimecodes. First indicates beginning of the scene, second - end.
-        :param synthesized_descriptions: descriptions as audio.
-        :return:
-        """
         video = VideoFileClip(video_fp)
         audio = AudioSegment.from_file(audio_fp)
 
@@ -157,12 +149,6 @@ class MovieComposerBase(MovieComposerInterface, StandardLogger):
         os.system(freeze_command)
 
     def save(self, out_fp: Union[str, Path]):
-        """
-        Saves composed movie as a file.
-
-        :param out_fp: path to output file.
-        :return:
-        """
         assert self.__video_tmp_fp is not None
         assert os.path.isfile(self.__video_tmp_fp.name)
         assert self.__audio_tmp_fp is not None

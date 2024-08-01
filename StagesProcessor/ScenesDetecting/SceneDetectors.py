@@ -25,14 +25,6 @@ class SceneDetectorBase(SceneDetectorInterface, StandardLogger):
             time_stop: float,
             time_start: float
     ) -> List[Tuple[FrameTimecode, FrameTimecode]]:
-        """
-        Detects scenes in a given serie of frames.
-
-        :param video: video to be processed.
-        :param time_stop: (seconds) in what moment of the movie to stop processing.
-        :param time_start: (seconds) in what moment of the movie to start processing.
-        :return:
-        """
         if time_stop < np.inf:
             end_time = FrameTimecode(time_stop, fps=video.frame_rate)
         else:

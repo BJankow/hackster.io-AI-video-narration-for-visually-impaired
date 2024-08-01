@@ -20,19 +20,7 @@ class TranslatorBase(TranslatorInterface):
         self.translator = GoogleTranslator(source=source_language, target=target_language)
 
     def translate(self, text: str) -> str:
-        """
-        Performs translation task. Source and target language were defined during instance initialization.
-
-        :param text: text in particular language to be translated to target language.
-        :return: translated text.
-        """
         return self.translator.translate(text=text)
 
     def batch_translate(self, texts: Iterable[str]) -> List[str]:
-        """
-        Performs multiple translation task. Source and target language were defined during instance initialization.
-
-        :param texts: Iterable of texts to be translated from particular language to target language.
-        :return: list of translated texts.
-        """
         return [self.translate(text=text) for text in texts]
