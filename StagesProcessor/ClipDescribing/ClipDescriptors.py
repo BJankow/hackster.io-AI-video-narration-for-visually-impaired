@@ -249,7 +249,7 @@ class ClipDescriptorVideoLLava(ClipDescriptorBase):
                       # "Prefer using complex sentences instead of several simple sentences. "
                       # "The style of your description should be similar to STYLE EXAMPLES given above."
                       # "Ommit describing colors. "
-                      # "Your description should be brief, and collect only the most important facts.\n"
+                      # "Description should be brief, and collect only the most important facts.\n"
                       "DESCRIPTION:")
         else:
             prompt = (f"{style_examples}"

@@ -193,11 +193,29 @@ Successes:
 
 Problems:
 - Description is still a bit too long.
+#### 3. 
 
-
-#### 3. The most basic prompt
+```python
+...
+prompt = (f"CURRENT SCENE: <video>\n"
+          "TASK: Directly describe the scene without starting with auxiliary words or helping verbs. "
+          "DESCRIPTION:")
+...
+# Results:
+# Scene 1: A field of green grass with trees in the background.
+# Scene 2: A field of grass with a small stream running through it. The grass is tall and green, and there are flowers in the field. The stream is shallow and runs through the grass, creating a peaceful and serene atmosphere.
+# Scene 3: A bird is perched on a branch of a tree.
+# Scene 4: A large, furry, and fluffy dog is laying in a grassy area. It is surrounded by rocks and is positioned in a hole. The dog appears to be sleeping or resting.
+# Scene 5: A large, fluffy bunny is sitting in the grass, looking at the camera. The bunny is wearing a necklace and has a big smile on its face.
+```
 
 #### 4. The most basic prompt
+...
+prompt = (f"CURRENT SCENE: <video>\n"
+          "TASK: Directly describe the scene without starting with auxiliary words or helping verbs. "
+          "DESCRIPTION:")
+...
+# Results:
 
 #### 5. The most basic prompt
 
