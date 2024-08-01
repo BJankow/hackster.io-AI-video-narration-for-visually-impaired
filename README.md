@@ -154,7 +154,7 @@ project/
 ### Prompt Construction (examples with results)
 
 Correct prompt is crucial to obtain desired descriptions.
-This section shows examples of prompts and descriptions that were results.
+This section shows examples of prompts with results (descriptions).
 Its aim is to visualise the process of creating desired prompt.
 
 #### 1. The most basic prompt
@@ -204,7 +204,7 @@ I will give an example of processing [Big Buck Bunny](https://www.youtube.com/wa
 
 It seems that number of detected scenes is the key factor influencing processing time.\
 The system has its limitations regarding acceptable length of the film due to [PyDub library]((https://github.com/jiaaro/pydub)) limitations. 
-I tried to process full length movie (1h 23min) and there were some issues related to audio decoding process. 
+I tried to process full length movie (1h 23min) and there were some issues related to audio decoding process.
 
 ### How to select a language
 
