@@ -203,7 +203,7 @@ Solved:
 
 Problems:
 
-- Multiple camera reference ("at the camera")
+- Multiple camera reference ("at the camera").
 - Descriptions are still a bit too long.
 
 #### 3. Removing camera reference - 2 prompts
@@ -241,7 +241,7 @@ prompt2 = (f"TEXT: {current_descriptions}. "
 Solved:
 
 - Descriptions do not start with "The video...", "The scene..." phrases.
-- Multiple camera reference ("at the camera") partially solved - now it sounds more natural ("They are all looking in the same direction." from Scene 24)
+- Multiple camera reference ("at the camera") partially solved - now it sounds more natural ("They are all looking in the same direction." from Scene 24).
 
 ### Working with AMD Radeon PRO W7900 (quick summary)
 
