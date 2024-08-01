@@ -47,10 +47,7 @@ In summary, the main features of the solution are:
 
 - Describing video scenes.
 - Identification of objects, actions, and scenes.
-- Keeping context between scenes.
 - Synchronized narration with video playback.
-
-> TODO: keeping context between scenes
 
 ## Results
 
