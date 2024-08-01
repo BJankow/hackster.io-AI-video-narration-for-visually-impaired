@@ -59,7 +59,7 @@ Narrator is already embedded into the movie.
 Sometimes there is a pause at the beginning of a scene (freeze of the scene's first frame).
 This freeze creates space for the narrator to have time to speak.
 
-[![IMAGE ALT TEXT HERE](doc/img/Thumbnail.png)](https://www.youtube.com/watch?v=F4pD0IXFhg4)
+[![IMAGE ALT TEXT HERE](doc/img/Thumbnail.png)](https://www.youtube.com/watch?v=_I5QYbEU_W0)
 
 ## Solution Details
 
