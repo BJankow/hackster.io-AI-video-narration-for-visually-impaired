@@ -240,7 +240,6 @@ prompt2 = (f"TEXT: {current_descriptions}. "
 
 Solved:
 
-- Descriptions do not start with *The video...*, *The scene...* phrases.
 - Multiple camera reference (*at the camera*) partially solved - now it sounds more natural (*They are all looking in the same direction* from Scene 24).
 
 ### Working with AMD Radeon PRO W7900 (quick summary)
