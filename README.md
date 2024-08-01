@@ -175,9 +175,9 @@ prompt = "USER: <video>\nWhat's the content of the video?\nDESCRIPTION:"
 
 Problems:
 
-- Description start with "The video", "The scene" phrases.
+- Descriptions start with "The video", "The scene" phrases.
 - Multiple camera reference ("at the camera").
-- Description is a bit too long (narrator will to talk too long).
+- Description is a bit too long (narrator will talk too long).
 
 #### 2. Skipping auxiliary words
 
@@ -204,7 +204,7 @@ Successes:
 Problems:
 
 - Multiple camera reference ("at the camera")
-- Description is still a bit too long.
+- Descriptions are still a bit too long.
 
 #### 3. Removing camera reference - 2 prompts
 
