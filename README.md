@@ -762,7 +762,7 @@ PyTorch for ROCm in Docker:
 
 ## Observe hardware usage
 
-### btop
+### [btop](https://github.com/aristocratos/btop)
 
 Very nice GUI interface to observe CPU usage
 
@@ -770,7 +770,7 @@ Very nice GUI interface to observe CPU usage
 sudo snap install btop
 ```
 
-### nvtop
+### [nvtop](https://github.com/Syllo/nvtop?tab=readme-ov-file)
 
 Install it via:
 
