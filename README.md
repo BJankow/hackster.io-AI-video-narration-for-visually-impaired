@@ -254,6 +254,7 @@ Here are my obervations about working with AMD Radeon PRO W7900:
 - The temperature sets at the level of 82 °C under load (see the chart below).
 - The noise level is acceptable (it's pretty quiet).
 - Power consumption at 100% of usage sets below 250 W - doesn't require powerful power supply.
+- Memory consumption often reached 35GB of VRAM.
 
 ![img](doc/img/W7900_usage_chart.png)
 
@@ -795,7 +796,7 @@ Aborted (core dumped)
 
 It is caused by the outdated version of that is in `apt` repository.
 
-## Ending
+## Conclusion
 
 My solution involves testing multiple Large Language Model architectures to determine the most suitable one.
 During this process, I assessed potential limitations of the AMD Radeon PRO W7900 GPU when working with these models.
