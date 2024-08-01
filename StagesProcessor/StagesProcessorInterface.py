@@ -55,6 +55,7 @@ class StagesProcessorInterface(ABC):
     def convert_descriptions_to_narration(self, descriptions: List[str]) -> List[str]:
         """
         Modifies descriptions so they briefly describe what happened in a video scene by scene. Narrative style.
+
         :param descriptions: Descriptions - one per scene
         :return: modified descriptions in the form of narrative.
         """

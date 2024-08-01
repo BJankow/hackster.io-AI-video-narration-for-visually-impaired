@@ -63,15 +63,6 @@ class StagesProcessor(StagesProcessorInterface, StandardLogger):
             *args,
             **kwargs
     ) -> List:
-        """
-        Detects scenes in a given movie.
-
-        :param fp: path to movie file.
-        :param time_stop: (seconds) in what moment of the movie to stop processing. Default: np.inf.
-        :param time_start: (seconds) in what moment of the movie to start processing. Default: 0.0.
-        :return: List of tuples with information about position (in a time domain) of scenes in a movie.
-        """
-
         self._logger.info("Detecting scenes...")
         self.load_movie(fp=fp)
         return self.scene_detector.detect_scenes(
@@ -85,14 +76,6 @@ class StagesProcessor(StagesProcessorInterface, StandardLogger):
             fp: Union[str, Path],
             scenes: List[Tuple[FrameTimecode, FrameTimecode]],
     ) -> List:
-        """
-        Generates descriptions for every shot/scene. Generated descriptions are in english ('en') language.
-
-        :param fp: path to movie file.
-        :param scenes: scenes of given movie.
-        :return: List of text descriptions.
-        """
-
         self._logger.info("Generating descriptions...")
         self.load_movie(fp=fp)
         descriptions = self.clip_descriptor.describe(
@@ -102,12 +85,6 @@ class StagesProcessor(StagesProcessorInterface, StandardLogger):
         return descriptions
 
     def convert_descriptions_to_narration(self, descriptions: List[str]) -> List[str]:
-        """
-        Modifies descriptions so they briefly describe what happened in a video scene by scene. Narrative style.
-        :param descriptions: Descriptions - one per scene
-        :return: modified descriptions in the form of narrative.
-        """
-
         self._logger.info("Converting descriptions to narration...")
         if self.summarizer is not None:
             return self.summarizer.summarize(sentences=descriptions)
@@ -116,7 +93,12 @@ class StagesProcessor(StagesProcessorInterface, StandardLogger):
                                  f"Passing descriptions through without changing.")
             return descriptions
 
-    def synthesize_descriptions(self, fp: Union[str, Path], descriptions: List[str], language: str) -> List:
+    def synthesize_descriptions(
+            self,
+            fp: Union[str, Path],
+            descriptions: List[str],
+            language: str
+    ) -> List:
         self._logger.info("Synthesizing descriptions...")
         return self.voice_synthesizer.synthesize(texts=descriptions, language=language)
 
@@ -127,15 +109,6 @@ class StagesProcessor(StagesProcessorInterface, StandardLogger):
             scenes: List[Tuple[FrameTimecode, FrameTimecode]],
             synthesized_descriptions: List[AudioSegment]
     ):
-        """
-
-        :param fp: path to original movie file.
-        :param out_fp: path to file where the composed movie will be saved.
-        :param scenes: scenes as Tuple of FrameTimecodes. First indicates beginning of the scene, second - end.
-        :param synthesized_descriptions: descriptions as audio.
-        :return:
-        """
-
         self._logger.info("Composing movie...")
         self.movie_composer.compose(
             video_fp=fp,

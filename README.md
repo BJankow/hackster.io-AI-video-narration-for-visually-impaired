@@ -158,8 +158,42 @@ This section shows examples of prompts with results (descriptions).
 Its aim is to visualise the process of creating desired prompt.
 
 #### 1. The most basic prompt
+```python
+...
+prompt = "USER: <video>\nWhat's the content of the video?\nDESCRIPTION:"
+...
+# Results:
+# Scene 1: The video features a beautiful landscape with a field of green grass, a forest of trees, and a sky with clouds. The scene is serene and peaceful, with a sense of tranquility.
+# Scene 2: The scene is a grassy area with a small stream of water flowing through it. The water is surrounded by grass and rocks, and there are flowers in the grass.
+# Scene 3: The scene is set on a tree branch with a bird perched on it. The bird is looking at the camera, and the sky is visible in the background.
+# Scene 4: A large, furry, and black dog is laying in a grassy area. It is surrounded by rocks and trees. The dog is looking at the camera.
+# Scene 5: A large white rabbit is standing in a grassy field. It is looking at the camera and appears to be smiling. The rabbit is standing in front of a tree and is surrounded by a variety of flowers.
+```
+Problems:
+- Description is a bit too long
+- Description start with "The video", "The scene" phrases.
 
-#### 2. The most basic prompt
+
+#### 2. Skipping auxiliary words
+```python
+...
+prompt = (f"CURRENT SCENE: <video>\n"
+          "TASK: Directly describe the scene without starting with auxiliary words or helping verbs. "
+          "DESCRIPTION:")
+...
+# Results:
+# Scene 1: A field of green grass with trees in the background.
+# Scene 2: A field of grass with a small stream running through it. The grass is tall and green, and there are flowers in the field. The stream is shallow and runs through the grass, creating a peaceful and serene atmosphere.
+# Scene 3: A bird is perched on a branch of a tree.
+# Scene 4: A large, furry, and fluffy dog is laying in a grassy area. It is surrounded by rocks and is positioned in a hole. The dog appears to be sleeping or resting.
+# Scene 5: A large, fluffy bunny is sitting in the grass, looking at the camera. The bunny is wearing a necklace and has a big smile on its face.
+```
+Successes:
+- Description do not start with "The video", "The scene" phrases.
+
+Problems:
+- Description is still a bit too long.
+
 
 #### 3. The most basic prompt
 

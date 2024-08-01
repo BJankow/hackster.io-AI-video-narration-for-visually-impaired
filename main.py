@@ -102,17 +102,18 @@ if __name__ == '__main__':
     # so the process will describe only those scenes that are between given timestamps.
     scenes = stages_processor.detect_scenes(
         fp=fp,
-        # time_start=0.0,  # [s]
-        # time_stop=90.0  # [s]
+        time_start=0.0,  # [s]
+        time_stop=50.0  # [s]
     )
     english_descriptions = stages_processor.generate_descriptions(
         fp=fp,
         scenes=scenes,
     )
-
     english_narration = stages_processor.convert_descriptions_to_narration(
         descriptions=english_descriptions
     )
+    for idx, d in enumerate(english_narration):
+        print(f"Scene {idx + 1}: {d}")
 
     for language in languages:
         logger._logger.info(f"Processing for language: '{language}'")

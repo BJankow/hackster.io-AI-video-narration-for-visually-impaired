@@ -240,14 +240,16 @@ class ClipDescriptorVideoLLava(ClipDescriptorBase):
         #           "Skip auxiliary words and helping verbs.\n"
         #           "NARRATION:")
         if scenes_string == "":
-            prompt = (f"{style_examples}"
+            # prompt = "USER: <video>\nWhat's the content of the video?\nDESCRIPTION:"
+            prompt = (f""
+                      # f"{style_examples}"
                       "CURRENT SCENE: <video>\n"
                       "TASK: Directly describe the scene without starting with auxiliary words or helping verbs. "
-                      "Use pronouns (like 'it', 'she', 'he') where appropriate to avoid repetition. "
-                      "Prefer using complex sentences instead of several simple sentences. "
-                      "The style of your description should be similar to STYLE EXAMPLES given above."
-                      "Ommit describing colors. "
-                      "Your description should be brief, and collect only the most important facts.\n"
+                      # "Use pronouns (like 'it', 'she', 'he') where appropriate to avoid repetition. "
+                      # "Prefer using complex sentences instead of several simple sentences. "
+                      # "The style of your description should be similar to STYLE EXAMPLES given above."
+                      # "Ommit describing colors. "
+                      # "Your description should be brief, and collect only the most important facts.\n"
                       "DESCRIPTION:")
         else:
             prompt = (f"{style_examples}"
