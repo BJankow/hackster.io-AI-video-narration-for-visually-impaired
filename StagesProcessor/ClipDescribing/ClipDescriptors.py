@@ -282,7 +282,6 @@ class ClipDescriptorVideoLLava(ClipDescriptorBase):
             scenes: List[Tuple[FrameTimecode, FrameTimecode]],
     ) -> List[str]:
         self._load_models()
-        # pick frame - take frame that is in 10% from beginning
         video.reset()  # make sure video is at the beginning
 
         s_idx = 0
@@ -293,9 +292,6 @@ class ClipDescriptorVideoLLava(ClipDescriptorBase):
                 for c_f in chosen_frames[1:-1]:
                     video.seek(int(c_f))
                     frame = video.read()[:, :, ::-1].copy()
-                    # cv2.imshow('a', frame)
-                    # cv2.waitKey()
-                    # cv2.destroyWindow('a')
                     clip.append(torch.from_numpy(frame))  # BGR2RGB conversion
                 clip = torch.stack(clip)
                 inputs = self._processor(

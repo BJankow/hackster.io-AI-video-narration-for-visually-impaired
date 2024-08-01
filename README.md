@@ -71,14 +71,14 @@ The pipeline is split into the following parts:
 1. **Loading a movie** - a movie is being loaded. It requires a path that indicates location of the movie in the local
 filesystem.
 2. **Splitting into scenes** - indicates frames that are beginnings and endings of the scenes.
-[PySceneDetect](https://www.scenedetect.com/) library is used mainly in this stage.
+[PySceneDetect](https://www.scenedetect.com/) library is used mainly at this stage.
 3. **Generating description for every scene** - bases on the results from previous stage.
 As it is known when scenes begin and end we can extract frames of particular scene and interpret it.
 [Transformers Video-LLaVA](https://huggingface.co/docs/transformers/model_doc/video_llava) model is used to process this task.
 One of the most time-consuming parts of this stage is to construct a suitable **prompt** - it expresses our expectations to model.
 Well constructed **prompt** improves quality of the descriptions. Description's base language is english.
 4. **(Optional step) Translation to other language** - uses [deep_translator.GoogleTranslator](https://deep-translator.readthedocs.io/en/latest/usage.html) to translate english descriptions to other language.
-5. **Synthesizing text description to voice description** - Converts descriptions from previous stages to audio voice narration.
+5. **Synthesizing text description to voice narration** - Converts descriptions from previous stages to audio voice narration.
 Uses [TTS](https://pypi.org/project/TTS/) Python library to process this task. Particularly [xtts_v2](https://huggingface.co/coqui/XTTS-v2) model is used.
 This model requires speaker voice reference to clone the voice tone.
 Example narrator voice samples are included in **voice_samples/** directory.\
@@ -251,9 +251,9 @@ I saw on the internet that AMD has already figured this out and created a 2-slot
 Here are my obervations about working with AMD Radeon PRO W7900:
 
 - It is important to make sure that GPU is well ventilated during work.
-- The temperature sets at the level of 82 °C under load (see the chart below).
+- The temperature sets at the level of 82°C under load (see the chart below).
 - The noise level is acceptable (it's pretty quiet).
-- Power consumption at 100% of usage sets below 250 W - doesn't require powerful power supply.
+- Power consumption at 100% of usage sets below 250W - doesn't require powerful power supply.
 - Memory consumption often reached 35GB of VRAM.
 
 ![img](doc/img/W7900_usage_chart.png)
@@ -276,7 +276,7 @@ I will give an example of processing [Big Buck Bunny](https://www.youtube.com/wa
 - Number of detected scenes: 129.
 - Processing time: 965 s (16 min 5 sec).
 
-It seems that number of detected scenes is the key factor influencing processing time.\
+It seems that number of detected scenes is the key factor influencing processing time.
 The system has its limitations regarding acceptable length of the film due to [PyDub library]((https://github.com/jiaaro/pydub)) limitations.
 I tried to process full length movie (1h 23min) and there were some issues related to audio decoding process.
 
@@ -377,7 +377,7 @@ All required Python packages are listed in requirements files:
 - [PyTorch requirements](torch_requirements.txt)
 - [Other requirements](misc_requirements.txt)
 
-## Environemnt setup
+## Environment setup
 
 The guide shows how to install AMD GPU drivers and ROCm software.
 It also walks through Conda installation and environment setup.
@@ -721,7 +721,7 @@ index: 0; device name: AMD Radeon PRO W7900
 index: 1; device name: AMD Radeon Graphics
 ```
 
-If you see more than one GPU device, you may need to export [`HIP_VISIBLE_DEVICES`](https://rocm.docs.amd.com/en/latest/conceptual/gpu-isolation.html#hip-visible-devices) variable to your environemnt every time before launching Python.
+If you see more than one GPU device, you may need to export [`HIP_VISIBLE_DEVICES`](https://rocm.docs.amd.com/en/latest/conceptual/gpu-isolation.html#hip-visible-devices) variable to your environment every time before launching Python.
 This may resolve potential conflicts and solve the problem of inappropriate GPU selection.
 
 > [!IMPORTANT]
