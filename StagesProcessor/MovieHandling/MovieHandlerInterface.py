@@ -24,8 +24,16 @@ class MovieHandlerInterface(ABC):
 
     @abstractmethod
     def get_video(self) -> Optional[VideoStream]:
+        """
+        TODO: 
+        :return: None.
+        """
         pass
 
     @abstractmethod
     def get_audio(self) -> Optional[AudioSegment]:
+        """
+        TODO: 
+        :return: None.
+        """
         pass

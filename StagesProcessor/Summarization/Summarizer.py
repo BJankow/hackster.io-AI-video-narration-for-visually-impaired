@@ -21,16 +21,13 @@ class SummarizerBase(SummarizerInterface, StandardLogger):
             self,
             sentences: List[str]
     ) -> List[str]:
-        """
-        This function expects input sentences to be description of movie shots. It will modify these descriptions to
-            provide a short summary in a narrative style. The summary should be concise and clear.
-        :param sentences: List of sentences that you want to summarize/modify.
-        :return: List of modified sentences forming a nice concise and clear summary.
-        """
-
         raise NotImplementedError
 
     def _reload_preferred_device(self):
+        """
+        TODO: here
+        :return:
+        """
         if torch.cuda.is_available():
             self.preferred_device = torch.device("cuda:0")
             self._logger.info(f"Utilized (GPU): {torch.cuda.get_device_name(self.preferred_device)}")
@@ -79,9 +76,4 @@ class PegasusSummarizer(SummarizerBase):
             self,
             sentences: List[str]
     ) -> List[str]:
-        """
-        This function expects input sentences to be description of movie shots. It will modify these descriptions to
-            provide a short summary in a narrative style. The summary should be concise and clear.
-        :param sentences: List of sentences that you want to summarize/modify.
-        :return: List of modified sentences forming a nice concise and clear summary.
-        """
+        raise NotImplementedError

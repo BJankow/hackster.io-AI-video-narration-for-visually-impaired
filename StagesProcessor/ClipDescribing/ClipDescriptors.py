@@ -32,6 +32,10 @@ class ClipDescriptorBase(ClipDescriptorInterface, StandardLogger):
         self._model_id = None
 
     def _reload_preferred_device(self):
+        """
+        TODO: 
+        :return:
+        """
         if torch.cuda.is_available():
             self.preferred_device = torch.device("cuda:0")
             self._logger.info(f"Utilized (GPU): {torch.cuda.get_device_name(self.preferred_device)}")
@@ -56,6 +60,10 @@ class ClipDescriptorViTGPT2(ClipDescriptorBase):
         self._model_id = "nlpconnect/vit-gpt2-image-captioning"
 
     def _load_models(self):
+        """
+        TODO: 
+        :return:
+        """
         self._reload_preferred_device()
         if self.model is None:
             model = VisionEncoderDecoderModel.from_pretrained(
@@ -128,6 +136,10 @@ class ClipDescriptorLLaVA15(ClipDescriptorBase):
         self._model_id = "llava-hf/llava-1.5-7b-hf"
 
     def _load_models(self):
+        """
+        TODO: 
+        :return:
+        """
         self._reload_preferred_device()
 
         if self.model is None:
@@ -182,6 +194,10 @@ class ClipDescriptorLLaVA15(ClipDescriptorBase):
         return descriptions
 
     def describe_single_image(self, image: np.array):
+        """
+        TODO: 
+        :return:
+        """
         self._load_models()
 
         with torch.inference_mode():
@@ -219,6 +235,10 @@ class ClipDescriptorVideoLLava(ClipDescriptorBase):
         self._model_id = "LanguageBind/Video-LLaVA-7B-hf"
 
     def _prompt(self) -> str:
+        """
+        TODO: 
+        :return:
+        """
         # https://www.reddit.com/r/LocalLLaMA/comments/1asyo9m/llava_16_how_to_write_proper_prompt_that_will/
         # (FinancialNailer answer is helpful to get rid of repeating "The image/video shows...")
         #
@@ -265,6 +285,10 @@ class ClipDescriptorVideoLLava(ClipDescriptorBase):
         return prompt
 
     def _load_models(self):
+        """
+        TODO: 
+        :return:
+        """
         self._reload_preferred_device()
 
         if self.model is None:
@@ -345,6 +369,10 @@ class ClipDescriptorLLaVAMistral16(ClipDescriptorBase):
         self._model_id = "llava-hf/llava-v1.6-mistral-7b-hf"
 
     def _load_models(self):
+        """
+        TODO: 
+        :return:
+        """
         self._reload_preferred_device()
 
         if self.model is None:
@@ -409,6 +437,10 @@ class ClipDescriptorLLaVANextVideo34B(ClipDescriptorBase):
         self._model_id = "llava-hf/LLaVA-NeXT-Video-34B-hf"
 
     def _load_models(self):
+        """
+        TODO: 
+        :return:
+        """
         self._reload_preferred_device()
 
         if self.model is None:
