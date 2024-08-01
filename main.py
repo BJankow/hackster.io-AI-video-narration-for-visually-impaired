@@ -97,6 +97,9 @@ if __name__ == '__main__':
         voice_synthesizer=VoiceSynthesizerBase(),
         movie_composer=MovieComposerBase()
     )
+
+    # if you don't want to process whole movie you can set time_start and time_stop (currently commented)
+    # so the process will describe only those scenes that are between given timestamps.
     scenes = stages_processor.detect_scenes(
         fp=fp,
         # time_start=0.0,  # [s]

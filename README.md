@@ -197,6 +197,13 @@ python3 main.py --fp CLIP_PATH.mov  # this will create CLIP_PATH_en.mov file in 
 python3 main.py --fp CLIP_PATH.mov --out_dir /home/$USER/videos  # this will create CLIP_PATH_en.mov file in the /home/$USER/videos directory
 ```
 
+Processing a clip may take various amount of time. But to bring the values closer
+I will give an example of processing [Big Buck Bunny](https://www.youtube.com/watch?v=aqz-KE-bpKQ) movie:
+- Original video time: 596 s (9 min 56 sec)
+- Number of detected scenes: 129 
+- Processing time: 965 s (16 min 5 sec)
+It seems that number of detected scenes is the key factor influencing processing time.
+
 ### How to select a language
 
 ![img](doc/img/people-talking-different-languages/people_talking_languages.jpg)\
