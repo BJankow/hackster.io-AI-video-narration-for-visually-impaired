@@ -177,7 +177,7 @@ Problems:
 
 - Descriptions start with "The video", "The scene" phrases.
 - Multiple camera reference ("at the camera").
-- Description is a bit too long (narrator will talk too long).
+- Descriptions are a bit too long (narrator will talk too long).
 
 #### 2. Skipping auxiliary words
 
