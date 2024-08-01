@@ -245,46 +245,11 @@ class ClipDescriptorVideoLLava(ClipDescriptorBase):
         """
         # https://www.reddit.com/r/LocalLLaMA/comments/1asyo9m/llava_16_how_to_write_proper_prompt_that_will/
         # (FinancialNailer answer is helpful to get rid of repeating "The image/video shows...")
-        #
-        scenes_string = ""
-        style_examples = (f"STYLE EXAMPLES:\n"
-                          "- Sunrise over the African savanna.\n"
-                          "- Animals gather at Pride Rock.\n"
-                          "- Mufasa and Sarabi present their newborn son, Simba.\n"
-                          "- Rafiki blesses him and lifts him up.\n"
-                          "- They cheer and bow.\n"
-                          "- The Pride Lands under the rising sun.\n"
-                          "\n")
-
-        for idx, description in list(self._scene_descriptions.items())[-5:]:  # consider only N last descriptions
-            scenes_string += f"\nScene {idx + 1}: {description}"
-
-        # prompt = ("USER: <video>\n"
-        #           "Describe the video scene briefly (in a laconic way), only the most important facts.\n"
-        #           "Skip auxiliary words and helping verbs.\n"
-        #           "NARRATION:")
-        if scenes_string == "":
-            # prompt = "USER: <video>\nWhat's the content of the video?\nDESCRIPTION:"
-            prompt = (f""
-                      # f"{style_examples}"
-                      "CURRENT SCENE: <video>\n"
-                      "TASK: Directly describe the scene without starting with auxiliary words or helping verbs. "
-                      # "Use pronouns (like 'it', 'she', 'he') where appropriate to avoid repetition. "
-                      # "Prefer using complex sentences instead of several simple sentences. "
-                      # "The style of your description should be similar to STYLE EXAMPLES given above."
-                      # "Ommit describing colors. "
-                      # "Description should be brief, and collect only the most important facts.\n"
-                      "DESCRIPTION:")
-        else:
-            prompt = (f"{style_examples}"
-                      f"PREVIOUS SCENE DESCRIPTIONS:{scenes_string}\n\n"
-                      "CURRENT SCENE:\n<video>\n"
-                      "TASK: Directly describe the scene without starting with auxiliary words or helping verbs. "
-                      "Use pronouns (like 'it', 'she', 'he') where appropriate to avoid repetition. "
-                      "The style of your description should be similar to STYLE EXAMPLES given above."
-                      "Your description should be brief, and collect only the most important facts."
-                      "Keep in mind PREVIOUS SCENE DESCRIPTIONS given above - your description should try to be coherent continuation of the narration\n"
-                      "DESCRIPTION:")
+        # prompt = "USER: <video>\nWhat's the content of the video?\nDESCRIPTION:"
+        prompt = (f""
+                  "CURRENT SCENE: <video>\n"
+                  "TASK: Directly describe the scene without starting with auxiliary words or helping verbs. "
+                  "\nDESCRIPTION:")
 
         return prompt
 
@@ -349,9 +314,30 @@ class ClipDescriptorVideoLLava(ClipDescriptorBase):
                     skip_special_tokens=True,
                     clean_up_tokenization_spaces=False
                 )[0].split("DESCRIPTION: ")[1]
+
+                # POST PROCESSING
                 if current_descriptions.__len__() > 0:
                     if not current_descriptions[-1].endswith('.'):  # not finished
                         current_descriptions = '.'.join(current_descriptions.split('.')[:-1]) + '.'
+
+                if "at the camera" in current_descriptions:
+                    inputs = self._processor(
+                        text=f"TEXT: {current_descriptions}. "
+                             f"TASK: rephrase given TEXT so it does not contain camera reference."
+                             f"\nRESULT:",
+                        return_tensors="pt"
+                    ).to(self.preferred_device, self._desired_data_type)
+                    output_ids = self.model.generate(
+                        **inputs,
+                        max_new_tokens=50,
+                        do_sample=False
+                    )
+                    current_descriptions = self._processor.batch_decode(
+                        output_ids,
+                        skip_special_tokens=True,
+                        clean_up_tokenization_spaces=False
+                    )[0].split("RESULT: ")[1]
+
                 self._scene_descriptions.update({
                     s_idx: current_descriptions
                 })

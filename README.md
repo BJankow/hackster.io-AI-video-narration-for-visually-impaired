@@ -165,16 +165,57 @@ prompt = "USER: <video>\nWhat's the content of the video?\nDESCRIPTION:"
 ...
 # Results:
 # Scene 1: The video features a beautiful landscape with a field of green grass, a forest of trees, and a sky with clouds. The scene is serene and peaceful, with a sense of tranquility.
-# Scene 2: The scene is a grassy area with a small stream of water flowing through it. The water is surrounded by grass and rocks, and there are flowers in the grass.
-# Scene 3: The scene is set on a tree branch with a bird perched on it. The bird is looking at the camera, and the sky is visible in the background.
-# Scene 4: A large, furry, and black dog is laying in a grassy area. It is surrounded by rocks and trees. The dog is looking at the camera.
-# Scene 5: A large white rabbit is standing in a grassy field. It is looking at the camera and appears to be smiling. The rabbit is standing in front of a tree and is surrounded by a variety of flowers.
+# Scene 2: The video features a grassy area with a small stream of water flowing through it. The stream is surrounded by grass and rocks, and there are several flowers in the area.
+# Scene 3: The video features a small bird sitting on a branch of a tree. The bird is seen looking at the camera and then flying away. The video also includes a title screen and a closing screen.
+# Scene 4: The video shows a large, furry creature lying in a grassy area. It appears to be a cartoon or animated character, and it is positioned in a way that makes it look like it is sleeping.
+# Scene 5: The video features a large white rabbit standing in a grassy field, with a tree in the background. The rabbit appears to be looking at the camera, and it seems to be a computer-generated image.
+# Scene 6: The video features a large white rabbit standing on a cloudy blue sky background. The rabbit is seen smiling and waving, and it appears to be enjoying the moment.
+# Scene 7: The video features a large, fluffy white bunny rabbit with big, expressive eyes and a big smile. The rabbit is standing in front of a tree and appears to be enjoying the sunshine.
+# Scene 8: The video features a white rabbit standing in a field of white flowers. The rabbit is seen eating the flowers and looking at the camera.
+# Scene 9: The video features a large white bunny standing in a field of grass, surrounded by purple flowers. The bunny is seen standing on its hind legs and waving its front paws in the air.
+# Scene 10: The video shows a small animal, possibly a dog, standing on a branch of a tree. The animal is looking at the camera, and there is a pink object in the grass nearby.
+# Scene 11: The video features a white cat with blue eyes, a smile, and a big nose, standing in a field of white flowers. The cat is seen eating the flowers and looking at the camera.
+# Scene 12: The video features a white bunny rabbit with purple wings and a butterfly on its head. The rabbit is laying on the grass, and the butterfly is flying above it.
+# Scene 13: The video features a large, white bunny holding an apple in its hand and standing in a field. The bunny is surrounded by a variety of colorful flowers, and there are trees in the background.
+# Scene 14: The video features a white polar bear standing next to a tree with red fruits on it. The polar bear is seen eating the fruits from the tree.
+# Scene 15: The video features a large bunny rabbit standing in a field of grass, with a tree in the background. The rabbit is holding a red apple in its mouth, and it appears to be enjoying the fruit.
+# Scene 16: The video shows a white bunny rabbit standing in a grassy field. The rabbit is seen eating grass and looking around the area. The video also features a tree with green leaves and a purple flower.
+# Scene 17: The video features a large, white, furry creature with big ears and a big smile. The creature is standing in a grassy field and is holding a butterfly in its hand.
+# Scene 18: The video shows a white sheep standing in a field of grass, with a purple butterfly flying nearby. The sheep appears to be looking at the butterfly, and the butterfly is flying in the air.
+# Scene 19: The video features three cartoon animals standing in a grassy field, with one of them holding a football. The animals are likely from the movie "Ice Age" and are engaging in playful behavior.
+# Scene 20: The video features a white rabbit with big ears and a purple butterfly flying towards it. The rabbit is standing under a tree, and the butterfly is flying towards the rabbit.
+# Scene 21: The video features a squirrel sitting on a tree branch, looking at the camera. The squirrel then jumps off the branch and runs away.
+# Scene 22: The video features a large white rabbit and a small brown rabbit interacting with each other. The large rabbit is seen hanging from a tree branch while the small rabbit is sitting on the ground.
+# Scene 23: The video shows a sheep standing in a field of grass.
+# Scene 24: The video features a group of cartoon animals, including a cat, a dog, and a fox, who are playing together in a grassy field.
+# Scene 25: The video features a large, white, fluffy bunny rabbit standing in a grassy field. The rabbit appears to be looking at the camera and appears to be making a funny face.
+# Scene 26: The video features a group of animated animals, including a squirrel, a cat, and a rat, who are interacting with each other in a grassy field.
+# Scene 27: The video features a large, fluffy bunny rabbit with big, expressive eyes and a big, fluffy body.
+# Scene 28: The video features three animated characters, two of which are squirrels and one of which is a rat. The squirrels are standing on a rock, while the rat is standing on the ground.
+# Scene 29: The video features a large, white, furry bunny rabbit with big, black eyes and a big, black nose. The rabbit is standing in a field of grass and appears to be yawning.
+# Scene 30: The video features three animated animals, two squirrels and a rat, who are playing together in a grassy field. The squirrels are seen holding a nut and a toy, while the rat is also holding a nut.
+# Scene 31: The video features a large, fluffy bunny rabbit standing in a field, with a cloudy sky in the background. The rabbit is wearing a red bow on its head and appears to be smiling.
+# Scene 32: The video features a group of animated animals, including a squirrel, a cat, and a dog, who are all standing on a rock.
+# Scene 33: The video features a large, white, and fluffy bunny rabbit walking through a field of grass. The rabbit is seen eating a carrot while walking, and it appears to be enjoying the carrot.
+# Scene 34: The video features a group of squirrels playing with a ball in a field. One of the squirrels is holding the ball in its mouth, while the other two are standing on the ground.
+# Scene 35: The video features a small animal, possibly a rodent, with big eyes and a big mouth, standing on a rock and looking at a butterfly.
+# Scene 36: The video features a large, fluffy bunny rabbit standing in a field of grass. The rabbit is holding a pumpkin in its mouth and appears to be enjoying the fall season.
+# Scene 37: The video features a character from the movie "Bears" who is holding a butterfly. The character is seen smiling and laughing while holding the butterfly.
+# Scene 38: The video features a large, white, furry creature with big, black eyes and a big, black nose. The creature is seen standing in a grassy field, and it appears to be yelling at the camera.
+# Scene 39: The video features a cartoon character, a red squirrel, who is seen holding a white object in its mouth. The squirrel is seen with its mouth open, and it appears to be yawning.
+# Scene 40: The video features a large, white, and furry rabbit with big, black eyes, standing in a grassy field.
+# Scene 41: The video features a cat and a butterfly interacting with each other. The cat is seen chasing the butterfly, and the butterfly is seen flying around the cat.
+# Scene 42: The video features a large, furry creature with big ears and a big mouth, standing in a field.
+# Scene 43: The video features a red animal with a purple butterfly in its mouth, standing in a grassy field. The animal is seen holding the butterfly in its mouth, and it appears to be a cartoon character.
+# Scene 44: The video features a large, white, furry creature with big ears and a big mouth, standing in a field. The creature appears to be yelling or shouting, and its mouth is open.
+# Scene 45: The video features a cartoon character, a red creature with wings, standing in a field and interacting with a dog. The character is seen standing in front of a tree, and the dog is seen looking at the character.
 ```
 
 Problems:
 
-- Description is a bit too long
+- Description is a bit too long (narrator will to talk too long).
 - Description start with "The video", "The scene" phrases.
+- Multiple camera reference ("at the camera").
 
 #### 2. Skipping auxiliary words
 
@@ -186,46 +227,130 @@ prompt = (f"CURRENT SCENE: <video>\n"
 ...
 # Results:
 # Scene 1: A field of green grass with trees in the background.
-# Scene 2: A field of grass with a small stream running through it. The grass is tall and green, and there are flowers in the field. The stream is shallow and runs through the grass, creating a peaceful and serene atmosphere.
-# Scene 3: A bird is perched on a branch of a tree.
-# Scene 4: A large, furry, and fluffy dog is laying in a grassy area. It is surrounded by rocks and is positioned in a hole. The dog appears to be sleeping or resting.
-# Scene 5: A large, fluffy bunny is sitting in the grass, looking at the camera. The bunny is wearing a necklace and has a big smile on its face.
+# Scene 2: The image features a grassy area with a small stream flowing through it. The stream is surrounded by a variety of plants, including a large flower and a small flower.
+# Scene 3: A small bird is perched on a branch of a tree.
+# Scene 4: A large, furry, and fluffy dog is laying down in a grassy area.
+# Scene 5: A large white rabbit is standing in a grassy field.
+# Scene 6: A large white rabbit is standing on a cloudy blue sky.
+# Scene 7: A large white bunny with a big smile on its face is standing in front of a tree.
+# Scene 8: A white rabbit is standing in a field of white flowers.
+# Scene 9: A large white bunny is standing in a field of grass with purple flowers.
+# Scene 10: A small animal is standing on a branch of a tree, looking down at a white animal laying on the ground.
+# Scene 11: A large, white, fluffy, and happy-looking cat is standing in a field of white flowers. The cat is smiling and appears to be enjoying the flowers.
+# Scene 12: A white bunny with purple wings is laying on the grass. A butterfly is flying above it.
+# Scene 13: A large white rabbit is standing in a field with a red apple in its hand.
+# Scene 14: A tree with green leaves and red fruits is in the foreground, while a white statue is in the background.
+# Scene 15: A large white rabbit is standing in a field of grass, surrounded by a variety of flowers. The rabbit is holding a red apple in its mouth.
+# Scene 16: A white bunny is sitting in the grass under a tree.
+# Scene 17: A large white bunny with big ears and a big smile is standing in a field with a butterfly flying above him.
+# Scene 18: A white bunny rabbit is sitting in a field of grass. There are two other bunnies in the field, one of which is standing and the other is sitting. The bunnies are surrounded by trees and a sky background.
+# Scene 19: Three cartoon animals are standing in a grassy field. One of them is holding a ball.
+# Scene 20: A white rabbit is standing under a tree with a purple butterfly flying above it.
+# Scene 21: A small brown animal is sitting on a tree trunk.
+# Scene 22: A large white rabbit is sitting under a tree, and a small brown rabbit is sitting on the tree branch above the white rabbit.
+# Scene 23: A white sheep is standing in a green field.
+# Scene 24: Three cartoon animals are sitting in a grassy field. One is a cat, another is a dog, and the third is a rabbit. They are all looking at the camera.
+# Scene 25: A large white bunny is standing in a field of grass.
+# Scene 26: Three cartoon animals are standing on a rock in a field.
+# Scene 27: A large, fluffy bunny with big, round ears and a big, round belly is standing in a field. The bunny has a big, round mouth and is making a funny face.
+# Scene 28: Three cartoon animals are standing in a grassy field. One of them is a squirrel, and the other two are rodents. They are all looking at the camera.
+# Scene 29: A large, white, furry bunny with big, black eyes and a big, black nose is standing in a field.
+# Scene 30: Three cartoon animals are standing in a grassy field. One is a squirrel, another is a cat, and the third is a dog. They are all looking at the camera.
+# Scene 31: A large, fluffy white bunny with a red bow on its head is standing in a field of grass.
+# Scene 32: A group of three small animals are standing on a rock, with one of them looking at the camera.
+# Scene 33: A large, white, furry creature with a bunny-like face and a black spot on its head is walking through a field of yellow flowers.
+# Scene 34: Two squirrels are playing with a ball in a field.
+# Scene 35: A small brown animal with a big smile is holding a large pink butterfly in its paws.
+# Scene 36: A large, white, furry rabbit is standing in a field of grass, surrounded by various fruits and vegetables.
+# Scene 37: A large, furry creature with a big smile on its face is holding a pink butterfly in its hand.
+# Scene 38: A large, white, furry bunny with big, black eyes and a big, black nose is standing in a field of grass. The bunny is making a face and appears to be yelling.
+# Scene 39: A cartoon character with a red and brown furry body is holding a white object in its paws. The character has a big smile on its face and is looking at the camera.
+# Scene 40: A large white bunny with big ears and a big mouth is standing in a field. The bunny is pointing at something with its right hand.
+# Scene 41: A cat is standing in front of a tree, and a butterfly is flying towards it.
+# Scene 42: A large, furry, and fuzzy bunny rabbit is standing in a field of grass. The rabbit is looking down at the ground and appears to be in distress.
+# Scene 43: A red animal with a purple butterfly in its mouth is standing in a field.
+# Scene 44: A large, white, furry creature with big ears and a big mouth is standing in a field. It is looking at the camera and appears to be yelling.
+# Scene 45: A cartoon character is standing in a field with a dog. The character is holding a purple object in its hand.
 ```
 
 Successes:
 
-- Description do not start with "The video", "The scene" phrases.
+- Description do not start with "The video...", "The scene..." phrases.
 
 Problems:
 
 - Description is still a bit too long.
-#### 3. 
+- Multiple camera reference ("at the camera")
+
+#### 3. Removing camera reference - 2 prompts
+
+Many attempts of trying to remove camera reference by modifying initial prompt came to nothing. 
+I tried other solution - second prompt that clearly says only to rephrase given description to skip camera reference.
+Results below.
 
 ```python
 ...
-prompt = (f"CURRENT SCENE: <video>\n"
+prompt = (f""
+          "CURRENT SCENE: <video>\n"
           "TASK: Directly describe the scene without starting with auxiliary words or helping verbs. "
-          "DESCRIPTION:")
+          "Remove camera references. "
+          "\nDESCRIPTION:")
+...
+
+current_descriptions = ...
+
+...
+prompt2 = (f"TEXT: {current_descriptions}. "
+           f"TASK: rephrase given TEXT so it does not contain camera reference."
+           f"\nRESULT:")
 ...
 # Results:
 # Scene 1: A field of green grass with trees in the background.
-# Scene 2: A field of grass with a small stream running through it. The grass is tall and green, and there are flowers in the field. The stream is shallow and runs through the grass, creating a peaceful and serene atmosphere.
-# Scene 3: A bird is perched on a branch of a tree.
-# Scene 4: A large, furry, and fluffy dog is laying in a grassy area. It is surrounded by rocks and is positioned in a hole. The dog appears to be sleeping or resting.
-# Scene 5: A large, fluffy bunny is sitting in the grass, looking at the camera. The bunny is wearing a necklace and has a big smile on its face.
+# Scene 2: The image features a grassy area with a small stream flowing through it. The stream is surrounded by a variety of plants, including a large flower and a small flower.
+# Scene 3: A small bird is perched on a branch of a tree.
+# Scene 4: A large, furry, and fluffy dog is laying down in a grassy area.
+# Scene 5: A large white rabbit is standing in a grassy field.
+# Scene 6: A large white rabbit is standing on a cloudy blue sky.
+# Scene 7: A large white bunny with a big smile on its face is standing in front of a tree.
+# Scene 8: A white rabbit is standing in a field of white flowers.
+# Scene 9: A large white bunny is standing in a field of grass with purple flowers.
+# Scene 10: A small animal is standing on a branch of a tree, looking down at a white animal laying on the ground.
+# Scene 11: A large, white, fluffy, and happy-looking cat is standing in a field of white flowers. The cat is smiling and appears to be enjoying the flowers.
+# Scene 12: A white bunny with purple wings is laying on the grass. A butterfly is flying above it.
+# Scene 13: A large white rabbit is standing in a field with a red apple in its hand.
+# Scene 14: A tree with green leaves and red fruits is in the foreground, while a white statue is in the background.
+# Scene 15: A large white rabbit is standing in a field of grass, surrounded by a variety of flowers. The rabbit is holding a red apple in its mouth.
+# Scene 16: A white bunny is sitting in the grass under a tree.
+# Scene 17: A large white bunny with big ears and a big smile is standing in a field with a butterfly flying above him.
+# Scene 18: A white bunny rabbit is sitting in a field of grass. There are two other bunnies in the field, one of which is standing and the other is sitting. The bunnies are surrounded by trees and a sky background.
+# Scene 19: Three cartoon animals are standing in a grassy field. One of them is holding a ball.
+# Scene 20: A white rabbit is standing under a tree with a purple butterfly flying above it.
+# Scene 21: A small brown animal is sitting on a tree trunk.
+# Scene 22: A large white rabbit is sitting under a tree, and a small brown rabbit is sitting on the tree branch above the white rabbit.
+# Scene 23: A white sheep is standing in a green field.
+# Scene 24: Three cartoon animals are sitting in a grassy field. One is a cat, another is a dog, and the third is a rabbit. They are all looking in the same direction.
+# Scene 25: A large white bunny is standing in a field of grass.
+# Scene 26: Three cartoon animals are standing on a rock in a field.
+# Scene 27: A large, fluffy bunny with big, round ears and a big, round belly is standing in a field. The bunny has a big, round mouth and is making a funny face.
+# Scene 28: Three cartoon animals are standing in a grassy field. One of them is a squirrel, and the other two are rodents. They are all looking in the same direction.
+# Scene 29: A large, white, furry bunny with big, black eyes and a big, black nose is standing in a field.
+# Scene 30: Three cartoon animals are standing in a grassy field. One is a squirrel, another is a cat, and the third is a dog. They are all looking in the same direction.
+# Scene 31: A large, fluffy white bunny with a red bow on its head is standing in a field of grass.
+# Scene 32: Three small animals are standing on a rock, with one of them looking at the viewer.
+# Scene 33: A large, white, furry creature with a bunny-like face and a black spot on its head is walking through a field of yellow flowers.
+# Scene 34: Two squirrels are playing with a ball in a field.
+# Scene 35: A small brown animal with a big smile is holding a large pink butterfly in its paws.
+# Scene 36: A large, white, furry rabbit is standing in a field of grass, surrounded by various fruits and vegetables.
+# Scene 37: A large, furry creature with a big smile on its face is holding a pink butterfly in its hand.
+# Scene 38: A large, white, furry bunny with big, black eyes and a big, black nose is standing in a field of grass. The bunny is making a face and appears to be yelling.
+# Scene 39: A cartoon character with a red and brown furry body is holding a white object in its paws. The character has a big smile on its face and is looking at the viewer.
+# Scene 40: A large white bunny with big ears and a big mouth is standing in a field. The bunny is pointing at something with its right hand.
+# Scene 41: A cat is standing in front of a tree, and a butterfly is flying towards it.
+# Scene 42: A large, furry, and fuzzy bunny rabbit is standing in a field of grass. The rabbit is looking down at the ground and appears to be in distress.
+# Scene 43: A red animal with a purple butterfly in its mouth is standing in a field.
+# Scene 44: A large, white, furry creature with big ears and a big mouth is standing in a field. It is looking at something and appears to be yelling.
+# Scene 45: A cartoon character is standing in a field with a dog. The character is holding a purple object in its hand.
 ```
-
-#### 4. The most basic prompt
-...
-prompt = (f"CURRENT SCENE: <video>\n"
-          "TASK: Directly describe the scene without starting with auxiliary words or helping verbs. "
-          "DESCRIPTION:")
-...
-# Results:
-
-#### 5. The most basic prompt
-
-> TODO: show examples of prompts and what adding every sentence changed.
 
 ### Working with AMD Radeon PRO W7900 (quick summary)
 

@@ -103,7 +103,7 @@ if __name__ == '__main__':
     scenes = stages_processor.detect_scenes(
         fp=fp,
         time_start=0.0,  # [s]
-        time_stop=150.0  # [s]
+        time_stop=210.0  # [s]
     )
     english_descriptions = stages_processor.generate_descriptions(
         fp=fp,

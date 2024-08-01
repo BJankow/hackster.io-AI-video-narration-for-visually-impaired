@@ -1,5 +1,4 @@
 # standard library imports
-import joblib
 from pathlib import Path
 from typing import Union, Tuple, List, Optional, Iterable
 
@@ -22,10 +21,6 @@ from . import StagesProcessorInterface
 from utils.LogHandling.LogHandlers import StandardLogger
 
 
-CACHE_FOLDER = ".cache/"
-mem = joblib.Memory(location=CACHE_FOLDER, verbose=1)
-
-
 class StagesProcessor(StagesProcessorInterface, StandardLogger):
 
     def __init__(
@@ -44,12 +39,6 @@ class StagesProcessor(StagesProcessorInterface, StandardLogger):
         self.voice_synthesizer = voice_synthesizer
         self.movie_composer = movie_composer
         self.summarizer = summarizer
-
-        # self.load_movie = mem.cache(self.load_movie)
-        # self.detect_scenes = mem.cache(self.detect_scenes)
-        # self.generate_descriptions = mem.cache(self.generate_descriptions, ignore=['scenes'])
-        # self.synthesize_descriptions = mem.cache(self.synthesize_descriptions)
-        # self.compose_movie = mem.cache(self.compose_movie, ignore=['out_fp', 'scenes', 'synthesized_descriptions'])
 
     def load_movie(self, fp: Union[str, Path]) -> Tuple:
         self._logger.info("Loading movie...")
