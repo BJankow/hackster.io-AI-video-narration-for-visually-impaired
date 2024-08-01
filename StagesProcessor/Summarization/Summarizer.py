@@ -25,7 +25,8 @@ class SummarizerBase(SummarizerInterface, StandardLogger):
 
     def _reload_preferred_device(self):
         """
-        TODO: here
+        Basing on CUDA device availability sets device on which calculation will be done (CPU or GPU).
+
         :return:
         """
         if torch.cuda.is_available():

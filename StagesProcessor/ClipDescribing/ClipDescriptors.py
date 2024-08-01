@@ -33,7 +33,8 @@ class ClipDescriptorBase(ClipDescriptorInterface, StandardLogger):
 
     def _reload_preferred_device(self):
         """
-        TODO: 
+        Basing on CUDA device availability sets device on which calculation will be done (CPU or GPU).
+
         :return:
         """
         if torch.cuda.is_available():
@@ -61,7 +62,8 @@ class ClipDescriptorViTGPT2(ClipDescriptorBase):
 
     def _load_models(self):
         """
-        TODO: 
+        Instantiates LLM model in memory.
+
         :return:
         """
         self._reload_preferred_device()
@@ -137,7 +139,8 @@ class ClipDescriptorLLaVA15(ClipDescriptorBase):
 
     def _load_models(self):
         """
-        TODO: 
+        Instantiates LLM model in memory.
+
         :return:
         """
         self._reload_preferred_device()
@@ -160,7 +163,6 @@ class ClipDescriptorLLaVA15(ClipDescriptorBase):
 
     def describe(self, video: VideoStreamCv2, scenes: List[Tuple[FrameTimecode, FrameTimecode]]) -> List[str]:
         self._load_models()
-        # TODO: pick frame - take frame that is in 10% from beginning
         video.reset()  # make sure video is at the beginning
         frames = []
         for s in scenes:
@@ -193,10 +195,11 @@ class ClipDescriptorLLaVA15(ClipDescriptorBase):
         descriptions = [description.split("ASSISTANT: ")[1] for description in descriptions]
         return descriptions
 
-    def describe_single_image(self, image: np.array):
+    def describe_single_image(self, image: np.array) -> str:
         """
-        TODO: 
-        :return:
+        Given image creates description using loaded LLM model.
+
+        :return: description in form of string
         """
         self._load_models()
 
@@ -236,8 +239,9 @@ class ClipDescriptorVideoLLava(ClipDescriptorBase):
 
     def _prompt(self) -> str:
         """
-        TODO: 
-        :return:
+        Generates prompt.
+
+        :return: prompt in form of a string.
         """
         # https://www.reddit.com/r/LocalLLaMA/comments/1asyo9m/llava_16_how_to_write_proper_prompt_that_will/
         # (FinancialNailer answer is helpful to get rid of repeating "The image/video shows...")
@@ -286,7 +290,8 @@ class ClipDescriptorVideoLLava(ClipDescriptorBase):
 
     def _load_models(self):
         """
-        TODO: 
+        Instantiates LLM model in memory.
+
         :return:
         """
         self._reload_preferred_device()
@@ -370,7 +375,8 @@ class ClipDescriptorLLaVAMistral16(ClipDescriptorBase):
 
     def _load_models(self):
         """
-        TODO: 
+        Instantiates LLM model in memory.
+
         :return:
         """
         self._reload_preferred_device()
@@ -438,7 +444,8 @@ class ClipDescriptorLLaVANextVideo34B(ClipDescriptorBase):
 
     def _load_models(self):
         """
-        TODO: 
+        Instantiates LLM model in memory.
+
         :return:
         """
         self._reload_preferred_device()

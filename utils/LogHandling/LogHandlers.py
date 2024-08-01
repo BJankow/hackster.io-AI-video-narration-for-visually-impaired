@@ -21,7 +21,7 @@ class LogHandlerBase:
         handler.setLevel(logging.DEBUG)
         formatter = logging.Formatter()
         handler.setFormatter(formatter)
-        self._my_logger.addHandler(handler)  # TODO: check if it works to stdout
+        self._my_logger.addHandler(handler)
 
 
 class CustomFormatter(logging.Formatter):
