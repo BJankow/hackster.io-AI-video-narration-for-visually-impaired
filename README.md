@@ -762,38 +762,6 @@ PyTorch for ROCm in Docker:
 
 ## Observe hardware usage
 
-### gpustat
-
-```shell
-gpustat -a -i 0.5
-```
-
-Arguments explaination:
-
-- `-a` - Display all gpu properties above
-- `-i 0.5` - Run in watch mode (equivalent to watch gpustat) if given. Denotes interval between updates.
-
-### radeontop
-
-```shell
-sudo pamac install radeontop
-radeontop
-```
-
-### htop
-
-Standard command line program that helps to observe CPU usage.
-
-```shell
-htop -d 10
-```
-
-Arguments explaination:
-
-- `-d 10` - Delay between updates, in tenths of a second. If the delay value is less than 1,
-            it is increased to 1, i.e. 1/10 second. If the delay value is greater than 100,
-            it is decreased to 100, i.e. 10 seconds.
-
 ### btop
 
 Very nice GUI interface to observe CPU usage
