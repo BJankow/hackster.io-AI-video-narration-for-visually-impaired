@@ -158,6 +158,7 @@ This section shows examples of prompts with results (descriptions).
 Its aim is to visualise the process of creating desired prompt.
 
 #### 1. The most basic prompt
+
 ```python
 ...
 prompt = "USER: <video>\nWhat's the content of the video?\nDESCRIPTION:"
@@ -169,12 +170,14 @@ prompt = "USER: <video>\nWhat's the content of the video?\nDESCRIPTION:"
 # Scene 4: A large, furry, and black dog is laying in a grassy area. It is surrounded by rocks and trees. The dog is looking at the camera.
 # Scene 5: A large white rabbit is standing in a grassy field. It is looking at the camera and appears to be smiling. The rabbit is standing in front of a tree and is surrounded by a variety of flowers.
 ```
+
 Problems:
+
 - Description is a bit too long
 - Description start with "The video", "The scene" phrases.
 
-
 #### 2. Skipping auxiliary words
+
 ```python
 ...
 prompt = (f"CURRENT SCENE: <video>\n"
@@ -188,12 +191,14 @@ prompt = (f"CURRENT SCENE: <video>\n"
 # Scene 4: A large, furry, and fluffy dog is laying in a grassy area. It is surrounded by rocks and is positioned in a hole. The dog appears to be sleeping or resting.
 # Scene 5: A large, fluffy bunny is sitting in the grass, looking at the camera. The bunny is wearing a necklace and has a big smile on its face.
 ```
+
 Successes:
+
 - Description do not start with "The video", "The scene" phrases.
 
 Problems:
-- Description is still a bit too long.
 
+- Description is still a bit too long.
 
 #### 3. The most basic prompt
 
@@ -213,12 +218,14 @@ I saw on the internet that AMD has already figured this out and created a 2-slot
 ![img](doc/img/PC_with_W7900.png)
 
 Here are my obervations about working with AMD Radeon PRO W7900:
+
 - It is important to make sure that GPU is well ventilated during work.
 - The temperature sets at level of 82 °C under load (see the chart below).
 - The noise level is acceptable (it's pretty quiet).
 - Power consumption at 100% of usage sets below 250 W - doesn't require powerful power supply.
 
 ![img](doc/img/W7900_usage_chart.png)
+
 ## Example usage
 
 ### Generate clip with narration
@@ -232,12 +239,13 @@ python3 main.py --fp CLIP_PATH.mov --out_dir /home/$USER/videos  # this will cre
 
 Processing a clip may take various amount of time. But to bring the values closer
 I will give an example of processing [Big Buck Bunny](https://www.youtube.com/watch?v=aqz-KE-bpKQ) movie:
+
 - Original video duration: 596 s (9 min 56 sec).
 - Number of detected scenes: 129.
 - Processing time: 965 s (16 min 5 sec).
 
 It seems that number of detected scenes is the key factor influencing processing time.\
-The system has its limitations regarding acceptable length of the film due to [PyDub library]((https://github.com/jiaaro/pydub)) limitations. 
+The system has its limitations regarding acceptable length of the film due to [PyDub library]((https://github.com/jiaaro/pydub)) limitations.
 I tried to process full length movie (1h 23min) and there were some issues related to audio decoding process.
 
 ### How to select a language
@@ -247,7 +255,7 @@ I tried to process full length movie (1h 23min) and there were some issues relat
 
 When launching *main.py* script you can **add *--languages* flag** multiple times. This will create a list of required languages.\
 **Language** that you are setting **must be available** for [deep_translator.GoogleTranslator](https://deep-translator.readthedocs.io/en/latest/usage.html) for translation stage and
-**must have set up its voice sample** (described in [How to add custom voice sample](#how-to-add-custom-voice-sample) section below).\
+**must have set up its voice sample** (described in [How to add a custom voice sample](#how-to-add-a-custom-voice-sample) section below).\
 To check available languages and their abbreviations run following `python` script (based on: [source](https://deep-translator.readthedocs.io/en/latest/usage.html#check-supported-languages)).
 
 ```python
