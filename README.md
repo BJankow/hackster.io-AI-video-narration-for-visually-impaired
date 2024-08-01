@@ -197,7 +197,7 @@ prompt = (f"CURRENT SCENE: <video>\n"
 # Scene 44: A large, white, furry creature with big ears and a big mouth is standing in a field. It is looking at the camera and appears to be yelling.
 ```
 
-Successes:
+Solved:
 
 - Descriptions do not start with "The video...", "The scene..." phrases.
 
@@ -238,7 +238,7 @@ prompt2 = (f"TEXT: {current_descriptions}. "
 # Scene 44: A large, white, furry creature with big ears and a big mouth is standing in a field. It is looking at something and appears to be yelling.
 ```
 
-Successes:
+Solved:
 
 - Descriptions do not start with "The video...", "The scene..." phrases.
 - Multiple camera reference ("at the camera") solved partially - now it sounds more natural ("They are all looking in the same direction." from Scene 24)
