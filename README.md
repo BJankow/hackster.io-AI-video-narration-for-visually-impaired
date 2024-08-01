@@ -175,9 +175,9 @@ prompt = "USER: <video>\nWhat's the content of the video?\nDESCRIPTION:"
 
 Problems:
 
-- Description is a bit too long (narrator will to talk too long).
 - Description start with "The video", "The scene" phrases.
 - Multiple camera reference ("at the camera").
+- Description is a bit too long (narrator will to talk too long).
 
 #### 2. Skipping auxiliary words
 
@@ -199,12 +199,12 @@ prompt = (f"CURRENT SCENE: <video>\n"
 
 Successes:
 
-- Description do not start with "The video...", "The scene..." phrases.
+- Descriptions do not start with "The video...", "The scene..." phrases.
 
 Problems:
 
-- Description is still a bit too long.
 - Multiple camera reference ("at the camera")
+- Description is still a bit too long.
 
 #### 3. Removing camera reference - 2 prompts
 
@@ -237,6 +237,11 @@ prompt2 = (f"TEXT: {current_descriptions}. "
 # Scene 32: Three small animals are standing on a rock, with one of them looking at the viewer.
 # Scene 44: A large, white, furry creature with big ears and a big mouth is standing in a field. It is looking at something and appears to be yelling.
 ```
+
+Successes:
+
+- Descriptions do not start with "The video...", "The scene..." phrases.
+- Multiple camera reference ("at the camera") solved partially - now it sounds more natural ("They are all looking in the same direction." from Scene 24)
 
 ### Working with AMD Radeon PRO W7900 (quick summary)
 
