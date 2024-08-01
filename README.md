@@ -199,10 +199,13 @@ python3 main.py --fp CLIP_PATH.mov --out_dir /home/$USER/videos  # this will cre
 
 Processing a clip may take various amount of time. But to bring the values closer
 I will give an example of processing [Big Buck Bunny](https://www.youtube.com/watch?v=aqz-KE-bpKQ) movie:
-- Original video time: 596 s (9 min 56 sec)
-- Number of detected scenes: 129 
-- Processing time: 965 s (16 min 5 sec)
-It seems that number of detected scenes is the key factor influencing processing time.
+- Original video duration: 596 s (9 min 56 sec).
+- Number of detected scenes: 129.
+- Processing time: 965 s (16 min 5 sec).
+
+It seems that number of detected scenes is the key factor influencing processing time.\
+The system has its limitations regarding acceptable length of the film due to [PyDub library]((https://github.com/jiaaro/pydub)) limitations. 
+I tried to process full length movie (1h 23min) and there are some issues connected to audio decoding process. 
 
 ### How to select a language
 
